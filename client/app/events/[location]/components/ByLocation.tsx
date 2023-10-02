@@ -15,15 +15,12 @@ export default function Hero(events: any) {
     };
 
     const right = () => {
-        if (currentEvent < 9) {
+        if (currentEvent < (width / 100)) {
             setCurrentEvent(currentEvent + 1);
         }
     };
 
     useEffect(() => {
-
-
-
         const container = document.getElementById('Hero');
         const LeftArrow = document.getElementById('LeftArrowContainer');
         const RightArrow = document.getElementById('RightArrowContainer');
@@ -45,7 +42,7 @@ export default function Hero(events: any) {
                 RightArrow.style.display = 'flex';
             }
         }
-        else if (currentEvent == 9) {
+        else if (currentEvent == ((width / 100) - 1)) {
             if (LeftArrow) {
                 LeftArrow.style.display = 'flex';
             }
@@ -61,7 +58,7 @@ export default function Hero(events: any) {
                 RightArrow.style.display = 'flex';
             }
         }
-    }, [currentEvent]);
+    }, [currentEvent, width]);
 
     return ( 
         <div id="Hero">
