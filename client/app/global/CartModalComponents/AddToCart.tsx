@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 
 interface AddToCartProps {
     hotel: any;
+    changeCartState: (cartLength: number) => void;
 }
 
-const AddToCart: React.FC<AddToCartProps> = ({ hotel }) => {
+const AddToCart: React.FC<AddToCartProps> = ({ hotel, changeCartState }) => {
 
     const [showWarning, setShowWarning] = useState(false);
 
@@ -22,7 +23,7 @@ const AddToCart: React.FC<AddToCartProps> = ({ hotel }) => {
         }
         cartArray.push(hotel);
         localStorage.setItem('cart', JSON.stringify(cartArray));
-        window.location.reload();
+        changeCartState(cartArray.length);
     }
 
     return (

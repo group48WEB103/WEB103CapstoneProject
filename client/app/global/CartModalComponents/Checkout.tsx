@@ -4,9 +4,10 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 interface CheckoutProps {
     closeCheckout: () => void;
+    updateCart: (cartLength: number) => void;
 }
 
-const Checkout: React.FC<CheckoutProps> = ({ closeCheckout }) => {
+const Checkout: React.FC<CheckoutProps> = ({ closeCheckout, updateCart }) => {
 
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -36,12 +37,11 @@ const Checkout: React.FC<CheckoutProps> = ({ closeCheckout }) => {
 
         if (cartArray.length <= 1) {
             localStorage.removeItem('cart');
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+            updateCart(0);
         } else {
             const updatedCart = cartArray.filter((item: any) => item.id !== index);
             localStorage.setItem('cart', JSON.stringify(updatedCart))
+            updateCart(updatedCart.length);
         }
 
         setItems();
