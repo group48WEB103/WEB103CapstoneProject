@@ -11,20 +11,16 @@ export default function Modal( hotel: any ) {
     const [cartLength, setCartLength] = useState(0);
 
     const handleCartModal = (cartLength: number) => {
-        console.log('in handleCartModal, cartLength is ', cartLength)
         if (cartLength > 0) {
-            console.log('in handleCartModal, cartLength is greater than 0, cart length is set to: ', cartLength)
             setCartLength(cartLength);
             setShowCart(true);
         } else {
-            console.log('in handleCartModal, cartLength is less than 0, cart length is set to: ', 0)
             setCartLength(0)
             setShowCart(false);
         }
     }
 
     const showCheckoutModal = () => {
-        setShowCart(false);
         setShowCheckout(true);
     }
 
@@ -44,9 +40,11 @@ export default function Modal( hotel: any ) {
             setCartLength(0);
             console.log('in useEffect, set cart length to ', 0);
             handleCartModal(0);
+            setShowCart(false);
+            console.log('in useEffect, set showCart to ', false, 'cart state is: ', showCart, 'and cart length is ', cartLength);
         }
 
-    }, []);
+    }, [cartLength]);
 
     return (
         <div>
