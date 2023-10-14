@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# WEB103 Project 3 - *Hotel Event Finder*
 
-## Getting Started
+Submitted by: ****
 
-First, run the development server:
+About this web app: **Hotel website that shows nearby events**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Time spent: **10** hours
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Required Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The following **required** functionality is completed:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<!-- Make sure to check off completed functionality below -->
+- [x] **The web app is connected to a PostgreSQL database, with an appropriately structured `CustomCar` table**
+  - [x] **NOTE: Your GIF must include a view of your Railway database that shows the contents of the table used by your app**
+- [x] **The web app uses React to display data from the API**
+- [x] **Users can view a list of options they can select for different aspects of a `CustomCar`**
+- [x] **On selecting each option, the displayed visual icon for the `CustomCar` updates to match the option the user chose**
+- [x] **The user can submit their choices to save the car to the list of created `CustomCar`**
+- [x] **If a user submits a feature combo that is impossible, they should receive an appropriate error message and the item should not be saved to the database**
+- [x] **The app displays the total price of all features**
+- [x] **Users can view a list of all submitted `CustomCar`**
+- [x] **Users can edit or delete a submitted `CustomCar` from the list view of submitted `CustomCar`**
+- [x] **Users can update or delete `CustomCar` that have been created from the detail page**
 
-## Learn More
+The following **optional** features are implemented:
 
-To learn more about Next.js, take a look at the following resources:
+- [ ] Selecting particular options prevents incompatible options from being selected even before form submission
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The following **optional** features are implemented:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- [ ] An additional page shows all possible `Events` that the user can sort and filter by `Location`
+- [ ] `Events` display a countdown showing the time remaining before that event and appears with different formatting when the event has passed
 
-## Deploy on Vercel
+The following **additional** features are implemented:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [ ] List anything else that you added to improve the site's functionality!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Video Walkthrough
+
+Here's a walkthrough of implemented required features:
+
+https://github.com/dawitalemu4/HotelTemplate/assets/106638403/d35d72fb-bcaa-4c95-9b41-ac0a65c09a0d
+
+
+GIF created with Microsoft Window Snipping Tool
+
+## Notes
+
+Describe any challenges encountered while building the app or any additional context you'd like to add.
+
+## License
+
+Copyright [2023] [Dawit Alemu]
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+> http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
