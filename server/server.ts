@@ -13,7 +13,7 @@ const port = process.env.PORT;
 
 const corsOptions = {
   origin: (origin: any, callback: any) => {
-    const allowedOrigins = "https://hotel-template-da.vercel.app";
+    const allowedOrigins = ["https://hotel-template-da.vercel.app", "http://localhost:3000"];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -23,6 +23,7 @@ const corsOptions = {
 }; 
 
 const server = express();
+server.use(express.json());
 server.use(cors(corsOptions));
 
 const HotelControllers = new HotelQueries();
@@ -51,17 +52,19 @@ server.get(HotelRoutes.getHotelsByLocation, (req, res) => {
     HotelControllers.getHotelsByLocation(req, res, location)
 });
 
-server.get(HotelRoutes.createHotel, (req, res) => {
-    const data = req.params.newHotel;
+server.post(HotelRoutes.createHotel, (req, res) => {
+    const data = req.body;
+    console.log(data);
     HotelControllers.createHotel(req, res, data)
 });
 
-server.get(HotelRoutes.updateHotel, (req, res) => {
-    const data = req.params.data;
-    HotelControllers.updateHotel(req, res, data)
+server.put(HotelRoutes.updateHotel, (req, res) => {
+    const data = req.body;
+    const id = String(req.params.id);
+    HotelControllers.updateHotel(req, res, data, id)
 });
 
-server.get(HotelRoutes.deleteHotel, (req, res) => {
+server.delete(HotelRoutes.deleteHotel, (req, res) => {
     const id = String(req.params.id);
     HotelControllers.deleteHotel(req, res, id)
 });
@@ -84,17 +87,18 @@ server.get(EventRoutes.getEventsByLocation, (req, res) => {
     EventControllers.getEventsByLocation(req, res, location)
 });
 
-server.get(EventRoutes.createEvent, (req, res) => {
-    const data = req.params.newEvent;
+server.post(EventRoutes.createEvent, (req, res) => {
+    const data = req.body;
     EventControllers.createEvent(req, res, data)
 });
 
-server.get(EventRoutes.updateEvent, (req, res) => {
-    const data = req.params.data;
-    EventControllers.updateEvent(req, res, data)
+server.put(EventRoutes.updateEvent, (req, res) => {
+    const data = req.body;
+    const id = String(req.params.id);
+    EventControllers.updateEvent(req, res, data, id)
 });
 
-server.get(EventRoutes.deleteEvent, (req, res) => {
+server.delete(EventRoutes.deleteEvent, (req, res) => {
     const id = String(req.params.id);
     EventControllers.deleteEvent(req, res, id)
 });

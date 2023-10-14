@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { Hotel } from '../types';
 
-export default async function updateHotel(updatedHotel: Hotel) {
+export default async function updateHotel(updatedHotel: Hotel, id: string) {
     try {
-        await axios.patch(`https://hotel-template-backend.vercel.app/hotel/update/${updatedHotel}`)
+        console.log(updatedHotel, id);
+        await axios.patch(`http://localhost:5432/hotel/update/${id}`, updatedHotel)
     }
     catch (error) {
         console.log(error);
