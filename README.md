@@ -1,6 +1,6 @@
 # WEB103 Project 3 - *Hotel Event Finder*
 
-Submitted by: **Dawit Alemu**
+Submitted by: ****
 
 About this web app: **Hotel website that shows nearby events**
 
