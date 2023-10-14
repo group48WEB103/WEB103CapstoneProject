@@ -3,7 +3,7 @@ import { Hotel } from '../types';
 
 export default async function updateHotel(updatedHotel: Hotel, id: string) {
     try {
-        await axios.put(`https://hotel-template-backend.vercel.app/hotel/update/${id}`, updatedHotel)
+        await axios.put(`https://codepath-web103-capstone48-project-api.vercel.app/hotel/update/${id}`, updatedHotel)
     }
     catch (error) {
         console.log(error);
