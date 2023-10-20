@@ -1,60 +1,68 @@
-# WEB103 Project 3 - *Hotel Event Finder*
+# Ticket Seller
 
-Submitted by: **Dawit Alemu, Zakariya Ahmed**
+CodePath WEB103 Final Project
 
-About this web app: **Hotel website that shows nearby events**
+Designed and developed by: Dawit Alemu, Zakariya Ahmed
 
-Time spent: **10** hours
+🔗 Link to deployed app:
 
-## Required Features
+## About
 
-The following **required** functionality is completed:
+### Description and Purpose
 
-<!-- Make sure to check off completed functionality below -->
-- [x] **The web app is connected to a PostgreSQL database, with an appropriately structured `CustomCar` table**
-  - [x] **NOTE: Your GIF must include a view of your Railway database that shows the contents of the table used by your app**
-- [x] **The web app uses React to display data from the API**
-- [x] **Users can view a list of options they can select for different aspects of a `CustomCar`**
-- [x] **On selecting each option, the displayed visual icon for the `CustomCar` updates to match the option the user chose**
-- [x] **The user can submit their choices to save the car to the list of created `CustomCar`**
-- [x] **If a user submits a feature combo that is impossible, they should receive an appropriate error message and the item should not be saved to the database**
-- [x] **The app displays the total price of all features**
-- [x] **Users can view a list of all submitted `CustomCar`**
-- [x] **Users can edit or delete a submitted `CustomCar` from the list view of submitted `CustomCar`**
-- [x] **Users can update or delete `CustomCar` that have been created from the detail page**
+A ticket selling application that allows users to buy bundles with access to multiple stadiums. Purpose of this application will be to allow access to as many tickets to events as needed by users.
 
-The following **optional** features are implemented:
+### Inspiration
 
-- [ ] Selecting particular options prevents incompatible options from being selected even before form submission
+Inspiration for this application came from popularity of sports in current society.
 
-The following **optional** features are implemented:
+## Tech Stack
 
-- [ ] An additional page shows all possible `Events` that the user can sort and filter by `Location`
-- [ ] `Events` display a countdown showing the time remaining before that event and appears with different formatting when the event has passed
+Frontend: React, Next.js, Javascript
 
-The following **additional** features are implemented:
+Backend: Node.js, Express, Vercel
 
-- [ ] List anything else that you added to improve the site's functionality!
+## Features
 
-## Video Walkthrough
+### Backend-Features: One-to-Many relational database
 
-Here's a walkthrough of implemented required features:
+User can purchase one ticket that offers multiple events/locations.
 
-https://github.com/dawitalemu4/HotelTemplate/assets/106638403/d35d72fb-bcaa-4c95-9b41-ac0a65c09a0d
+| TicketID | TicketName   | Price |
+|---------|--------------|-------|
+| 1       | Bundle A     | 50    |
+| 2       | Bundle B     | 75    |
+| 3       | Bundle C     | 60    |
+
+| EventLocationID | TicketID | EventLocationName    |
+|-----------------|----------|----------------------|
+| 1               | 1        | Event 1              |
+| 2               | 1        | Event 2              |
+| 3               | 1        | Location A           |
+| 4               | 2        | Event 3              |
+| 5               | 2        | Location B           |
+| 6               | 3        | Event 4              |
+| 7               | 3        | Event 5              |
+| 8               | 3        | Location C           |
 
 
-GIF created with Microsoft Window Snipping Tool
+### Backend-Features: RESTful API with response to at least of each type of Request (CRUD)
 
-## Notes
+User can CREATE/READ/UPDATE/DELETE their shopping list of tickets.
 
-Describe any challenges encountered while building the app or any additional context you'd like to add.
 
-## License
+### Frontend Features
+The web app implements at least one redirection.
+The web app implements at least one interaction that the user can initiate and complete on the same page without navigating to a new page.
+The web app uses dynamic frontend routes created with React Router.
+The web app uses hierarchically designed React components:
+Components are broken down into categories, including page and component types.
+Corresponding container components and presenter components as appropriate.
 
-Copyright [2023] [Dawit Alemu]
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+### [ADDITIONAL FEATURES GO HERE - ADD ALL FEATURES HERE IN THE FORMAT ABOVE; you will check these off and add gifs as you complete them]
 
-> http://www.apache.org/licenses/LICENSE-2.0
+## Installation Instructions
 
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+[instructions go here]
