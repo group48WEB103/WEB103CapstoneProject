@@ -1,116 +1,73 @@
 'use client'
-import '../globals.css'
-import React, { useState, useEffect } from 'react';
-import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
-import Modal from '../global/CartModalComponents/Modal';
+import React, { useState } from "react";
+import "../globals.css"
+import { MockEvents } from "./MockEvents";
+import { Event } from "../../services/types";
+// import getLocationByID from "../../services/GET/getLocationByID"
 
-export default function Hero(hotels: any) {
-    const [currentHotel, setCurrentHotel] = useState(0);
-    const width = hotels.hotels.length * 100;
+export default function Home() {
 
-    const left = () => {
-        if (currentHotel > 0) {
-            setCurrentHotel(currentHotel - 1);
-        }
-    };
+    // const [stadiumsData, setStadiumsData] = useState([]);
 
-    const right = () => {
-        if (currentHotel < (width / 100)) {
-            setCurrentHotel(currentHotel + 1);
-        }
-    };
+    // const fetchStadiumsData = async () => {
+    //     const res = await getAllStadiumsData();
+    //     setStadiumsData(res);
+    // }
 
-    useEffect(() => {
-        const container = document.getElementById('Hero');
-        const LeftArrow = document.getElementById('LeftArrowContainer');
-        const RightArrow = document.getElementById('RightArrowContainer');
+    // if (stadiumsData && stadiumsData.length === 0) {
+    //     fetchStadiumsData();
+    // }
 
-        if (container) {
-            const scrollPosition = currentHotel * window.innerWidth;
-            window.scrollTo({
-                top: 0,
-                left: scrollPosition,
-                behavior: 'smooth'
-            });
-        }
-
-        if (currentHotel == 0) {
-            if (LeftArrow) {
-                LeftArrow.style.display = 'none';
-            }
-            if (RightArrow) {
-                RightArrow.style.display = 'flex';
-            }
-        }
-        else if (currentHotel == ((width / 100) - 1)) {
-            if (LeftArrow) {
-                LeftArrow.style.display = 'flex';
-            }
-            if (RightArrow) {
-                RightArrow.style.display = 'none';
-            }
-        }
-        else {
-            if (LeftArrow) {
-                LeftArrow.style.display = 'flex';
-            }
-            if (RightArrow) {
-                RightArrow.style.display = 'flex';
-            }
-        }
-    }, [currentHotel]);
+    const eventRedirect = (id: string) => {
+        window.location.href = `/${id}`;
+    }
 
     return ( 
-        <div id="Hero">
-            <div id="HeroContainer">
-                <div id="HotelListContainer">
-                    <div id="LeftArrowContainer" onClick={left}>
-                        <BsArrowLeftShort id="LeftArrow" />
-                    </div>
-                    {hotels.hotels.map((hotel: any) => (
-                        <div id='Hotel' key={hotel.id}>
-                            <div id="ImageContainer">
-                                <img id='Image' src={hotel.img} />
-                            </div>
-                            <div id="HotelInfo">
-                                <div id="HotelName">
-                                    <p id='Name'><a id="HotelLink" href={`/${hotel.id}`}>{hotel.title}</a></p>
+        <div id='Home'>
+            <div id="HomeContainer">
+                <div id="HomeHeaderContainer">
+                    <p id="HomeHeader">Recent Events</p>
+                </div>
+                <div id="EventListContainer">
+                    {MockEvents.map((event: Event) => (
+                        <div id='Event' key={event.id} onClick={() => eventRedirect(String(event.id))}>
+                            <img id="EventImage" src={event.image} />
+                            <div id="EventInfo">
+                                <div id="EventLeftContainer">
+                                    <div id="EventTitleContainer">
+                                        <p id="EventTitle">{event.title}</p>
+                                    </div>
+                                    <div id="EventPreformerContainer">
+                                        <p id="EventPreformer">{event.performer}</p>
+                                    </div>    
                                 </div>
-                                <div id="HotelAddress">
-                                    <p id="Address">{hotel.address} - <a id="LocationLink" href={`/events/${hotel.location}`}>{hotel.location}</a></p>
+                                <div id="EventMiddleContainer">
+                                    <p id="EventAt">@</p>
                                 </div>
-                                <div id="HotelDescription">
-                                    <p id="Description">{hotel.description}</p>
-                                </div>
-                                <div id="HotelPrice">
-                                    <Modal hotel={hotel} />                                 
-                                </div>
+                                <div id="EventRightContainer">
+                                    <div id="EventLocationContainer">
+                                        <p id="EventLocation">Golden Gate Arena</p>
+                                        {/* stadiumsData[location_id].title */}
+                                    </div>
+                                </div> 
                             </div>
                         </div>
                     ))}
-                    <div id="RightArrowContainer"  onClick={right}>
-                        <BsArrowRightShort id="RightArrow" />
-                    </div>
                 </div>
             </div>
         <style>
             {`
-
-                :root { --width: ${width}vw; }
-
-                #Hero {
+                #Home {
                     display: flex;
                     position: relative;
-                    width: var(--width);
-                    height: 80vh;
-                    margin-top: 15vh;
+                    width: 100vw;
+                    height: 100%;
+                    margin-top: 10vh;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
-                    overflow: hidden;
-                    z-index: 2;
                 }
-                #HeroContainer {
+                #HomeContainer {
                     display: flex;
                     position: relative;
                     width: 100%;
@@ -119,101 +76,137 @@ export default function Hero(hotels: any) {
                     justify-content: center;
                     align-items: center;
                 }
-                #HotelListContainer {
+                #HomeHeaderContainer {
                     display: flex;
                     position: relative;
-                    width: 100%;
-                    height: 100%;
-                    flex-wrap: wrap;
-                    justify-content: space-around;
-                    align-items: center;
+                    width: 90%;
+                    height: 15%;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
                 }
-                #LeftArrowContainer {
-                    display: none;
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    height: 100px;
-                    width: 100px;
-                    cursor: pointer;
-                }
-                #RightArrowContainer {
-                    display: none;
-                    position: fixed;
-                    bottom: 0;
-                    right: 0;
-                    height: 100px;
-                    width: 100px;
-                    cursor: pointer;
-                }
-                #LeftArrow, #RightArrow {
-                    height: 100%;
-                    width: 100%;
+                #HomeHeader {
+                    font-size: 40px;
                     color: white;
+                    font-family: InterBold;
                 }
-                #Hotel {
+                #EventListContainer {
+                    display: grid;
+                    position: relative;
+                    width: 90%;
+                    height: 85%;
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                    grid-gap: 25px;
+                }
+                #Event {
                     display: flex;
                     position: relative;
-                    width: 70vw;
-                    height: 80vh;
+                    width: 250px;
+                    height: 250px;
+                    margin-bottom: 25px;
                     flex-direction: column;
-                    align-items: center;
                     justify-content: center;
+                    align-items: center;
+                    border-radius: 15px;
+                    cursor: pointer;
+                    overflow: hidden;
+                    transition: 0.2s;
                 }
-                #ImageContainer {
+                #Event:hover {
+                    transform: scale(1.05);
+                }
+                #EventImage {
                     display: flex;
-                    position: relative;
-                    width: 100%;
-                    height: 50%;
-                    justify-content: center;
-                    align-items: center;
-                }
-                #Image {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
                 }
-                #HotelInfo {
+                #EventInfo {
+                    display: flex;
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    height: 25%;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 10px;
+                    background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 1));
+                }
+                #EventLeftContainer {
                     display: flex;
                     position: relative;
-                    width: 99%;
-                    height: 45%;
-                    margin-top: 3%;
-                    padding-right: 1%;
+                    width: 50%;
+                    height: 100%;
                     flex-direction: column;
-                    overflow-y: scroll;
+                    justify-content: center;
+                    align-items: center;
+                    overflow: hidden;
                 }
-                #HotelInfo::-webkit-scrollbar {
-                    width: 5px;
-                    background: transparent;
+                #EventTitleContainer {
+                    display: flex;
+                    position: relative;
+                    width: 90%;
+                    height: 45%;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
                 }
-                #HotelInfo::-webkit-scrollbar-thumb {
-                    background: grey;  
-                    border-radius: 10px;              
-                }
-                #HotelName {
-                    
-                }
-                #Name {
+                #EventTitle {
+                    font-size: 20px;
                     color: white;
-                    font-size: 30px;
                     font-family: InterBold;
                 }
-                #HotelAddress {
-
+                #EventPreformerContainer {
+                    display: flex;
+                    position: relative;
+                    width: 90%;
+                    height: 45%;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
                 }
-                #Address {
+                #EventPreformer {
+                    font-size: 15px;
                     color: white;
-                    font-size: 12px;
+                    font-family: InterSemi;
                 }
-                #HotelDescription {
-                    
+                #EventMiddleContainer {
+                    display: flex;
+                    position: relative;
+                    width: 5%;
+                    height: 100%;
+                    margin-right: 3px;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
                 }
-                #Description {
+                #EventRightContainer {
+                    display: flex;
+                    position: relative;
+                    width: 40%;
+                    height: 100%;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    overflow: hidden;
+                }
+                #EventLocationContainer {
+                    display: flex;
+                    position: relative;
+                    width: 90%;
+                    height: 50%;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-end;
+                }
+                #EventAt, #EventLocation {
+                    font-size: 15px;
                     color: white;
+                    font-family: InterSemi;
                 }
-                #LocationLink, #HotelLink {
-                    color: white;
+                @media (max-width: 600px) {
+                    #EventListContainer { justify-items: center; }
                 }
             `}
         </style>

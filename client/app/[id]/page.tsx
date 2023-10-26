@@ -1,23 +1,22 @@
 import React from 'react';
 import { Metadata } from 'next';
-import getLocationByID from '../../services/GET/getHotelByID';
 import Header from '../global/Header';
-import Hero from './components/Hotel';
+import Ticket from './components/Ticket';
 
 export const metadata: Metadata = {
-  title: 'View Hotel',
-  description: 'View Hotel',
+  title: 'View Ticket',
+  description: 'Buy a ticket for your favorite event!',
 };
 
-export default async function Location({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
 
-  const hotel = await getLocationByID(params.id);
+  // fetch ticket by id from server and pass into Ticket props. (params.id)
 
   return (
     <html>
       <body>
         <Header />
-        <Hero hotel={hotel} />
+        <Ticket />
       </body>
     </html>
   )

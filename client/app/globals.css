@@ -4,21 +4,20 @@ html, body {
   flex-direction: column;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
   background-color: black;
   font-family: InterMedium;
-  user-select: none;
 }
 
 body::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
-  background-color: black;
+  width: 5px;
+  background-color: transparent;
 }
 
 body::-webkit-scrollbar-thumb {
-  width: 0px;
-  height: 0px;
-  background-color: #F5F5F5;
+  width: 5px;
+  background-color: rgb(195, 195, 195);
+  border-radius: 25px;
 }
 
 @font-face {
