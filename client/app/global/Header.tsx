@@ -1,17 +1,110 @@
-import React from "react";
+'use client'
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { FaBars } from 'react-icons/fa';
+import { AiOutlineClose } from 'react-icons/ai';
 
 export default function Header() {
+
+    const [scrolled, setScrolled] = useState(false);
+    const [showMobileView, setShowMobileView] = useState(false);
+    const [showBars, setShowBars] = useState(true);
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+    const handleScroll = () => {
+        if (window.scrollY > 10) {
+            setScrolled(true);
+        } else {
+            setScrolled(false);
+        }
+    };
+
+    const handleMediaQuery = () => {
+        if (window.innerWidth < 600) {
+            setShowBars(true);
+            setShowMobileView(true);
+            setShowMobileMenu(false);
+        } else {
+            setShowBars(false);
+            setShowMobileView(false);
+            setShowMobileMenu(false);
+        }
+    }
+
+    const openMobileMenu = () => {
+        setShowMobileMenu(true);
+        setShowBars(false);
+    }
+
+    const closeMobileMenu = () => {
+        setShowMobileMenu(false);
+        setShowBars(true);
+    }
+
+    useEffect(() => {
+
+        if (window.innerWidth < 600) {
+            setShowMobileView(true);
+        } else {
+            setShowMobileView(false);
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleMediaQuery);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleMediaQuery);
+        };
+
+    }, []);
+
     return (
         <div id="Header">
-            <div id="HeaderContainer">
-                <div id="MenuButtons">
-                    <div id="HomeButton">
-                        <a id="HomeLink" href="/">Home</a>
-                    </div>
-                    <div id="EventsButton">
-                        <a id="EventsLink" href="/events">Events</a>
-                    </div>
+            <div id="HeaderContainer" className={scrolled ? 'scrolled' : ''}>
+                <div id="HeaderLogoContainer">
+                    <Link id="HeaderLogoLink" href='/'>
+                        <img id='HeaderLogo' src="ticketellerLogo.png" />
+                    </Link>
                 </div>
+                {showMobileView ? (
+                    <div id="MobileMenuContainer">
+                        {showBars ? (
+                            <div id="MobileMenuOpenContainer">
+                                <FaBars id='MobileMenuOpen' onClick={openMobileMenu} />
+                            </div>
+                        ) : (    
+                            <div id="MobileMenuCloseContainer">
+                                <AiOutlineClose id='MobileMenuClose' onClick={closeMobileMenu} />
+                            </div>
+                        )}
+                        {showMobileMenu ? (
+                            <div id='MobileMenu' className={scrolled ? 'scrolled' : ''}>
+                                <div id="MobileMenuItems">
+                                    <div id="MobileStadiumItemContainer">
+                                        <Link id="MobileStadiumItem" href="/stadiums">Stadiums</Link>
+                                    </div>
+                                    <div id="MobileBundleItemContainer">
+                                        <Link id="MobileBundleItem" href="/bundles">Bundles</Link>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            null
+                        )}
+                    </div>
+                ) : (
+                    <div id="MenuContainer">
+                        <div id="MenuItems">
+                            <div id="StadiumItemContainer">
+                                <Link id="StadiumItem" href="/stadiums">Stadiums</Link>
+                            </div>
+                            <div id="BundleItemContainer">
+                                <Link id="BundleItem" href="/bundles">Bundles</Link>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         <style>
             {`
@@ -20,58 +113,130 @@ export default function Header() {
                     position: fixed;
                     top: 0;
                     left: 0;
-                    width: 99.8vw;
-                    height: 100px;
-                    justify-content: center;
+                    width: 100vw;
+                    height: 10vh;
+                    background-color: rgba(0, 0, 0, 0);
                     align-items: center;
-                    z-index: 1;
+                    justify-content: center;
+                    z-index: 3;
                 }
                 #HeaderContainer {
                     display: flex;
                     position: relative;
-                    width: 100%;
+                    width: 95%;
                     height: 100%;
-                    justify-content: flex-end;
+                    flex-direction: row;
+                    justify-content: space-between;
                     align-items: center;
+                    background-color: rgba(0, 0, 0, 0);
+                    transition: 0.5s;
                 }
-                #MenuButtons {
+                #HeaderContainer.scrolled {
+                    width: 100%;
+                    padding: 0 2.5%;
+                    background-color: rgba(0, 0, 0, 0.85);
+                }
+                #HeaderLogoContainer {
                     display: flex;
                     position: relative;
                     width: 40%;
                     height: 100%;
+                    align-items: center;
+                    justify-content: center;
+                }
+                #HeaderLogoLink {
+                    display: flex;
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    align-items: center;
+                    justify-content: flex-start;
+                }
+                #HeaderLogo {
+                    width: 300px;
+                    height: 100px;
+                    object-fit: contain;
+                }
+                #MenuContainer {
+                    display: flex;
+                    position: relative;
+                    width: 60%;
+                    height: 100%;
+                    align-items: center;
+                    justify-content: flex-end;
+                }
+                #MenuItems {
+                    display: flex;
+                    position: relative;
+                    width: 60%;
+                    height: 100%;
+                    align-items: center;
                     justify-content: space-around;
-                    align-items: center;
                 }
-                #HomeButton {
+                #StadiumItem, #BundleItem { 
+                    font-size: 20px;
+                    color: white; 
+                    text-decoration: none;
+                    font-family: InterSemi; 
+                    transition: 0.5s;
+                }
+                #StadiumItem:hover, #BundleItem:hover { opacity: 0.7; }
+                #MobileMenuContainer {
                     display: flex;
                     position: relative;
-                    width: 50%;
+                    width: 100px;
                     height: 100%;
-                    justify-content: center;
                     align-items: center;
+                    justify-content: center;
                 }
-                #HomeLink {
-                    font-size: 20px;
-                    font-family: InterBold;
-                    color: white;
-                    text-decoration: none;
-                }
-                #EventsButton {
+                #MobileMenuOpenContainer, #MobileMenuCloseContainer {
                     display: flex;
                     position: relative;
-                    width: 50%;
+                    width: 100%;
                     height: 100%;
-                    justify-content: center;
                     align-items: center;
+                    justify-content: center;
                 }
-                #EventsLink {
-                    font-size: 20px;
-                    font-family: InterBold;
+                #MobileMenuOpen, #MobileMenuClose {
+                    width: 60%;
+                    height: 60%;
                     color: white;
-                    text-decoration: none;
+                    border-radius: 50%;
+                    cursor: pointer;
                 }
-                @media (max-width: 500px) {
-                    #MenuButtons { width: 70%; }
+                #MobileMenu {
+                    display: flex;
+                    position: fixed;
+                    top: 10vh;
+                    left: 0;
+                    width: 100vw;
+                    height: 12vh;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: rgba(0, 0, 0, 0.85);
+                    border-radius: 0 0 10px 10px;
+                }
+                #MobileMenuItems {
+                    display: flex;
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-around;
+                }
+                #MobileStadiumItem, #MobileBundleItem { 
+                    font-size: 20px;
+                    color: white; 
+                    text-decoration: none; 
+                    font-family: InterSemi; 
+                    transition: 0.5s;
+                }
+                #MobileStadiumItem:hover, #MobileBundleItem:hover { opacity: 0.7; }
+                @media (max-width: 600px) {
+                    #HeaderLogo { width: 200px; height: 75px; }
+                    #MenuContainer { display: none; }
+                }
             `}
         </style>
         </div>

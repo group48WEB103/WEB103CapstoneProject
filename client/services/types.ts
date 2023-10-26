@@ -1,25 +1,42 @@
-export interface Hotel {
+export interface Stadium {
     id?: number;
+    location: string;
     title: string;
     description: string;
-    location: string;
-    address: string;
-    rating: number;
-    price: number;
-    img: string;
+    capacity: number;
+    image: string;
 }
 
 export interface Event {
     id?: number;
+    location_id: number;
     title: string;
-    location: string;
-    address: string;
-    img: string;
-    date: string;
+    description: string;
+    performer: string;
+    image: string;
 }
 
-export interface Admin {
+export interface Ticket {
     id?: number;
-    username: string;
-    password: string;
+    event_id: number;
+    title: string;
+    seat_number: number;
+    description: string;
+    performer: string;
+    image: string;
+    stadium_id: number;
+}
+
+export interface Bundle {
+    id?: number;
+    ticket_id: number;
+    title: string;
+    image: string;
+}
+
+export interface Customer {
+    id?: number;
+    name: string;
+    ticket_id: number;
+    bundle_id: number;
 }

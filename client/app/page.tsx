@@ -1,23 +1,22 @@
 import React from 'react';
 import { Metadata } from 'next';
-import getAllLocations from '../services/GET/getAllHotels';
 import Header from './global/Header';
-import Hero from './components/Home';
+import Home from './components/Home';
 
 export const metadata: Metadata = {
-  title: 'Explore Hotels',
-  description: 'View Our Hotels',
+  title: 'tickeTeller',
+  description: 'Buy a ticket for your favorite event!',
 };
 
-export default async function Home() {
+export default async function Page() {
 
-  const hotels = await getAllLocations();
+  // fetch tickets from server and pass into Home props
 
   return (
     <html>
       <body>
         <Header />
-        <Hero hotels={hotels} />
+        <Home />
       </body>
     </html>
   )  
