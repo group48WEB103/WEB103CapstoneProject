@@ -8,4 +8,6 @@ export const MockEvents = [
     {id: 7, location_id: 3, title: 'Event 7', description: 'Event 7 description', performer: 'Performer 7', image: 'https://via.placeholder.com/150'},
     {id: 8, location_id: 4, title: 'Event 8', description: 'Event 8 description', performer: 'Performer 8', image: 'https://via.placeholder.com/150'},
     {id: 9, location_id: 1, title: 'Event 9', description: 'Event 9 description', performer: 'Performer 9', image: 'https://via.placeholder.com/150'},
+    {id: 10, location_id: 2, title: 'Event 10', description: 'Event 10 description', performer: 'Performer 10', image: 'https://via.placeholder.com/150'},
+    {id: 11, location_id: 3, title: 'Event 11', description: 'Event 11 description', performer: 'Performer 11', image: 'https://via.placeholder.com/150'},
 ];

@@ -10,12 +10,12 @@ html, body {
 }
 
 body::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
   background-color: transparent;
 }
 
 body::-webkit-scrollbar-thumb {
-  width: 5px;
+  width: 10px;
   background-color: rgb(195, 195, 195);
   border-radius: 25px;
 }
