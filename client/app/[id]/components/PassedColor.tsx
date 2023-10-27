@@ -27,14 +27,19 @@ const PassedColor: React.FC<PassedColorProps> = ({ image, location, event }) => 
         setGotColor(gotColor + 1);
     };
 
+    const catchColorThiefError = () => {
+        setBackgroundColor('rgba(255,255,255,0.4)');
+        setAccentColor('rgba(255,255,255,0.95)');
+        setGotColor(2);
+    };
+
     const resetGotColor = () => {
         setGotColor(0);
         setresetCount(resetCount + 1);
-        if (resetCount > 50) {
-            window.location.reload();
+        if (resetCount > 500) {
+            catchColorThiefError();
         }
-        console.log('resetCount: ', resetCount);
-    }
+    };
 
     return (
         <div>

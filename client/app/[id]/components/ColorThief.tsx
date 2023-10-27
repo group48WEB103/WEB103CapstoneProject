@@ -23,7 +23,7 @@ const ColorThief: React.FC<BackgroundProps> = ({ getBackgroundColor, getAccentCo
         <Color src={image} crossOrigin="anonymous" format="hex">
           {({ data: predominantColorData }) => {
             const color = predominantColorData ?? '';
-            const backgroundRGBA = hexToRGBA(color, 0.5);
+            const backgroundRGBA = hexToRGBA(color, 0.6);
             getBackgroundColor(backgroundRGBA);
             const accentRGBA = hexToRGBA(color, 0.95);
             getAccentColor(accentRGBA);

@@ -16,7 +16,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, location, BackgroundColor,
     
     const [showLoading, setShowLoading] = useState(0);
     
-    if (BackgroundColor === 'rgba(NaN,NaN,NaN,0.5)' && AccentColor === 'rgba(NaN,NaN,NaN,0.95)') {
+    if (BackgroundColor === 'rgba(NaN,NaN,NaN,0.6)' && AccentColor === 'rgba(NaN,NaN,NaN,0.95)') {
         retryColorThief();
     } else {
         setTimeout(() => {
@@ -75,7 +75,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, location, BackgroundColor,
                     justify-content: center;
                     align-items: center;
                     background-color: ${showLoading <= 1 ? 'black' : 'var(--BackgroundColor)'};
-                    background-image: ${showLoading <= 1 ? 'black' : 'linear-gradient(var(--BackgroundColor), rgba(0, 0, 0, 0.95))'};
+                    background-image: ${showLoading <= 1 ? 'black' : 'linear-gradient(var(--BackgroundColor), rgba(0, 0, 0, 0.9))'};
                 }
                 #Loading { width: 200px; height: 150px; margin-top: -10vh; }
                 #EventInfoImage {
