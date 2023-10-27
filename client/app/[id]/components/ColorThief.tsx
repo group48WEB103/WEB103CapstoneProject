@@ -17,8 +17,6 @@ const ColorThief: React.FC<BackgroundProps> = ({ getBackgroundColor, getAccentCo
       const a = alpha;
       return `rgba(${r},${g},${b},${a})`;
   };
-
-  console.log(image);
     
   return (
     <div>
@@ -31,8 +29,8 @@ const ColorThief: React.FC<BackgroundProps> = ({ getBackgroundColor, getAccentCo
             getAccentColor(accentRGBA);
 
             return (
-              <div>
-                <img src={image} alt="test" style={{ width: 300 }}/>
+              <div style={{ display: 'flex', width: '100vw', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
+                <img src='/loading.gif' style={{ width: '200px', height: '150px' }}/>
               </div>
             )
           }}

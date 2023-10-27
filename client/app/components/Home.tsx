@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from "react";
+import "../globals.css"
 import { MockEvents } from "./MockEvents";
 import { Event } from "../../services/types";
 // import getLocationByID from "../../services/GET/getLocationByID"

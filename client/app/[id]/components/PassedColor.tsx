@@ -1,13 +1,21 @@
 'use client'
 import React, { useState } from 'react';
 import ColorThief from './ColorThief';
-import Event from './Event';
+import EventInfo from './Event';
+import { Event } from "../../../services/types";
 
-export default function PassedColor( image: any, event: any ) {
+interface PassedColorProps {
+    image: string;
+    location: string;
+    event: Event;
+}
+
+const PassedColor: React.FC<PassedColorProps> = ({ image, location, event }) => {
 
     const [BackgroundColor, setBackgroundColor] = useState('');
     const [AccentColor, setAccentColor] = useState('');
     const [gotColor, setGotColor] = useState(0);
+    const [resetCount, setresetCount] = useState(0);
 
     const getNewBackgroundColor = (newBackgroundColor: string) => {
         setBackgroundColor(newBackgroundColor);
@@ -19,10 +27,21 @@ export default function PassedColor( image: any, event: any ) {
         setGotColor(gotColor + 1);
     };
 
+    const resetGotColor = () => {
+        setGotColor(0);
+        setresetCount(resetCount + 1);
+        if (resetCount > 50) {
+            window.location.reload();
+        }
+        console.log('resetCount: ', resetCount);
+    }
+
     return (
         <div>
-            {gotColor < 2 ? <ColorThief getBackgroundColor={(value: any) => getNewBackgroundColor(value)} getAccentColor={(value: any) => getNewAccentColor(value)} image={image} /> : null}
-            {gotColor === 2 ? <Event event={event} BackgroundColor={BackgroundColor} AccentColor={AccentColor} /> : null}
+            {gotColor < 2 && <ColorThief getBackgroundColor={(value: any) => getNewBackgroundColor(value)} getAccentColor={(value: any) => getNewAccentColor(value)} image={image} />}
+            {gotColor === 2 ? <EventInfo event={event} location={location} BackgroundColor={BackgroundColor} AccentColor={AccentColor} retryColorThief={resetGotColor} /> : null}
         </div>
     )
 }
+
+export default PassedColor;
