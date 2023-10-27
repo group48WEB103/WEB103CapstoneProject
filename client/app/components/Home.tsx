@@ -5,7 +5,7 @@ import { MockEvents } from "./MockEvents";
 import { Event } from "../../services/types";
 // import getLocationByID from "../../services/GET/getLocationByID"
 
-export default function Home() {
+export default function Home( events: any ) {
 
     // const [stadiumsData, setStadiumsData] = useState([]);
 
@@ -62,10 +62,14 @@ export default function Home() {
                     position: relative;
                     width: 100vw;
                     height: 100%;
-                    margin-top: 10vh;
+                    padding-top: 10vh;
                     flex-direction: column;
                     justify-content: center;
-                    align-items: center;
+                    align-items: center;  
+                    background: url(/homeBackground.webp);
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-color: rgba(0, 0, 0, 0.9);
                 }
                 #HomeContainer {
                     display: flex;

@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 
 export default async function Page() {
 
-  // fetch tickets from server and pass into Home props
+  const events = ''; // fetch tickets from server and pass into Home props
 
   return (
     <html>
       <body>
         <Header />
-        <Home />
+        <Home events={events} />
       </body>
     </html>
   )  

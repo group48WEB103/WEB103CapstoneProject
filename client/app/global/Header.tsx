@@ -64,7 +64,7 @@ export default function Header() {
             <div id="HeaderContainer" className={scrolled ? 'scrolled' : ''}>
                 <div id="HeaderLogoContainer">
                     <Link id="HeaderLogoLink" href='/'>
-                        <img id='HeaderLogo' src="ticketellerLogo.png" />
+                        <img id='HeaderLogo' src="ticketellerLogo.webp" />
                     </Link>
                 </div>
                 {showMobileView ? (
@@ -126,7 +126,7 @@ export default function Header() {
                     width: 95%;
                     height: 100%;
                     flex-direction: row;
-                    justify-content: space-between;
+                    justify-content: center;
                     align-items: center;
                     background-color: rgba(0, 0, 0, 0);
                     transition: 0.5s;

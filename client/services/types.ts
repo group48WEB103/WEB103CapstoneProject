@@ -29,7 +29,7 @@ export interface Ticket {
 
 export interface Bundle {
     id?: number;
-    ticket_id: number;
+    ticket_id: number[];
     title: string;
     image: string;
 }
