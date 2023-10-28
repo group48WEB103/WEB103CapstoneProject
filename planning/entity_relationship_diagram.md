@@ -25,17 +25,21 @@ Tables for:
 | ... | ... | ... |
 
 
-TicketID	TicketName	Price
-1	Bundle A	50
-2	Bundle B	75
-3	Bundle C	60
+| TicketID | TicketName   | Price |
+|---------|--------------|-------|
+| 1       | Bundle A     | 50    |
+| 2       | Bundle B     | 75    |
+| 3       | Bundle C     | 60    |
 
-EventLocationID	TicketID	EventLocationName
-1	1	Event 1
-2	1	Event 2
-3	1	Location A
-4	2	Event 3
-5	2	Location B
-6	3	Event 4
-7	3	Event 5
-8	3	Location C
+
+| EventLocationID | TicketID | EventLocationName    |
+|-----------------|----------|----------------------|
+| 1               | 1        | Event 1              |
+| 2               | 1        | Event 2              |
+| 3               | 1        | Location A           |
+| 4               | 2        | Event 3              |
+| 5               | 2        | Location B           |
+| 6               | 3        | Event 4              |
+| 7               | 3        | Event 5              |
+| 8               | 3        | Location C           |
+

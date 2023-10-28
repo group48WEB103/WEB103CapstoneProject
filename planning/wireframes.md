@@ -8,14 +8,14 @@ Reference the Creating an Entity Relationship Diagram final project guide in the
 
 ## Wireframe 1: Home Page
 
-![WireFrame1](planning/Wireframe.pdf)
+![WireFrame1](Wireframe.pdf)
 
 ## Wireframe 2: Ticket Page
 
-![WireFrame2](planning/Wireframe (1).pdf)
+![WireFrame2](Wireframe_(1).pdf)
 
 ## Wireframe 3: Bundle Page
 
-![WireFrame3](planning/Wireframe (2).pdf)
+![WireFrame3](Wireframe_(2).pdf)
 
 [👉🏾👉🏾👉🏾 include more wireframes as desired]
