@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import "../globals.css"
+import "../home.css"
 import { MockEvents } from "./MockEvents";
 import { Event } from "../../services/types";
 // import getLocationByID from "../../services/GET/getLocationByID"
@@ -66,10 +66,6 @@ export default function Home( events: any ) {
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;  
-                    background: url(/homeBackground.webp);
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                    background-color: rgba(0, 0, 0, 0.9);
                 }
                 #HomeContainer {
                     display: flex;

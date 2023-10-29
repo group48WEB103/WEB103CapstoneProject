@@ -24,9 +24,9 @@ CREATE TABLE ticket (
     seat_number INTEGER,
     description TEXT,
     performer TEXT REFERENCES event(performer),
-    image TEXT
+    image TEXT,
     -- one-to-many
-    staidum_id INT REFERENCES stadium(id)
+    stadium_id INT REFERENCES stadium(id)
 );
 
 
@@ -44,11 +44,17 @@ CREATE TABLE customer (
     bundle_id INT REFERENCES bundle(id)
 );
 
+-- Run DROP TABLE ticket; query and then run following query because of typo
 
-
-
-
-
-
-
-
+CREATE TABLE ticket (
+    id SERIAL PRIMARY KEY,
+    event_id INT REFERENCES event(id),
+    title TEXT,
+    -- Make sure seat number is within capacity in Controller
+    seat_number INTEGER,
+    description TEXT,
+    performer TEXT REFERENCES event(performer),
+    image TEXT,
+    -- one-to-many
+    stadium_id INT REFERENCES stadium(id)
+);

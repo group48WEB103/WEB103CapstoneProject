@@ -1,0 +1,44 @@
+html, body {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: url(/homeBackground.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: black;
+    font-family: InterMedium;
+  }
+  
+  body::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent;
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: rgb(195, 195, 195);
+    border-radius: 25px;
+  }
+  
+  @font-face {
+    font-family: 'Inter';
+    src: url('/Inter-Regular.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'InterMedium';
+    src: url('/Inter-Medium.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'InterSemi';
+    src: url('/Inter-SemiBold.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'InterBold';
+    src: url('/Inter-Bold.ttf') format('truetype');
+  }
