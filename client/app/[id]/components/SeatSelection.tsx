@@ -19,7 +19,7 @@ const SeatSelection: React.FC<SeatSelectionProps> = ({ stadium }) => {
     };
 
     const sendSeatChoice = (seat: number) => {
-        // send seat choice to next step
+        // send seat choice to next step 
     }
 
     return (
