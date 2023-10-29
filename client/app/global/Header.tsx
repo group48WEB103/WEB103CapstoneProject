@@ -34,6 +34,7 @@ export default function Header() {
     const openMobileMenu = () => {
         setShowMobileMenu(true);
         setShowBars(false);
+        setScrolled(true);
     }
 
     const closeMobileMenu = () => {
@@ -79,7 +80,7 @@ export default function Header() {
                             </div>
                         )}
                         {showMobileMenu ? (
-                            <div id='MobileMenu' className={scrolled ? 'scrolled' : ''}>
+                            <div id='MobileMenu'>
                                 <div id="MobileMenuItems">
                                     <div id="MobileStadiumItemContainer">
                                         <Link id="MobileStadiumItem" href="/stadiums">Stadiums</Link>
@@ -126,20 +127,19 @@ export default function Header() {
                     width: 95%;
                     height: 100%;
                     flex-direction: row;
-                    justify-content: center;
+                    justify-content: space-between;
                     align-items: center;
                     background-color: rgba(0, 0, 0, 0);
                     transition: 0.5s;
                 }
                 #HeaderContainer.scrolled {
-                    width: 100%;
                     padding: 0 2.5%;
                     background-color: rgba(0, 0, 0, 0.85);
                 }
                 #HeaderLogoContainer {
                     display: flex;
                     position: relative;
-                    width: 40%;
+                    width: 300px;
                     height: 100%;
                     align-items: center;
                     justify-content: center;
@@ -213,8 +213,7 @@ export default function Header() {
                     height: 12vh;
                     align-items: center;
                     justify-content: center;
-                    background-color: rgba(0, 0, 0, 0.85);
-                    border-radius: 0 0 10px 10px;
+                    background-color: rgba(0, 0, 0, 0);
                 }
                 #MobileMenuItems {
                     display: flex;
@@ -222,8 +221,10 @@ export default function Header() {
                     width: 100%;
                     height: 100%;
                     flex-direction: row;
-                    align-items: center;
                     justify-content: space-around;
+                    align-items: center;
+                    background-color: rgba(0, 0, 0, 0.85);
+                    border-radius: 0 0 10px 10px;
                 }
                 #MobileStadiumItem, #MobileBundleItem { 
                     font-size: 20px;
@@ -234,7 +235,7 @@ export default function Header() {
                 }
                 #MobileStadiumItem:hover, #MobileBundleItem:hover { opacity: 0.7; }
                 @media (max-width: 600px) {
-                    #HeaderLogo { width: 200px; height: 75px; }
+                    #HeaderLogo { width: 200px; height: 75px; margin-left: 10px; }
                     #MenuContainer { display: none; }
                 }
             `}

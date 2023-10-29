@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import "../../globals.css"
+import "../../globals.css";
+import SeatSelection from "./SeatSelection";
 import { IoIosArrowBack } from "react-icons/io";
 import { CiLocationOn } from "react-icons/ci";
-import { Event } from "../../../services/types";
+import { Event, Stadium } from "../../../services/types";
 
 interface EventInfoProps {
     event: Event;
-    location: string;
+    stadium: Stadium;
     BackgroundColor: string;
     AccentColor: string;
     retryColorThief: () => void;
 }
 
-const EventInfo: React.FC<EventInfoProps> = ({ event, location, BackgroundColor, AccentColor, retryColorThief }) => {
+const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, AccentColor, retryColorThief }) => {
     
     const [showLoading, setShowLoading] = useState(0);
     
@@ -45,17 +46,18 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, location, BackgroundColor,
                             <div id="EventInfoTitleContainer">
                                 <p id='EventInfoTitle'>{event.title}</p>
                             </div>
-                            <div id="EventInfoTitleContainer">
-                                <p id='EventInfoSubTitle'>{event.performer}</p>
+                            <div id="EventInfoPerformerContainer">
+                                <p id='EventInfoPerformer'>{event.performer}</p>
                             </div>
-                            <div id="EventInfoTitleContainer">
-                                <p id='EventInfoVenue'><CiLocationOn id='LocationIcon'/>{location}</p>
-                            </div>
-                            <div id="EventInfoTitleContainer">
-                                <p id='EventInfoDescription'>{event.description}</p>
+                            <div id="EventInfoLocationContainer">
+                                <p id='EventInfoLocation'><CiLocationOn id='LocationIcon'/>{stadium.title}</p>
                             </div>
                         </div>
                     </div>
+                    <div id="EventInfoDescriptionContainer">
+                        <p id='EventInfoDescription'>{event.description}</p>
+                    </div>
+                    <SeatSelection stadium={stadium} />
                 </div>
             )}
         <style>
@@ -78,9 +80,117 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, location, BackgroundColor,
                     background-image: ${showLoading <= 1 ? 'black' : 'linear-gradient(var(--BackgroundColor), rgba(0, 0, 0, 0.9))'};
                 }
                 #Loading { width: 200px; height: 150px; margin-top: -10vh; }
-                #EventInfoImage {
+                #EventContainer {
+                    display: flex;
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+                #BackButtonContainer {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
                     width: 100px;
                     height: 100px;
+                    justify-content: center;
+                    align-items: center;
+                }
+                #BackButton { font-size: 50px; cursor: pointer; }
+                #EventInfoContainer {
+                    display: flex;
+                    position: relative;
+                    width: 80%;
+                    height: 40%;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                }
+                #EventInfoImageContainer {
+                    display: flex;
+                    position: relative;
+                    width: 50%;
+                    height: 90%;
+                    justify-content: center;
+                    align-items: center;
+                }
+                #EventInfoImage {
+                    width: 50%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+                #EventInfoTextContainer {
+                    display: flex;
+                    position: relative;
+                    width: 50%;
+                    height: 100%;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+                #EventInfoTitleContainer, #EventInfoPerformerContainer, #EventInfoLocationContainer {
+                    display: flex;
+                    position: relative;
+                    width: 100%;
+                    height: 30%;
+                    justify-content: flex-start;
+                    align-items: center;
+                    overflow-y: hidden;
+                    overflow-x: scroll;
+                }
+                #EventInfoTitleContainer::-webkit-scrollbar, #EventInfoPerformerContainer::-webkit-scrollbar, #EventInfoLocationContainer::-webkit-scrollbar {
+                    height: 0;
+                    background-color: transparent;
+                }
+                #EventInfoTitleContainer::-webkit-scrollbar-thumb, #EventInfoPerformerContainer::-webkit-scrollbar-thumb, #EventInfoLocationContainer::-webkit-scrollbar-thumb {
+                    height: 0;
+                    background-color: transparent;
+                }
+                #EventInfoTitle {
+                    font-size: 30px;
+                    font-family: InterBold;
+                }
+                #EventInfoPerformer {
+                    font-size: 25px;
+                    font-family: InterSemi;
+                }
+                #EventInfoLocation {
+                    font-size: 20px;
+                    font-family: Inter;
+                }
+                #LocationIcon { font-size: 20px; margin-right: 3px; margin-bottom: -2px; }
+                #EventInfoDescriptionContainer {
+                    display: flex;
+                    position: relative;
+                    width: 80%;
+                    height: 20%;
+                    overflow-y: scroll;
+                }
+                #EventInfoDescriptionContainer::-webkit-scrollbar {
+                    width: 10px;
+                    background-color: transparent;
+                }
+                #EventInfoDescriptionContainer::-webkit-scrollbar-thumb {
+                    width: 10px;
+                    background-color: rgb(195, 195, 195);
+                    border-radius: 25px;
+                }
+                #EventInfoDescription { padding: 5px 0 0 5px; }
+                @media (max-width: 600px) {
+                    #BackButtonContainer { width: 70px; height: 70px; }
+                    #EventInfoContainer { width: 70%; height: 40%; flex-direction: column; }
+                    #EventInfoImageContainer { width: 100%; height: 60%; }
+                    #EventInfoImage { width: 70%; height: 90%; }
+                    #EventInfoTextContainer { width: 100%; height: 40%; }
+                    #EventInfoTitleContainer, #EventInfoPerformerContainer, #EventInfoLocationContainer { justify-content: center; }
+                    #EventInfoTitle { font-size: 25px; }
+                    #EventInfoPerformer { font-size: 20px; }
+                    #EventInfoLocation { font-size: 15px; }
+                    #LocationIcon { font-size: 15px; }
+                    #EventInfoDescriptionContainer { width: 70%; height: 15%; }
                 }
             `}
         </style>

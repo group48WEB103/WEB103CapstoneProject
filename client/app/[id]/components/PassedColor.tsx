@@ -2,15 +2,15 @@
 import React, { useState } from 'react';
 import ColorThief from './ColorThief';
 import EventInfo from './Event';
-import { Event } from "../../../services/types";
+import { Event, Stadium } from "../../../services/types";
 
 interface PassedColorProps {
     image: string;
-    location: string;
+    stadium: Stadium;
     event: Event;
 }
 
-const PassedColor: React.FC<PassedColorProps> = ({ image, location, event }) => {
+const PassedColor: React.FC<PassedColorProps> = ({ image, stadium, event }) => {
 
     const [BackgroundColor, setBackgroundColor] = useState('');
     const [AccentColor, setAccentColor] = useState('');
@@ -44,7 +44,7 @@ const PassedColor: React.FC<PassedColorProps> = ({ image, location, event }) => 
     return (
         <div>
             {gotColor < 2 && <ColorThief getBackgroundColor={(value: any) => getNewBackgroundColor(value)} getAccentColor={(value: any) => getNewAccentColor(value)} image={image} />}
-            {gotColor === 2 ? <EventInfo event={event} location={location} BackgroundColor={BackgroundColor} AccentColor={AccentColor} retryColorThief={resetGotColor} /> : null}
+            {gotColor === 2 ? <EventInfo event={event} stadium={stadium} BackgroundColor={BackgroundColor} AccentColor={AccentColor} retryColorThief={resetGotColor} /> : null}
         </div>
     )
 }
