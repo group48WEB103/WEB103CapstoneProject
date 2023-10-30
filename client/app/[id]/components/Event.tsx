@@ -16,6 +16,7 @@ interface EventInfoProps {
 const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, AccentColor, retryColorThief }) => {
     
     const [showLoading, setShowLoading] = useState(0);
+    const [textColor, setTextColor] = useState('black');
     
     if (BackgroundColor === 'rgba(NaN,NaN,NaN,0.6)' && AccentColor === 'rgba(NaN,NaN,NaN,0.95)') {
         retryColorThief();
@@ -23,11 +24,27 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
         setTimeout(() => {
             setShowLoading(showLoading + 1);
         }, 1);
-    }
+    };
+
+    const rgbaColor = BackgroundColor.replace("rgba(", "").replace(")", "").split(",");
+    const red = parseInt(rgbaColor[0], 10);
+    const green = parseInt(rgbaColor[1], 10);
+    const blue = parseInt(rgbaColor[2], 10);
+    const lightness = (Math.max(red, green, blue) + Math.min(red, green, blue)) / 510;
+
+    if (lightness > 0.5) { 
+        setTimeout(() => {
+            setTextColor('black');
+        }, 1);
+    } else {
+        setTimeout(() => {
+            setTextColor('white');
+        }, 1);
+    };
 
     const homeRedirect = () => {
         window.location.href = '/';
-    }
+    };
     
     return (
         <div id='Event'>
@@ -66,6 +83,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                 :root {
                     --BackgroundColor: ${BackgroundColor};
                     --AccentColor: ${AccentColor};
+                    --TextColor: ${textColor};
                 }
 
                 #Event {
@@ -99,7 +117,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     justify-content: center;
                     align-items: center;
                 }
-                #BackButton { font-size: 50px; cursor: pointer; }
+                #BackButton { font-size: 50px; cursor: pointer; color: var(--TextColor); }
                 #EventInfoContainer {
                     display: flex;
                     position: relative;
@@ -121,6 +139,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     width: 50%;
                     height: 100%;
                     object-fit: contain;
+                    user-select: none;
                 }
                 #EventInfoTextContainer {
                     display: flex;
@@ -130,6 +149,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
+                    color: var(--TextColor);
                 }
                 #EventInfoTitleContainer, #EventInfoPerformerContainer, #EventInfoLocationContainer {
                     display: flex;
@@ -140,6 +160,9 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     align-items: center;
                     overflow-y: hidden;
                     overflow-x: scroll;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    color: var(--TextColor);
                 }
                 #EventInfoTitleContainer::-webkit-scrollbar, #EventInfoPerformerContainer::-webkit-scrollbar, #EventInfoLocationContainer::-webkit-scrollbar { height: 0; }
                 #EventInfoTitleContainer::-webkit-scrollbar-thumb, #EventInfoPerformerContainer::-webkit-scrollbar-thumb, #EventInfoLocationContainer::-webkit-scrollbar-thumb { height: 0; }
@@ -163,7 +186,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     background-color: rgb(195, 195, 195);
                     border-radius: 25px;
                 }
-                #EventInfoDescription { padding: 5px 0 0 5px; }
+                #EventInfoDescription { padding: 5px 0 0 5px; color: var(--TextColor); }
                 @media (max-width: 600px) {
                     #BackButtonContainer { width: 70px; height: 70px; }
                     #EventInfoContainer { width: 70%; height: 40%; flex-direction: column; }

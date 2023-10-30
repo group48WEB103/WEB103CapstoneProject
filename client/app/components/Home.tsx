@@ -111,6 +111,7 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                    user-select: none;
                 }
                 #EventInfo {
                     display: flex;
@@ -143,7 +144,9 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     justify-content: center;
                     align-items: flex-start;
                     overflow-x: scroll;
+                    overflow-y: hidden;
                     white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
                 #EventTitleContainer::-webkit-scrollbar { display: none; }
                 #EventTitle {
@@ -160,7 +163,9 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     justify-content: center;
                     align-items: flex-start;
                     overflow-x: scroll;
+                    overflow-y: hidden;
                     white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
                 #EventPreformerContainer::-webkit-scrollbar { display: none; }
                 #EventPreformer {

@@ -17,6 +17,8 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
     
     const [showLoading, setShowLoading] = useState(0);
     const [galleryImage, setGalleryImage] = useState(0);
+    const [galleryImageView, setGalleryImageView] = useState(true);
+    const [textColor, setTextColor] = useState('black');
     
     if (BackgroundColor === 'rgba(NaN,NaN,NaN,0.6)' && AccentColor === 'rgba(NaN,NaN,NaN,0.95)') {
         retryColorThief();
@@ -26,23 +28,42 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
         }, 1);
     };
 
+    const rgbaColor = BackgroundColor.replace("rgba(", "").replace(")", "").split(",");
+    const red = parseInt(rgbaColor[0], 10);
+    const green = parseInt(rgbaColor[1], 10);
+    const blue = parseInt(rgbaColor[2], 10);
+    const lightness = (Math.max(red, green, blue) + Math.min(red, green, blue)) / 510;
+
+    if (lightness > 0.5) { 
+        setTimeout(() => {
+            setTextColor('black');
+        }, 1);
+    } else {
+        setTimeout(() => {
+            setTextColor('white');
+        }, 1);
+    };
+
     const homeRedirect = () => {
-        window.location.href = '/';
+        window.location.href = '/stadiums';
     };
     
     const iterateGallery = () => {
-        if (galleryImage + 1 > stadium.gallery.length) {
+        setGalleryImageView(false);
+        if (galleryImage === stadium.gallery.length - 1) {
             setGalleryImage(0);
         } else {
             setGalleryImage(galleryImage + 1);
         }
+        setTimeout(() => {
+            setGalleryImageView(true);
+        }, 1);
     };
 
     useEffect(() => {
-        const intervalId = setInterval(iterateGallery, 3000);
-
+        const galleryLoop = setInterval(iterateGallery, 7000);
         return () => {
-            clearInterval(intervalId);
+            clearInterval(galleryLoop);
         };
     }, [galleryImage]);
 
@@ -64,7 +85,7 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                                 <p id='StadiumInfoTitle'>{stadium.title}</p>
                             </div>
                             <div id="StadiumInfoCapacityContainer">
-                                <p id='StadiumInfoCapacity'>{stadium.capacity}</p>
+                                <p id='StadiumInfoCapacity'>Capacity: {stadium.capacity}</p>
                             </div>
                             <div id="StadiumInfoLocationContainer">
                                 <p id='StadiumInfoLocation'><CiLocationOn id='LocationIcon'/>{stadium.title}</p>
@@ -77,7 +98,7 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                     <div id="StadiumInfoGalleryContainer">
                         {stadium.gallery.map((image: string, index: number) => (
                             <div id="StadiumGalleryImageItem" key={index}>
-                                {galleryImage === index ? ( <img id='StadiumGalleryImage' src={image} /> ) : null}
+                                {galleryImage === index ? ( galleryImageView && <img id='StadiumGalleryImage' src={image} /> ) : null}
                             </div>
                         ))}
                     </div>
@@ -89,6 +110,7 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                 :root {
                     --BackgroundColor: ${BackgroundColor};
                     --AccentColor: ${AccentColor};
+                    --TextColor: ${textColor};
                 }
 
                 #Stadium {
@@ -122,7 +144,7 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                     justify-content: center;
                     align-items: center;
                 }
-                #BackButton { font-size: 50px; cursor: pointer; }
+                #BackButton { font-size: 50px; cursor: pointer; color: var(--TextColor); }
                 #StadiumInfoContainer {
                     display: flex;
                     position: relative;
@@ -144,6 +166,7 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                     width: 50%;
                     height: 100%;
                     object-fit: contain;
+                    user-select: none;
                 }
                 #StadiumInfoTextContainer {
                     display: flex;
@@ -163,6 +186,9 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                     align-items: center;
                     overflow-y: hidden;
                     overflow-x: scroll;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    color: var(--TextColor);
                 }
                 #StadiumInfoTitleContainer::-webkit-scrollbar, #StadiumInfoCapacityContainer::-webkit-scrollbar, #StadiumInfoLocationContainer::-webkit-scrollbar { height: 0; }
                 #StadiumInfoTitleContainer::-webkit-scrollbar-thumb, #StadiumInfoCapacityContainer::-webkit-scrollbar-thumb, #StadiumInfoLocationContainer::-webkit-scrollbar-thumb { height: 0; }
@@ -193,18 +219,25 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                     height: 40%;
                     flex-direction: row;
                     justify-content: center;
-                    align-items: center;
+                    align-items: flex-start;
                 }
                 #StadiumGalleryImageItem {
                     display: flex;
                     position: relative;
-                    height: 100%;
+                    height: 90%;
                     justify-content: center;
                     align-items: center;
                     object-fit: contain;
+                    animation: fade 7s ease-in-out infinite;
+                    user-select: none;
+                }
+                @keyframes fade {
+                    0% { opacity: 0; transform: translateX(-25px); }
+                    50% { opacity: 1; transform: translateX(0px); }
+                    100% { opacity: 0; transform: translateX(25px); }
                 }
                 #StadiumGalleryImage { width: 100%; height: 100%; }
-                #StadiumInfoDescription { padding: 5px 0 0 5px; }
+                #StadiumInfoDescription { padding: 5px 0 0 5px; color: var(--TextColor); }
                 @media (max-width: 600px) {
                     #BackButtonContainer { width: 70px; height: 70px; }
                     #StadiumInfoContainer { width: 70%; height: 40%; flex-direction: column; }

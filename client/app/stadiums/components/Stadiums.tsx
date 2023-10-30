@@ -107,6 +107,7 @@ const Stadiums: React.FC<StadiumsProps> = ({ stadiums }) => {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                    user-select: none;
                 }
                 #StadiumInfo {
                     display: flex;
@@ -139,7 +140,9 @@ const Stadiums: React.FC<StadiumsProps> = ({ stadiums }) => {
                     justify-content: center;
                     align-items: flex-start;
                     overflow-x: scroll;
+                    overflow-y: hidden;
                     white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
                 #StadiumTitleContainer::-webkit-scrollbar { display: none; }
                 #StadiumTitle {
@@ -156,7 +159,9 @@ const Stadiums: React.FC<StadiumsProps> = ({ stadiums }) => {
                     justify-content: center;
                     align-items: flex-start;
                     overflow-x: scroll;
+                    overflow-y: hidden;
                     white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
                 #StadiumLocationContainer::-webkit-scrollbar { display: none; }
                 #StadiumLocation {
