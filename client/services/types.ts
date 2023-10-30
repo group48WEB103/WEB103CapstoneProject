@@ -5,6 +5,7 @@ export interface Stadium {
     description: string;
     capacity: number;
     image: string;
+    gallery: string[];
 }
 
 export interface Event {
@@ -38,6 +39,8 @@ export interface Bundle {
 export interface Customer {
     id?: number;
     name: string;
+    email: string;
+    password: string;
     ticket_id?: number;
     bundle_id?: number;
 }

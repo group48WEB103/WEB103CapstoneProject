@@ -69,7 +69,7 @@ export default function Header() {
             <div id="HeaderContainer" className={scrolled ? 'scrolled' : ''}>
                 <div id="HeaderLogoContainer">
                     <Link id="HeaderLogoLink" href='/'>
-                        <img id='HeaderLogo' src="ticketellerLogo.webp" />
+                        <img id='HeaderLogo' src="/ticketellerLogo.webp" />
                     </Link>
                 </div>
                 {showMobileView ? (
@@ -89,8 +89,8 @@ export default function Header() {
                                     <div id="MobileStadiumItemContainer">
                                         <Link id="MobileStadiumItem" href="/stadiums">Stadiums</Link>
                                     </div>
-                                    <div id="MobileBundleItemContainer">
-                                        <Link id="MobileBundleItem" href="/bundles">Bundles</Link>
+                                    <div id="MobileUserContainer">
+                                        <Link id="MobileUser" href="/login">Login</Link>
                                     </div>
                                 </div>
                             </div>
@@ -104,8 +104,8 @@ export default function Header() {
                             <div id="StadiumItemContainer">
                                 <Link id="StadiumItem" href="/stadiums">Stadiums</Link>
                             </div>
-                            <div id="BundleItemContainer">
-                                <Link id="BundleItem" href="/bundles">Bundles</Link>
+                            <div id="UserContainer">
+                                <Link id="User" href="/login">Login</Link>
                             </div>
                         </div>
                     </div>
@@ -177,14 +177,14 @@ export default function Header() {
                     align-items: center;
                     justify-content: space-around;
                 }
-                #StadiumItem, #BundleItem { 
+                #StadiumItem, #User { 
                     font-size: 20px;
                     color: white; 
                     text-decoration: none;
                     font-family: InterSemi; 
                     transition: 0.5s;
                 }
-                #StadiumItem:hover, #BundleItem:hover { opacity: 0.7; }
+                #StadiumItem:hover, #User:hover { opacity: 0.7; }
                 #MobileMenuContainer {
                     display: flex;
                     position: relative;
@@ -230,14 +230,14 @@ export default function Header() {
                     background-color: rgba(0, 0, 0, 0.85);
                     border-radius: 0 0 10px 10px;
                 }
-                #MobileStadiumItem, #MobileBundleItem { 
+                #MobileStadiumItem, #MobileUser { 
                     font-size: 20px;
                     color: white; 
                     text-decoration: none; 
                     font-family: InterSemi; 
                     transition: 0.5s;
                 }
-                #MobileStadiumItem:hover, #MobileBundleItem:hover { opacity: 0.7; }
+                #MobileStadiumItem:hover, #MobileUser:hover { opacity: 0.7; }
                 @media (max-width: 600px) {
                     #HeaderLogo { width: 200px; height: 75px; margin-left: 10px; }
                     #MenuContainer { display: none; }

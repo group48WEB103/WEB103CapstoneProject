@@ -1,46 +1,42 @@
 'use client'
 import React from "react";
-import "../home.css"
-import { Event, Stadium } from "../../services/types";
+import "../../home.css"
+import { Stadium } from "../../../services/types";
 
-interface HomeProps {
-    events: Event[],
+interface StadiumsProps {
     stadiums: Stadium[]
 }
 
-const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
+const Stadiums: React.FC<StadiumsProps> = ({ stadiums }) => {
 
-    const eventRedirect = (id: string) => {
-        window.location.href = `/${id}`;
+    const stadiumRedirect = (id: string) => {
+        window.location.href = `/stadiums/${id}`;
     }
 
     return ( 
-        <div id='Home'>
-            <div id="HomeContainer">
-                <div id="HomeHeaderContainer">
-                    <p id="HomeHeader">Recent Events</p>
+        <div id='Stadiums'>
+            <div id="StadiumsContainer">
+                <div id="StadiumsHeaderContainer">
+                    <p id="StadiumsHeader">Stadiums</p>
                 </div>
-                <div id="EventListContainer">
-                    {events.map((event: Event) => (
-                        <div id='Event' key={event.id} onClick={() => eventRedirect(String(event.id))}>
-                            <img id="EventImage" src={event.image} />
-                            <div id="EventInfo">
-                                <div id="EventLeftContainer">
-                                    <div id="EventTitleContainer">
-                                        <p id="EventTitle">{event.title}</p>
+                <div id="StadiumsListContainer">
+                    {stadiums.map((stadium: Stadium) => (
+                        <div id='Stadium' key={stadium.id} onClick={() => stadiumRedirect(String(stadium.id))}>
+                            <img id="StadiumImage" src={stadium.image} />
+                            <div id="StadiumInfo">
+                                <div id="StadiumLeftContainer">
+                                    <div id="StadiumTitleContainer">
+                                        <p id="StadiumTitle">{stadium.title}</p>
                                     </div>
-                                    <div id="EventPreformerContainer">
-                                        <p id="EventPreformer">{event.performer}</p>
+                                    <div id="StadiumLocationContainer">
+                                        <p id="StadiumLocation">{stadium.location}</p>
                                     </div>    
                                 </div>
-                                <div id="EventMiddleContainer">
-                                    <p id="EventAt">@</p>
-                                </div>
-                                <div id="EventRightContainer">
-                                    <div id="EventStadiumContainer">
-                                        <p id="EventStadium">{stadiums[event.stadium_id].title}</p>
+                                <div id="StadiumRightContainer">
+                                    <div id="StadiumCapacityContainer">
+                                        <p id="StadiumCapacity">Holds {stadium.capacity}</p>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -48,7 +44,7 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
             </div>
         <style>
             {`
-                #Home {
+                #Stadiums {
                     display: flex;
                     position: relative;
                     width: 100vw;
@@ -58,7 +54,7 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     justify-content: center;
                     align-items: center;  
                 }
-                #HomeContainer {
+                #StadiumsContainer {
                     display: flex;
                     position: relative;
                     width: 100%;
@@ -67,7 +63,7 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     justify-content: center;
                     align-items: center;
                 }
-                #HomeHeaderContainer {
+                #StadiumsHeaderContainer {
                     display: flex;
                     position: relative;
                     width: 90%;
@@ -76,12 +72,12 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     justify-content: center;
                     align-items: flex-start;
                 }
-                #HomeHeader {
+                #StadiumsHeader {
                     font-size: 40px;
                     color: white;
                     font-family: InterBold;
                 }
-                #EventListContainer {
+                #StadiumsListContainer {
                     display: grid;
                     position: relative;
                     width: 90%;
@@ -89,7 +85,7 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                     grid-gap: 25px;
                 }
-                #Event {
+                #Stadium {
                     display: flex;
                     position: relative;
                     width: 250px;
@@ -103,16 +99,16 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     overflow: hidden;
                     transition: 0.2s;
                 }
-                #Event:hover {
+                #Stadium:hover {
                     transform: scale(1.05);
                 }
-                #EventImage {
+                #StadiumImage {
                     display: flex;
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
                 }
-                #EventInfo {
+                #StadiumInfo {
                     display: flex;
                     position: absolute;
                     bottom: 0;
@@ -124,17 +120,17 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     border-radius: 10px;
                     background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 1));
                 }
-                #EventLeftContainer {
+                #StadiumLeftContainer {
                     display: flex;
                     position: relative;
-                    width: 60%;
+                    width: 70%;
                     height: 100%;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
                     overflow: hidden;
                 }
-                #EventTitleContainer {
+                #StadiumTitleContainer {
                     display: flex;
                     position: relative;
                     width: 90%;
@@ -145,13 +141,13 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     overflow-x: scroll;
                     white-space: nowrap;
                 }
-                #EventTitleContainer::-webkit-scrollbar { display: none; }
-                #EventTitle {
+                #StadiumTitleContainer::-webkit-scrollbar { display: none; }
+                #StadiumTitle {
                     font-size: 20px;
                     color: white;
                     font-family: InterBold;
                 }
-                #EventPreformerContainer {
+                #StadiumLocationContainer {
                     display: flex;
                     position: relative;
                     width: 90%;
@@ -162,32 +158,22 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     overflow-x: scroll;
                     white-space: nowrap;
                 }
-                #EventPreformerContainer::-webkit-scrollbar { display: none; }
-                #EventPreformer {
+                #StadiumLocationContainer::-webkit-scrollbar { display: none; }
+                #StadiumLocation {
                     font-size: 15px;
                     color: white;
                 }
-                #EventMiddleContainer {
+                #StadiumRightContainer {
                     display: flex;
                     position: relative;
-                    width: 5%;
-                    height: 100%;
-                    margin-right: 3px;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                }
-                #EventRightContainer {
-                    display: flex;
-                    position: relative;
-                    width: 30%;
+                    width: 25%;
                     height: 100%;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
                     overflow: hidden;
                 }
-                #EventStadiumContainer {
+                #StadiumCapacityContainer {
                     display: flex;
                     position: relative;
                     width: 90%;
@@ -196,14 +182,14 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                     justify-content: center;
                     align-items: center;
                 }
-                #EventAt, #EventStadium {
-                    font-size: 14px;
+                #StadiumCapacity {
+                    font-size: 15px;
                     color: white;
                     font-family: InterSemi;
                     text-align: center;
                 }
                 @media (max-width: 600px) {
-                    #EventListContainer { justify-items: center; }
+                    #StadiumsListContainer { justify-items: center; }
                 }
             `}
         </style>
@@ -211,4 +197,4 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
     )
 }
 
-export default Home;
+export default Stadiums;
