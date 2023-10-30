@@ -1,26 +1,44 @@
 import React, { useState } from "react";
-import { Stadium } from "../../../services/types";
+import { Event, Stadium } from "../../../services/types";
 
 interface SeatSelectionProps {
+    event: Event;
     stadium: Stadium;
+    changeCartState: (cartLength: number) => void;
 };
 
-const SeatSelection: React.FC<SeatSelectionProps> = ({ stadium }) => {
+const SeatSelection: React.FC<SeatSelectionProps> = ({ event, stadium, changeCartState }) => {
 
-    const [chosenSeat, setChosenSeat] = useState(-1);
+    const [showWarning, setShowWarning] = useState(false);
+    const [chosenSeat, setChosenSeat] = useState([-1, 0]);
     const leftSeatsArray = Array.from({ length: Math.floor(stadium.capacity / 3) }).map((_, index) => index);
     const middleSeatsArray = Array.from({ length: Math.floor(stadium.capacity / 3) }).map((_, index) => index + leftSeatsArray.length);
     const rightSeatsArray = Array.from({ length: stadium.capacity - leftSeatsArray.length - middleSeatsArray.length }).map((_, index) => index + leftSeatsArray.length + middleSeatsArray.length);
     
-    const chooseSeat = (seat: number) => {
+    const chooseSeat = (seat: number, price: number) => {
         if (seat <= stadium.capacity && seat >= 0) {
-            setChosenSeat(seat);
+            setChosenSeat([seat, price]);
         }     
     };
 
-    const sendSeatChoice = (seat: number) => {
-        // send seat choice to next step 
-    }
+    const addToCart = (seat: number, price: number) => {
+        const cart = localStorage.getItem('cart');
+        const cartArray = cart ? JSON.parse(cart) : [];
+        const seatObject = { id: seat, title: `${stadium.title} - Seat #${seat}`, price: price, event_id: event.id, stadium_id: stadium.id };
+        const found = cartArray.find((item: any) => item.id === seatObject.id);
+        if (found) {
+            setShowWarning(true);
+            setChosenSeat([-1, 0]);
+            setTimeout(() => {
+                setShowWarning(false);
+            }, 2000);
+            return;
+        }
+        cartArray.push(seatObject);
+        localStorage.setItem('cart', JSON.stringify(cartArray));
+        changeCartState(cartArray.length);
+        setChosenSeat([-1, 0]);
+    };
 
     return (
         <div id='SeatSelection'>
@@ -29,28 +47,29 @@ const SeatSelection: React.FC<SeatSelectionProps> = ({ stadium }) => {
                     <div id="StageContainer">{stadium.title} Stage</div>
                     <div id="SeatLeftContainer">
                         {leftSeatsArray.map((index: number) => (
-                            <div id='Seat' key={index} onClick={() => chooseSeat(index)}>
-                                <img id="SeatIcon" src="/seatIconLeft.png" className={chosenSeat === index ? 'selected' : ''} />
+                            <div id='Seat' key={index} onClick={() => chooseSeat(index, 50)}>
+                                <img id="SeatIcon" src="/seatIconLeft.png" className={chosenSeat[0] === index ? 'selected' : ''} />
                             </div>
                         ))}
                     </div>
                     <div id="SeatMiddleContainer">
                         {middleSeatsArray.map((index: number) => (
-                            <div id='Seat' key={index} onClick={() => chooseSeat(index)}>
-                                <img id="SeatIcon" src="/seatIconMiddle.png" className={chosenSeat === index ? 'selected' : ''} />
+                            <div id='Seat' key={index} onClick={() => chooseSeat(index, 75)}>
+                                <img id="SeatIcon" src="/seatIconMiddle.png" className={chosenSeat[0] === index ? 'selected' : ''} />
                             </div>
                         ))}
                     </div>
                     <div id="SeatRightContainer">
                         {rightSeatsArray.map((index: number) => (
-                            <div id='Seat' key={index} onClick={() => chooseSeat(index)}>
-                                <img id="SeatIcon" src="/seatIconRight.png" className={chosenSeat === index ? 'selected' : ''} />
+                            <div id='Seat' key={index} onClick={() => chooseSeat(index, 50)}>
+                                <img id="SeatIcon" src="/seatIconRight.png" className={chosenSeat[0] === index ? 'selected' : ''} />
                             </div>
                         ))}
                     </div>
                 </div>
                 <div id="ChooseSeatButtonContainer">
-                    {chosenSeat !== -1 ? ( <div id="ChooseSeatButton" onClick={() => sendSeatChoice(chosenSeat)}>Choose Seat</div> ) : null}
+                    {chosenSeat[0] !== -1 ? ( <div id="ChooseSeatButton" onClick={() => addToCart(chosenSeat[0], chosenSeat[1])}>Choose Seat</div> ) : null}
+                    {showWarning ? ( <div id="Warning">Seat already in cart!</div> ) : null}
                 </div>
             </div>
         <style>
@@ -58,10 +77,10 @@ const SeatSelection: React.FC<SeatSelectionProps> = ({ stadium }) => {
                 #SeatSelection {
                     display: flex;
                     position: relative;
-                    width: 80%;
-                    height: 40%;
+                    width: 100%;
+                    height: 100%;
                     justify-content: center;
-                    align-items: flex-start;
+                    align-items: center;
                 }
                 #SeatSelectionContainer {
                     display: flex;
@@ -92,6 +111,7 @@ const SeatSelection: React.FC<SeatSelectionProps> = ({ stadium }) => {
                     align-items: center;
                     overflow: hidden;
                 }
+                #SeatRightContainer { flex-wrap: wrap-reverse; }
                 #SeatMiddleContainer {
                     position: absolute;
                     top: 0;
@@ -109,6 +129,7 @@ const SeatSelection: React.FC<SeatSelectionProps> = ({ stadium }) => {
                     justify-content: center;
                     align-items: center;
                     background-color: black;
+                    border-radius: 25px 25px 0 0;
                     font-size: 15px;
                     color: white;
                 }
@@ -140,7 +161,7 @@ const SeatSelection: React.FC<SeatSelectionProps> = ({ stadium }) => {
                     justify-content: center;
                     align-items: center;
                 }
-                #ChooseSeatButton {
+                #ChooseSeatButton, #Warning {
                     display: flex;
                     position: relative;
                     width: 100%;
@@ -153,7 +174,6 @@ const SeatSelection: React.FC<SeatSelectionProps> = ({ stadium }) => {
                     cursor: pointer;
                 }
                 @media (max-width: 600px) {
-                    #SeatSelection { height: 45%; }
                     #StageContainer { font-size: 10px; }
                 }
             `}

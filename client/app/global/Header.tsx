@@ -16,6 +16,7 @@ export default function Header() {
             setScrolled(true);
         } else {
             setScrolled(false);
+            closeMobileMenu();
         }
     };
 
@@ -40,6 +41,9 @@ export default function Header() {
     const closeMobileMenu = () => {
         setShowMobileMenu(false);
         setShowBars(true);
+        if (window.scrollY <= 10) {
+            setScrolled(false);
+        }
     }
 
     useEffect(() => {

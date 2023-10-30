@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import "../home.css"
 import { MockEvents } from "./MockEvents";
+import { MockStadium } from "./MockStadium";
 import { Event } from "../../services/types";
-// import getLocationByID from "../../services/GET/getLocationByID"
+// import getStadiumByID from "../../services/GET/getStadiumByID"
 
 export default function Home( events: any ) {
 
@@ -45,9 +46,8 @@ export default function Home( events: any ) {
                                     <p id="EventAt">@</p>
                                 </div>
                                 <div id="EventRightContainer">
-                                    <div id="EventLocationContainer">
-                                        <p id="EventLocation">Golden Gate Arena</p>
-                                        {/* stadiumsData[location_id].title */}
+                                    <div id="EventStadiumContainer">
+                                        <p id="EventStadium">{MockStadium[event.stadium_id].title}</p>
                                     </div>
                                 </div> 
                             </div>
@@ -126,17 +126,17 @@ export default function Home( events: any ) {
                     position: absolute;
                     bottom: 0;
                     width: 100%;
-                    height: 25%;
+                    height: 27%;
                     flex-direction: row;
                     justify-content: center;
                     align-items: center;
                     border-radius: 10px;
-                    background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 1));
+                    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 1));
                 }
                 #EventLeftContainer {
                     display: flex;
                     position: relative;
-                    width: 50%;
+                    width: 60%;
                     height: 100%;
                     flex-direction: column;
                     justify-content: center;
@@ -147,7 +147,7 @@ export default function Home( events: any ) {
                     display: flex;
                     position: relative;
                     width: 90%;
-                    height: 45%;
+                    height: 40%;
                     flex-direction: column;
                     justify-content: center;
                     align-items: flex-start;
@@ -161,7 +161,7 @@ export default function Home( events: any ) {
                     display: flex;
                     position: relative;
                     width: 90%;
-                    height: 45%;
+                    height: 40%;
                     flex-direction: column;
                     justify-content: center;
                     align-items: flex-start;
@@ -169,7 +169,6 @@ export default function Home( events: any ) {
                 #EventPreformer {
                     font-size: 15px;
                     color: white;
-                    font-family: InterSemi;
                 }
                 #EventMiddleContainer {
                     display: flex;
@@ -184,26 +183,27 @@ export default function Home( events: any ) {
                 #EventRightContainer {
                     display: flex;
                     position: relative;
-                    width: 40%;
+                    width: 30%;
                     height: 100%;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
                     overflow: hidden;
                 }
-                #EventLocationContainer {
+                #EventStadiumContainer {
                     display: flex;
                     position: relative;
                     width: 90%;
                     height: 50%;
                     flex-direction: column;
                     justify-content: center;
-                    align-items: flex-end;
+                    align-items: center;
                 }
-                #EventAt, #EventLocation {
-                    font-size: 15px;
+                #EventAt, #EventStadium {
+                    font-size: 12px;
                     color: white;
                     font-family: InterSemi;
+                    text-align: center;
                 }
                 @media (max-width: 600px) {
                     #EventListContainer { justify-items: center; }
