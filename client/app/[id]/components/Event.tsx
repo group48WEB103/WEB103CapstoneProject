@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../globals.css";
-import SeatSelection from "./SeatSelection";
+import Modal from "../../global/CartModalComponents/Modal";
 import { IoIosArrowBack } from "react-icons/io";
 import { CiLocationOn } from "react-icons/ci";
 import { Event, Stadium } from "../../../services/types";
@@ -57,7 +57,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     <div id="EventInfoDescriptionContainer">
                         <p id='EventInfoDescription'>{event.description}</p>
                     </div>
-                    <SeatSelection stadium={stadium} />
+                    <Modal stadium={stadium} event={event} />
                 </div>
             )}
         <style>
@@ -141,26 +141,11 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     overflow-y: hidden;
                     overflow-x: scroll;
                 }
-                #EventInfoTitleContainer::-webkit-scrollbar, #EventInfoPerformerContainer::-webkit-scrollbar, #EventInfoLocationContainer::-webkit-scrollbar {
-                    height: 0;
-                    background-color: transparent;
-                }
-                #EventInfoTitleContainer::-webkit-scrollbar-thumb, #EventInfoPerformerContainer::-webkit-scrollbar-thumb, #EventInfoLocationContainer::-webkit-scrollbar-thumb {
-                    height: 0;
-                    background-color: transparent;
-                }
-                #EventInfoTitle {
-                    font-size: 30px;
-                    font-family: InterBold;
-                }
-                #EventInfoPerformer {
-                    font-size: 25px;
-                    font-family: InterSemi;
-                }
-                #EventInfoLocation {
-                    font-size: 20px;
-                    font-family: Inter;
-                }
+                #EventInfoTitleContainer::-webkit-scrollbar, #EventInfoPerformerContainer::-webkit-scrollbar, #EventInfoLocationContainer::-webkit-scrollbar { height: 0; }
+                #EventInfoTitleContainer::-webkit-scrollbar-thumb, #EventInfoPerformerContainer::-webkit-scrollbar-thumb, #EventInfoLocationContainer::-webkit-scrollbar-thumb { height: 0; }
+                #EventInfoTitle { font-size: 30px; font-family: InterBold; }
+                #EventInfoPerformer { font-size: 25px; font-family: InterSemi; }
+                #EventInfoLocation { font-size: 20px; }
                 #LocationIcon { font-size: 20px; margin-right: 3px; margin-bottom: -2px; }
                 #EventInfoDescriptionContainer {
                     display: flex;

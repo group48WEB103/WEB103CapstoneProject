@@ -1,4 +1,3 @@
-'use client'
 import React from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 
@@ -8,6 +7,8 @@ interface CartProps {
 }
 
 const Cart: React.FC<CartProps> = ({ showCheckout, cartLength }) => {
+
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--AccentColor').trim();
 
     return (
         <div id="Cart" onClick={showCheckout}>
@@ -27,7 +28,7 @@ const Cart: React.FC<CartProps> = ({ showCheckout, cartLength }) => {
                         left: 20px;
                         width: 70px;
                         height: 70px;
-                        background-color: grey;
+                        background-color: ${accentColor === 'rgba(255,255,255,0.95)' ? 'rgb(169,169,169)' : 'var(--AccentColor)'};
                         justify-content: center;
                         align-items: center;
                         border-radius: 50%;
@@ -50,6 +51,14 @@ const Cart: React.FC<CartProps> = ({ showCheckout, cartLength }) => {
                         align-items: center;
                     }
                     #CartIcon { font-size: 35px; }
+                    @media (max-width: 600px) {
+                        #Cart {
+                            bottom: 5px;
+                            left: 5px;
+                            width: 60px;
+                            height: 60px;
+                        }
+                    }
                 `}
             </style>
         </div>

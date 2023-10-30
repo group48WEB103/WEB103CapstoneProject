@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default async function Page({ params }: { params: { id: string } }) {
 
   const event = MockEvents[Number(params.id)] // fetch ticket by id from server and pass into Ticket props. (params.id)
-  const stadium = MockStadium[Number(event.location_id)]; // fetch stadium by id from server and pass into Ticket props. (event.location_id)
+  const stadium = MockStadium[Number(event.stadium_id)]; // fetch stadium by id from server and pass into Ticket props. (event.stadium_id)
 
   return (
     <html>

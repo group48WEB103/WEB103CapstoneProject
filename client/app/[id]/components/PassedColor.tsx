@@ -36,7 +36,7 @@ const PassedColor: React.FC<PassedColorProps> = ({ image, stadium, event }) => {
     const resetGotColor = () => {
         setGotColor(0);
         setresetCount(resetCount + 1);
-        if (resetCount > 500) {
+        if (resetCount > 100) {
             catchColorThiefError();
         }
     };

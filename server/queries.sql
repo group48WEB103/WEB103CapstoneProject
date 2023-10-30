@@ -44,17 +44,29 @@ CREATE TABLE customer (
     bundle_id INT REFERENCES bundle(id)
 );
 
--- Run DROP TABLE ticket; query and then run following query because of typo
+-- Run ' DROP TABLE ticket; ' query and then run following query because of typo
 
 CREATE TABLE ticket (
     id SERIAL PRIMARY KEY,
     event_id INT REFERENCES event(id),
     title TEXT,
     -- Make sure seat number is within capacity in Controller
-    seat_number INTEGER,
+    seat_numbers INTEGER[],
     description TEXT,
     performer TEXT REFERENCES event(performer),
     image TEXT,
     -- one-to-many
-    stadium_id INT REFERENCES stadium(id)
+    stadium_id INT REFERENCES stadium(id),
+    price INTEGER
+);
+
+-- Run ' DROP TABLE event; ' query and then run following query because of typo
+
+CREATE TABLE event (
+    id SERIAL PRIMARY KEY,
+    stadium_id INT REFERENCES stadium(id),
+    title TEXT,
+    description TEXT,
+    performer TEXT,
+    image TEXT
 );

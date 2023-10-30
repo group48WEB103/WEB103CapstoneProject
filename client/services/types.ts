@@ -8,8 +8,8 @@ export interface Stadium {
 }
 
 export interface Event {
-    id?: number;
-    location_id: number;
+    id: number;
+    stadium_id: number;
     title: string;
     description: string;
     performer: string;
@@ -20,11 +20,12 @@ export interface Ticket {
     id?: number;
     event_id: number;
     title: string;
-    seat_number: number;
+    seat_numbers: number[];
     description: string;
     performer: string;
     image: string;
     stadium_id: number;
+    price: number;
 }
 
 export interface Bundle {
@@ -37,6 +38,6 @@ export interface Bundle {
 export interface Customer {
     id?: number;
     name: string;
-    ticket_id: number;
-    bundle_id: number;
+    ticket_id?: number;
+    bundle_id?: number;
 }
