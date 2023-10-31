@@ -53,7 +53,6 @@ CREATE TABLE ticket (
     -- Make sure seat number is within capacity in Controller
     seat_numbers INTEGER[],
     description TEXT,
-    performer TEXT REFERENCES event(performer),
     image TEXT,
     -- one-to-many
     stadium_id INT REFERENCES stadium(id),
@@ -61,6 +60,8 @@ CREATE TABLE ticket (
 );
 
 -- Run ' DROP TABLE event; ' query and then run following query because of typo
+
+
 
 CREATE TABLE event (
     id SERIAL PRIMARY KEY,
@@ -79,7 +80,7 @@ CREATE TABLE customer (
     name TEXT,
     email TEXT,
     password TEXT,
-    tickets INT[] REFERENCES ticket(id)
+    tickets INT[]
 );
 
 -- Run ' DROP TABLE stadium; ' query to revamp customer table
