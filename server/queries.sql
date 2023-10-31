@@ -70,3 +70,26 @@ CREATE TABLE event (
     performer TEXT,
     image TEXT
 );
+
+-- Run ' DROP TABLE bundle; ' query because we can go with stadium's one-to-many
+-- Run ' DROP TABLE customer; ' query to revamp customer table
+
+CREATE TABLE customer (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    email TEXT,
+    password TEXT,
+    tickets INT[] REFERENCES ticket(id)
+);
+
+-- Run ' DROP TABLE stadium; ' query to revamp customer table
+
+CREATE TABLE stadium (
+    id SERIAL PRIMARY KEY,
+    location TEXT,
+    title TEXT,
+    description TEXT,
+    capacity INTEGER,
+    image TEXT,
+    gallery TEXT[]
+);

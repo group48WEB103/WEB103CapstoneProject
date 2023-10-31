@@ -10,6 +10,9 @@ export default function Header() {
     const [showMobileView, setShowMobileView] = useState(false);
     const [showBars, setShowBars] = useState(true);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
+    const [showMobileMenuItems, setShowMobileMenuItems] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [profilePicture, setProfilePicture] = useState('');
 
     const handleScroll = () => {
         if (window.scrollY > 10) {
@@ -30,13 +33,16 @@ export default function Header() {
             setShowMobileView(false);
             setShowMobileMenu(false);
         }
-    }
+    };
 
     const openMobileMenu = () => {
         setShowMobileMenu(true);
         setShowBars(false);
         setScrolled(true);
-    }
+        setTimeout(() => {
+            setShowMobileMenuItems(true);
+        }, 1);
+    };
 
     const closeMobileMenu = () => {
         setShowMobileMenu(false);
@@ -44,7 +50,21 @@ export default function Header() {
         if (window.scrollY <= 10) {
             setScrolled(false);
         }
-    }
+        setTimeout(() => {
+            setShowMobileMenuItems(false);
+        }, 1);
+    };
+
+    const checkLoggedIn = () => {
+        const token = localStorage.getItem('auth');
+        const tokenArray = token ? JSON.parse(token) : []
+        if (token) {
+            setLoggedIn(true);
+            setProfilePicture(tokenArray.profilePicture);
+        } else {
+            setLoggedIn(false);
+        }
+    };
 
     useEffect(() => {
 
@@ -56,6 +76,7 @@ export default function Header() {
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleMediaQuery);
+        checkLoggedIn();
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -69,7 +90,7 @@ export default function Header() {
             <div id="HeaderContainer" className={scrolled ? 'scrolled' : ''}>
                 <div id="HeaderLogoContainer">
                     <Link id="HeaderLogoLink" href='/'>
-                        <img id='HeaderLogo' src="ticketellerLogo.webp" />
+                        <img id='HeaderLogo' src="/ticketellerLogo.webp" />
                     </Link>
                 </div>
                 {showMobileView ? (
@@ -85,12 +106,12 @@ export default function Header() {
                         )}
                         {showMobileMenu ? (
                             <div id='MobileMenu'>
-                                <div id="MobileMenuItems">
+                                <div id="MobileMenuItems" className={showMobileMenuItems ? 'opened' : ''}>
                                     <div id="MobileStadiumItemContainer">
                                         <Link id="MobileStadiumItem" href="/stadiums">Stadiums</Link>
                                     </div>
-                                    <div id="MobileBundleItemContainer">
-                                        <Link id="MobileBundleItem" href="/bundles">Bundles</Link>
+                                    <div id="MobileUserContainer">
+                                        {loggedIn ? ( <img id='ProfilePicture' src={profilePicture} /> ) : ( <Link id="MobileUser" href="/profile">Login</Link> )}
                                     </div>
                                 </div>
                             </div>
@@ -104,8 +125,8 @@ export default function Header() {
                             <div id="StadiumItemContainer">
                                 <Link id="StadiumItem" href="/stadiums">Stadiums</Link>
                             </div>
-                            <div id="BundleItemContainer">
-                                <Link id="BundleItem" href="/bundles">Bundles</Link>
+                            <div id="UserContainer">
+                                <Link id="User" href="/profile">Login</Link>
                             </div>
                         </div>
                     </div>
@@ -177,14 +198,14 @@ export default function Header() {
                     align-items: center;
                     justify-content: space-around;
                 }
-                #StadiumItem, #BundleItem { 
+                #StadiumItem, #User { 
                     font-size: 20px;
                     color: white; 
                     text-decoration: none;
                     font-family: InterSemi; 
                     transition: 0.5s;
                 }
-                #StadiumItem:hover, #BundleItem:hover { opacity: 0.7; }
+                #StadiumItem:hover, #User:hover { opacity: 0.7; }
                 #MobileMenuContainer {
                     display: flex;
                     position: relative;
@@ -214,7 +235,7 @@ export default function Header() {
                     top: 10vh;
                     left: 0;
                     width: 100vw;
-                    height: 12vh;
+                    height: 11vh;
                     align-items: center;
                     justify-content: center;
                     background-color: rgba(0, 0, 0, 0);
@@ -222,22 +243,27 @@ export default function Header() {
                 #MobileMenuItems {
                     display: flex;
                     position: relative;
-                    width: 100%;
+                    width: 95%;
                     height: 100%;
                     flex-direction: row;
                     justify-content: space-around;
                     align-items: center;
-                    background-color: rgba(0, 0, 0, 0.85);
+                    background-color: rgba(0, 0, 0, 0);
+                    transition: 0.5s;
                     border-radius: 0 0 10px 10px;
                 }
-                #MobileStadiumItem, #MobileBundleItem { 
+                #MobileMenuItems.opened {
+                    padding: 0 2.5%;
+                    background-color: rgba(0, 0, 0, 0.85);
+                }
+                #MobileStadiumItem, #MobileUser { 
                     font-size: 20px;
                     color: white; 
                     text-decoration: none; 
                     font-family: InterSemi; 
                     transition: 0.5s;
                 }
-                #MobileStadiumItem:hover, #MobileBundleItem:hover { opacity: 0.7; }
+                #MobileStadiumItem:hover, #MobileUser:hover { opacity: 0.7; }
                 @media (max-width: 600px) {
                     #HeaderLogo { width: 200px; height: 75px; margin-left: 10px; }
                     #MenuContainer { display: none; }

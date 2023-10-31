@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 // import getAllCustomers from '../../../services/GET/getAllCustomers';
 // import createCustomer from '../../../services/POST/createCustomer';
+// import updateCustomer from '../../../services/PUT/updateCustomer';
 import { Customer } from '../../../services/types';
 
 interface InformationProps {
@@ -14,20 +15,47 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
 
     const [showWarning, setShowWarning] = useState(false);
     const [name, setName] = useState('');
-    const [customer, setCustomer] = useState<Customer>({ name: name, ticket_id: undefined, bundle_id: undefined });
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [customer, setCustomer] = useState<Customer>({ name: name, email: email, password: password, tickets: [ticketID] });
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--AccentColor').trim();
+
+    const fetchSavedInfo = () => {
+        const token = localStorage.getItem('auth');
+        const tokenArray = token ? JSON.parse(token) : [];
+        if (tokenArray.email && tokenArray.password) {
+            setEmail(tokenArray.email);
+            setPassword(tokenArray.password);
+        }
+    };
+
+    if (email.length === 0 && password.length === 0) {
+        fetchSavedInfo();
+    };
 
     const updateName = (e: any) => {
         setName(e.target.value);
     };
 
+    const updateEmail = (e: any) => {
+        setEmail(e.target.value);
+    };
+
+    const updatePassword = (e: any) => {
+        setPassword(e.target.value);
+    };
+
     const validateInformation = () => {
-        if (name.length > 0) {
-            setCustomer({ name: name, ticket_id: ticketID, bundle_id: undefined });
+        const regex = /.*@.*\..*/;
+        if (name.length > 0 && regex.test(email) === true && password.length > 0) {
+            setCustomer({ name: name, email: email, password: password, tickets: [ticketID] });
             // const allCustomers = await getAllCustomers();
             // const foundCustomer = allCustomers.find((item: any) => item.seat_numbers === customer.seat_numbers && item.event_id === customer.event_id);
             // if (foundCustomer) {
             //     setcustomer(foundCustomer);
+            //     add new ticket to found customer ticket array
+            //     updateCustomer(customer);
+            // }
             // } else {
             //     createNewCustomer(customer);
             //     const getNewCustomers = await getAllCustomers();
@@ -51,7 +79,19 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                 <div id="InformationHeaderContainer">
                     <p id="InformationHeader">Information</p>
                 </div>
-                <div id="ConfirmTicketContainer">
+                <div id="InformationFormContainer">
+                    <div id="NameInputContainer">
+                        <input id="NameInput" type="text" placeholder="Name" value={name} onChange={updateName} />
+                    </div>
+                    <div id="EmailInputContainer">
+                        <input id="EmailInput" type="text" placeholder="Email" value={email} onChange={updateEmail} />
+                    </div>
+                    <div id="PasswordInputContainer">
+                        <input id="PasswordInput" type="password" placeholder="Password" value={password} onChange={updatePassword} />
+                    </div>
+                </div>
+                <div id="InformationButtonContainer">
+                    <div id="InformationButton" onClick={validateInformation}>Confirm Ticket</div>
                 </div>
             </div>
             <style>
@@ -108,70 +148,43 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                         font-size: 30px;
                         font-family: InterBold;
                     }
-                    #ConfirmTicketContainer {
+                    #InformationFormContainer {
                         display: flex;
                         position: relative;
                         width: 90%;
                         height: 60%;
                         flex-direction: column;
+                        justify-content: center;
                         align-items: center;
                         overflow-y: scroll;
                     }
-                    #ConfirmTicketContainer::-webkit-scrollbar {
+                    #InformationFormContainer::-webkit-scrollbar {
                         width: 10px;
                         background-color: transparent;
                     }
-                    #ConfirmTicketContainer::-webkit-scrollbar-thumb {
+                    #InformationFormContainer::-webkit-scrollbar-thumb {
                         background-color: #c4c4c4;
                         border-radius: 10px;
                     }
-                    #InformationItem {
+                    #NameInputContainer, #EmailInputContainer, #PasswordInputContainer {
                         display: flex;
                         position: relative;
-                        width: 80%;
-                        height: 20%;
-                        justify-content: space-between;
-                        align-items: center;
-                        border-bottom: 1px solid black;
-                    }
-                    #InformationItemRemoveContainer {
-                        display: flex;
-                        position: relative;
-                        width: 20%;
-                        height: 100%;
+                        width: 500px;
+                        height: 50px;
+                        margin: 10px;
                         justify-content: center;
                         align-items: center;
-                        cursor: pointer;
                     }
-                    #TotalPriceContainer {
+                    #NameInput, #EmailInput, #PasswordInput {
                         display: flex;
                         position: relative;
                         width: 100%;
-                        height: 10%;
-                        justify-content: center;
-                        align-items: center;
-                    }
-                    #InformationItemName {
-                        font-size: 18px;
-                        font-family: InterSemi;
-                        overflow-x: scroll;
-                    }
-                    #InformationItemName::-webkit-scrollbar {
-                        display: none;
-                    }
-                    #TotalPrice {
-                        font-size: 25px;
-                        font-family: InterBold;
-                    }
-                    #InformationEmptyContainer {
-                        display: flex;
-                        position: relative;
-                        width: 90%;
                         height: 100%;
+                        padding-left: 10px;
                         font-size: 20px;
-                        font-family: InterSemi;
-                        justify-content: center;
-                        align-items: center;
+                        font-family: Inter;
+                        border-radius: 10px;
+                        border: 1px solid black;
                     }
                     #InformationButtonContainer {
                         display: flex;
@@ -193,8 +206,9 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                         box-shadow: -1px 1.5px 5px black;
                         cursor: pointer;
                     }
-                    @media (max-width: 600px) {
+                    @media (max-width: 700px) {
                         #BackIcon { top: 5px; }
+                        #NameInputContainer, #EmailInputContainer, #PasswordInputContainer { width: 90%; }
                     }
                 `}
             </style>

@@ -1,21 +1,23 @@
-import React, { useState } from "react";
-import "../../globals.css";
-import Modal from "../../global/CartModalComponents/Modal";
+'use client'
+import React, { useState, useEffect, use } from "react";
+import "../../../globals.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { CiLocationOn } from "react-icons/ci";
-import { Event, Stadium } from "../../../services/types";
+import { Stadium, Event } from "../../../../services/types";
 
-interface EventInfoProps {
-    event: Event;
+interface StadiumInfoProps {
     stadium: Stadium;
+    event: Event;
     BackgroundColor: string;
     AccentColor: string;
     retryColorThief: () => void;
 }
 
-const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, AccentColor, retryColorThief }) => {
+const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, AccentColor, retryColorThief }) => {
     
     const [showLoading, setShowLoading] = useState(0);
+    const [galleryImage, setGalleryImage] = useState(0);
+    const [galleryImageView, setGalleryImageView] = useState(true);
     const [textColor, setTextColor] = useState('black');
     
     if (BackgroundColor === 'rgba(NaN,NaN,NaN,0.6)' && AccentColor === 'rgba(NaN,NaN,NaN,0.95)') {
@@ -43,38 +45,63 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
     };
 
     const homeRedirect = () => {
-        window.location.href = '/';
+        window.location.href = '/stadiums';
     };
     
+    const iterateGallery = () => {
+        setGalleryImageView(false);
+        if (galleryImage === stadium.gallery.length - 1) {
+            setGalleryImage(0);
+        } else {
+            setGalleryImage(galleryImage + 1);
+        }
+        setTimeout(() => {
+            setGalleryImageView(true);
+        }, 1);
+    };
+
+    useEffect(() => {
+        const galleryLoop = setInterval(iterateGallery, 7000);
+        return () => {
+            clearInterval(galleryLoop);
+        };
+    }, [galleryImage]);
+
     return (
-        <div id='Event'>
+        <div id='Stadium'>
             {showLoading <= 1 ? ( 
                 <img id='Loading' src='/loading.gif' />
             ) : (
-                <div id="EventContainer">
+                <div id="StadiumContainer">
                     <div id='BackButtonContainer'>
                         <IoIosArrowBack id='BackButton' onClick={homeRedirect}/>
                     </div>
-                    <div id="EventInfoContainer">
-                        <div id='EventInfoImageContainer'>
-                            <img id='EventInfoImage' src={event.image} />
+                    <div id="StadiumInfoContainer">
+                        <div id='StadiumInfoImageContainer'>
+                            <img id='StadiumInfoImage' src={stadium.image} />
                         </div>
-                        <div id='EventInfoTextContainer'>
-                            <div id="EventInfoTitleContainer">
-                                <p id='EventInfoTitle'>{event.title}</p>
+                        <div id='StadiumInfoTextContainer'>
+                            <div id="StadiumInfoTitleContainer">
+                                <p id='StadiumInfoTitle'>{stadium.title}</p>
                             </div>
-                            <div id="EventInfoPerformerContainer">
-                                <p id='EventInfoPerformer'>{event.performer}</p>
+                            <div id="StadiumInfoCapacityContainer">
+                                <p id='StadiumInfoCapacity'>Capacity: {stadium.capacity}</p>
                             </div>
-                            <div id="EventInfoLocationContainer">
-                                <p id='EventInfoLocation'><CiLocationOn id='LocationIcon'/>{stadium.title}</p>
+                            <div id="StadiumInfoLocationContainer">
+                                <p id='StadiumInfoLocation'><CiLocationOn id='LocationIcon'/>{stadium.location}</p>
                             </div>
                         </div>
                     </div>
-                    <div id="EventInfoDescriptionContainer">
-                        <p id='EventInfoDescription'>{event.description}</p>
+                    <div id="StadiumInfoDescriptionContainer">
+                        <p id='StadiumInfoDescription'>{stadium.description}</p>
                     </div>
-                    <Modal stadium={stadium} event={event} />
+                    <div id="StadiumInfoGalleryContainer">
+                        {stadium.gallery.map((image: string, index: number) => (
+                            <div id="StadiumGalleryImageItem" key={index}>
+                                {galleryImage === index ? ( galleryImageView && <img id='StadiumGalleryImage' src={image} /> ) : null}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
         <style>
@@ -86,7 +113,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     --TextColor: ${textColor};
                 }
 
-                #Event {
+                #Stadium {
                     display: flex;
                     position: relative;
                     width: 100vw;
@@ -98,7 +125,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     background-image: ${showLoading <= 1 ? 'black' : 'linear-gradient(var(--BackgroundColor), rgba(0, 0, 0, 0.9))'};
                 }
                 #Loading { width: 200px; height: 150px; margin-top: -10vh; }
-                #EventContainer {
+                #StadiumContainer {
                     display: flex;
                     position: relative;
                     width: 100%;
@@ -118,7 +145,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     align-items: center;
                 }
                 #BackButton { font-size: 50px; cursor: pointer; color: var(--TextColor); }
-                #EventInfoContainer {
+                #StadiumInfoContainer {
                     display: flex;
                     position: relative;
                     width: 80%;
@@ -127,7 +154,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     justify-content: center;
                     align-items: center;
                 }
-                #EventInfoImageContainer {
+                #StadiumInfoImageContainer {
                     display: flex;
                     position: relative;
                     width: 50%;
@@ -135,13 +162,13 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     justify-content: center;
                     align-items: center;
                 }
-                #EventInfoImage {
+                #StadiumInfoImage {
                     width: 50%;
                     height: 100%;
                     object-fit: contain;
                     user-select: none;
                 }
-                #EventInfoTextContainer {
+                #StadiumInfoTextContainer {
                     display: flex;
                     position: relative;
                     width: 50%;
@@ -149,9 +176,8 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
-                    color: var(--TextColor);
                 }
-                #EventInfoTitleContainer, #EventInfoPerformerContainer, #EventInfoLocationContainer {
+                #StadiumInfoTitleContainer, #StadiumInfoCapacityContainer, #StadiumInfoLocationContainer {
                     display: flex;
                     position: relative;
                     width: 100%;
@@ -164,41 +190,66 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     text-overflow: ellipsis;
                     color: var(--TextColor);
                 }
-                #EventInfoTitleContainer::-webkit-scrollbar, #EventInfoPerformerContainer::-webkit-scrollbar, #EventInfoLocationContainer::-webkit-scrollbar { height: 0; }
-                #EventInfoTitleContainer::-webkit-scrollbar-thumb, #EventInfoPerformerContainer::-webkit-scrollbar-thumb, #EventInfoLocationContainer::-webkit-scrollbar-thumb { height: 0; }
-                #EventInfoTitle { font-size: 30px; font-family: InterBold; }
-                #EventInfoPerformer { font-size: 25px; font-family: InterSemi; }
-                #EventInfoLocation { font-size: 20px; }
+                #StadiumInfoTitleContainer::-webkit-scrollbar, #StadiumInfoCapacityContainer::-webkit-scrollbar, #StadiumInfoLocationContainer::-webkit-scrollbar { height: 0; }
+                #StadiumInfoTitleContainer::-webkit-scrollbar-thumb, #StadiumInfoCapacityContainer::-webkit-scrollbar-thumb, #StadiumInfoLocationContainer::-webkit-scrollbar-thumb { height: 0; }
+                #StadiumInfoTitle { font-size: 30px; font-family: InterBold; }
+                #StadiumInfoCapacity { font-size: 25px; font-family: InterSemi; }
+                #StadiumInfoLocation { font-size: 20px; }
                 #LocationIcon { font-size: 20px; margin-right: 3px; margin-bottom: -2px; }
-                #EventInfoDescriptionContainer {
+                #StadiumInfoDescriptionContainer {
                     display: flex;
                     position: relative;
                     width: 80%;
                     height: 20%;
                     overflow-y: scroll;
                 }
-                #EventInfoDescriptionContainer::-webkit-scrollbar {
+                #StadiumInfoDescriptionContainer::-webkit-scrollbar {
                     width: 10px;
                     background-color: transparent;
                 }
-                #EventInfoDescriptionContainer::-webkit-scrollbar-thumb {
+                #StadiumInfoDescriptionContainer::-webkit-scrollbar-thumb {
                     width: 10px;
                     background-color: rgb(195, 195, 195);
                     border-radius: 25px;
                 }
-                #EventInfoDescription { padding: 5px 0 0 5px; color: var(--TextColor); }
+                #StadiumInfoGalleryContainer {
+                    display: flex;
+                    position: relative;
+                    width: 80%;
+                    height: 40%;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: flex-start;
+                }
+                #StadiumGalleryImageItem {
+                    display: flex;
+                    position: relative;
+                    height: 90%;
+                    justify-content: center;
+                    align-items: center;
+                    object-fit: contain;
+                    animation: fade 7s ease-in-out infinite;
+                    user-select: none;
+                }
+                @keyframes fade {
+                    0% { opacity: 0; transform: translateX(-25px); }
+                    50% { opacity: 1; transform: translateX(0px); }
+                    100% { opacity: 0; transform: translateX(25px); }
+                }
+                #StadiumGalleryImage { width: 100%; height: 100%; }
+                #StadiumInfoDescription { padding: 5px 0 0 5px; color: var(--TextColor); }
                 @media (max-width: 600px) {
                     #BackButtonContainer { width: 70px; height: 70px; }
-                    #EventInfoContainer { width: 70%; height: 40%; flex-direction: column; }
-                    #EventInfoImageContainer { width: 100%; height: 60%; }
-                    #EventInfoImage { width: 70%; height: 90%; }
-                    #EventInfoTextContainer { width: 100%; height: 40%; }
-                    #EventInfoTitleContainer, #EventInfoPerformerContainer, #EventInfoLocationContainer { justify-content: center; }
-                    #EventInfoTitle { font-size: 25px; }
-                    #EventInfoPerformer { font-size: 20px; }
-                    #EventInfoLocation { font-size: 15px; }
+                    #StadiumInfoContainer { width: 70%; height: 40%; flex-direction: column; }
+                    #StadiumInfoImageContainer { width: 100%; height: 60%; }
+                    #StadiumInfoImage { width: 70%; height: 90%; }
+                    #StadiumInfoTextContainer { width: 100%; height: 40%; }
+                    #StadiumInfoTitleContainer, #StadiumInfoCapacityContainer, #StadiumInfoLocationContainer { justify-content: center; }
+                    #StadiumInfoTitle { font-size: 25px; }
+                    #StadiumInfoCapacity { font-size: 20px; }
+                    #StadiumInfoLocation { font-size: 15px; }
                     #LocationIcon { font-size: 15px; }
-                    #EventInfoDescriptionContainer { width: 70%; height: 15%; }
+                    #StadiumInfoDescriptionContainer { width: 70%; height: 15%; }
                 }
             `}
         </style>
@@ -206,4 +257,4 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
     )
 }
 
-export default EventInfo;
+export default StadiumInfo;

@@ -17,12 +17,12 @@ const Modal: React.FC<ModalProps> = ({ stadium, event }) => {
     const [showCart, setShowCart] = useState(false);
     const [showCheckout, setShowCheckout] = useState(false);
     const [showInformation, setShowInformation] = useState(false);
-    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showConfirmation, setShowConfirmation] = useState(true);
     const [totalPrice, setTotalPrice] = useState(0);
     const [ticketID, setTicketID] = useState(0);
     const [cartLength, setCartLength] = useState(0);
     const [ticket, setTicket] = useState<Ticket>({ event_id: 0, title: '', seat_numbers: [], description: '', performer: '', image: '', stadium_id: 0, price: 0 });
-    const [customer, setCustomer] = useState<Customer>({ name: '', ticket_id: undefined, bundle_id: undefined });
+    const [customer, setCustomer] = useState<Customer>({ name: '', email: '', password: '', tickets: [] });
 
     const handleCartModal = (cartLength: number) => {
         if (cartLength > 0) {

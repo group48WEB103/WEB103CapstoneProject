@@ -1,16 +1,18 @@
 'use client'
 import React, { useState } from 'react';
-import ColorThief from './ColorThief';
-import EventInfo from './Event';
+import ColorThief from '../../global/BackgroundColorComponents/ColorThief';
+import EventInfo from '../../[id]/components/Event';
+import StadiumInfo from '../../stadiums/[stadium]/components/Stadium';
 import { Event, Stadium } from "../../../services/types";
 
 interface PassedColorProps {
     image: string;
     stadium: Stadium;
     event: Event;
+    render: string;
 }
 
-const PassedColor: React.FC<PassedColorProps> = ({ image, stadium, event }) => {
+const PassedColor: React.FC<PassedColorProps> = ({ image, stadium, event, render }) => {
 
     const [BackgroundColor, setBackgroundColor] = useState('');
     const [AccentColor, setAccentColor] = useState('');
@@ -44,7 +46,13 @@ const PassedColor: React.FC<PassedColorProps> = ({ image, stadium, event }) => {
     return (
         <div>
             {gotColor < 2 && <ColorThief getBackgroundColor={(value: any) => getNewBackgroundColor(value)} getAccentColor={(value: any) => getNewAccentColor(value)} image={image} />}
-            {gotColor === 2 ? <EventInfo event={event} stadium={stadium} BackgroundColor={BackgroundColor} AccentColor={AccentColor} retryColorThief={resetGotColor} /> : null}
+            {gotColor === 2 && 
+                render === 'event' ? (
+                    <EventInfo event={event} stadium={stadium} BackgroundColor={BackgroundColor} AccentColor={AccentColor} retryColorThief={resetGotColor} />
+                ) : render === 'stadium' ? (
+                    <StadiumInfo stadium={stadium} event={event} BackgroundColor={BackgroundColor} AccentColor={AccentColor} retryColorThief={resetGotColor} />
+                ) : null
+            }
         </div>
     )
 }
