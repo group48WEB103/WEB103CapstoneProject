@@ -8,7 +8,7 @@ import { MockEvents } from "./components/MockEvents";
 import { MockStadium } from "./components/MockStadium";
 
 export const metadata: Metadata = {
-  title: 'tickeTeller | Home',
+  title: 'tickeTeller',
   description: 'Buy a ticket for your favorite event!',
 };
 

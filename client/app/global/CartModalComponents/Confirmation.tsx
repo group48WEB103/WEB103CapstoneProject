@@ -22,9 +22,26 @@ const Confirmation: React.FC<ConfirmationProps> = ({ ticket, customer, totalPric
                 <div id="ConfirmationHeaderContainer">
                     <p id="ConfirmationHeader">Confirmation</p>
                 </div>
-                <div id="ConfirmTicketContainer">
-                    {ticket.title}
-                    {ticket.event_id}
+                <div id="ConfirmationDetailsContainer">
+                    <div id="TicketOverviewContainer">
+                        <div id="TicketOverviewHeaderContainer">
+                            <p id="TicketOverviewHeader">Ticket Overview</p>
+                        </div>
+                        <div id="TicketSeatsContainer">
+                            <p id="TicketSeats">{ticket.seat_numbers}</p>
+                        </div>
+                    </div>
+                    <div id="UserOverviewContainer">
+                        <div id="UserOverviewHeaderContainer">
+                            <p id="UserOverviewHeader">User Overview</p>
+                        </div>
+                        <div id="UserNameContainer">
+                            <p id="UserName">{customer.name} - {customer.email}</p>
+                        </div>
+                        <div id='UserTicketNumberContainer'>
+                            <p id="UserTicketNumber">Ticket Order Number: {customer.tickets}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <style>

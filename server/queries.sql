@@ -79,8 +79,7 @@ CREATE TABLE customer (
     name TEXT,
     email TEXT,
     password TEXT,
-    ticket_id INT REFERENCES ticket(id),
-    bundle_id INT REFERENCES bundle(id)
+    tickets INT[] REFERENCES ticket(id)
 );
 
 -- Run ' DROP TABLE stadium; ' query to revamp customer table

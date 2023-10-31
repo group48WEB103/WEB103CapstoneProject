@@ -29,18 +29,10 @@ export interface Ticket {
     price: number;
 }
 
-export interface Bundle {
-    id?: number;
-    ticket_id: number[];
-    title: string;
-    image: string;
-}
-
 export interface Customer {
     id?: number;
     name: string;
     email: string;
     password: string;
-    ticket_id?: number;
-    bundle_id?: number;
+    tickets: number[];
 }

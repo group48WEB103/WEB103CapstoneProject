@@ -88,7 +88,7 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                                 <p id='StadiumInfoCapacity'>Capacity: {stadium.capacity}</p>
                             </div>
                             <div id="StadiumInfoLocationContainer">
-                                <p id='StadiumInfoLocation'><CiLocationOn id='LocationIcon'/>{stadium.title}</p>
+                                <p id='StadiumInfoLocation'><CiLocationOn id='LocationIcon'/>{stadium.location}</p>
                             </div>
                         </div>
                     </div>

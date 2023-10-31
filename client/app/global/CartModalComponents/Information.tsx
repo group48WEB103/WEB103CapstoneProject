@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 // import getAllCustomers from '../../../services/GET/getAllCustomers';
 // import createCustomer from '../../../services/POST/createCustomer';
+// import updateCustomer from '../../../services/PUT/updateCustomer';
 import { Customer } from '../../../services/types';
 
 interface InformationProps {
@@ -16,7 +17,7 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [customer, setCustomer] = useState<Customer>({ name: name, email: '', password: '', ticket_id: undefined, bundle_id: undefined });
+    const [customer, setCustomer] = useState<Customer>({ name: name, email: email, password: password, tickets: [ticketID] });
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--AccentColor').trim();
 
     const fetchSavedInfo = () => {
@@ -45,12 +46,16 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
     };
 
     const validateInformation = () => {
-        if (name.length > 0) {
-            setCustomer({ name: name, email: email, password: password, ticket_id: ticketID, bundle_id: undefined });
+        const regex = /.*@.*\..*/;
+        if (name.length > 0 && regex.test(email) === true && password.length > 0) {
+            setCustomer({ name: name, email: email, password: password, tickets: [ticketID] });
             // const allCustomers = await getAllCustomers();
             // const foundCustomer = allCustomers.find((item: any) => item.seat_numbers === customer.seat_numbers && item.event_id === customer.event_id);
             // if (foundCustomer) {
             //     setcustomer(foundCustomer);
+            //     add new ticket to found customer ticket array
+            //     updateCustomer(customer);
+            // }
             // } else {
             //     createNewCustomer(customer);
             //     const getNewCustomers = await getAllCustomers();
@@ -149,6 +154,7 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                         width: 90%;
                         height: 60%;
                         flex-direction: column;
+                        justify-content: center;
                         align-items: center;
                         overflow-y: scroll;
                     }
@@ -159,6 +165,26 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                     #InformationFormContainer::-webkit-scrollbar-thumb {
                         background-color: #c4c4c4;
                         border-radius: 10px;
+                    }
+                    #NameInputContainer, #EmailInputContainer, #PasswordInputContainer {
+                        display: flex;
+                        position: relative;
+                        width: 500px;
+                        height: 50px;
+                        margin: 10px;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    #NameInput, #EmailInput, #PasswordInput {
+                        display: flex;
+                        position: relative;
+                        width: 100%;
+                        height: 100%;
+                        padding-left: 10px;
+                        font-size: 20px;
+                        font-family: Inter;
+                        border-radius: 10px;
+                        border: 1px solid black;
                     }
                     #InformationButtonContainer {
                         display: flex;
@@ -180,8 +206,9 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                         box-shadow: -1px 1.5px 5px black;
                         cursor: pointer;
                     }
-                    @media (max-width: 600px) {
+                    @media (max-width: 700px) {
                         #BackIcon { top: 5px; }
+                        #NameInputContainer, #EmailInputContainer, #PasswordInputContainer { width: 90%; }
                     }
                 `}
             </style>
