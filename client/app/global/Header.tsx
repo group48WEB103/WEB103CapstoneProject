@@ -140,7 +140,7 @@ export default function Header() {
                     top: 0;
                     left: 0;
                     width: 100vw;
-                    height: 10vh;
+                    height: 12vh;
                     background-color: rgba(0, 0, 0, 0);
                     align-items: center;
                     justify-content: center;
