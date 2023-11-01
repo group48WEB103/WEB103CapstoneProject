@@ -38,7 +38,7 @@ export class StadiumQueries {
     async createNewStadium(req: Request, res: Response){
         try {
             const {location,title,description,capacity,image,gallery} = req.body;
-            const stadium = await pool.manyOrNone('INSERT INTO stadium (location,title,description,capacity,image,gallery) VALUE = ($1,$2,$3,$4,$5, $6)',[location,title,description,capacity,image,gallery])
+            const stadium = await pool.manyOrNone('INSERT INTO stadium (location,title,description,capacity,image,gallery) VALUES ($1,$2,$3,$4,$5, $6)',[location,title,description,capacity,image,gallery])
             return res.json(stadium)
         } catch (error) {
             console.log(error)
@@ -57,7 +57,7 @@ export class StadiumQueries {
         }
     }
 
-    async deleteCustomer(req: Request, res: Response, id: string) {
+    async deleteStadium(req: Request, res: Response, id: string) {
         try {
             const stadium = await pool.manyOrNone('DELETE from stadium WHERE id = $1',[id])
             return res.json(stadium)

@@ -38,7 +38,7 @@ export class EventQueries {
     async createNewEvent(req: Request, res: Response){
         try {
             const {stadium_id,title,description,performer,image} = req.body;
-            const event = await pool.manyOrNone('INSERT INTO event (stadium_id,title,description,performer,image) VALUE = ($1,$2,$3,$4,$5)',[stadium_id,title,description,performer,image])
+            const event = await pool.manyOrNone('INSERT INTO event (stadium_id,title,description,performer,image) VALUES ($1,$2,$3,$4,$5)',[stadium_id,title,description,performer,image])
             return res.json(event)
         } catch (error) {
             console.log(error)
