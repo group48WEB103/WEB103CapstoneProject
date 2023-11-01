@@ -1,8 +1,8 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { IoIosClose } from 'react-icons/io';
-// import getAllTickets from '../../../services/GET/getAllTickets';
-// import createTicket from '../../../services/POST/createTicket';
+import getAllTickets from '../../../services/GET/getAllTickets';
+import createTicket from '../../../services/POST/createTicket';
 import { Event, Ticket } from '../../../services/types';
 
 interface CheckoutProps {
@@ -16,7 +16,7 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
 
     const [cart, setCart] = useState([]);
     const [selectedSeats, setSelectedSeats] = useState([]);
-    const [ticket, setTicket] = useState<Ticket>({event_id: 0, title: '', seat_numbers: [], description: '', performer: '', image: '', stadium_id: 0, price: 0});
+    const [ticket, setTicket] = useState<Ticket>({event_id: 0, title: event.title, seat_numbers: [], description: '', performer: '', image: '', stadium_id: 0, price: 0});
     const [totalPrice, setTotalPrice] = useState(0);
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--AccentColor').trim();
 

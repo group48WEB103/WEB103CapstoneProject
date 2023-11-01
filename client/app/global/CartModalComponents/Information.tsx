@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
-// import getAllCustomers from '../../../services/GET/getAllCustomers';
-// import createCustomer from '../../../services/POST/createCustomer';
-// import updateCustomer from '../../../services/PUT/updateCustomer';
+import getAllCustomers from '../../../services/GET/getAllCustomers';
+import createCustomer from '../../../services/POST/createCustomer';
+import updateCustomer from '../../../services/PUT/updateCustomer';
 import { Customer } from '../../../services/types';
 
 interface InformationProps {
@@ -52,9 +52,8 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
             // const allCustomers = await getAllCustomers();
             // const foundCustomer = allCustomers.find((item: any) => item.seat_numbers === customer.seat_numbers && item.event_id === customer.event_id);
             // if (foundCustomer) {
-            //     setcustomer(foundCustomer);
-            //     add new ticket to found customer ticket array
-            //     updateCustomer(customer);
+            //     setCustomer({ name: foundCustomer.name, email: foundCustomer.email, password: foundCustomer.password, tickets: [ticketID, ...foundCustomer.tickets] });
+            //     showConfirmation(customer);
             // }
             // } else {
             //     createNewCustomer(customer);

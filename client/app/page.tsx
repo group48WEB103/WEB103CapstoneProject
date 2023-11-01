@@ -2,8 +2,8 @@ import React from 'react';
 import { Metadata } from 'next';
 import Header from './global/Header';
 import Home from './components/Home';
-// import getAllEvents from "../../services/GET/getAllEvents"
-// import getAllStadiums from "../../services/GET/getAllStadiums"
+import getAllEvents from "../services/GET/getAllEvents"
+import getAllStadiums from "../services/GET/getAllStadiums"
 import { MockEvents } from "./components/MockEvents";
 import { MockStadium } from "./components/MockStadium";
 

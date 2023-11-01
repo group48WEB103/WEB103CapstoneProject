@@ -12,7 +12,7 @@ export default function Header() {
     const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [showMobileMenuItems, setShowMobileMenuItems] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
-    const [profilePicture, setProfilePicture] = useState('');
+    const [username, setUsername] = useState('');
 
     const handleScroll = () => {
         if (window.scrollY > 10) {
@@ -56,11 +56,11 @@ export default function Header() {
     };
 
     const checkLoggedIn = () => {
-        const token = localStorage.getItem('auth');
-        const tokenArray = token ? JSON.parse(token) : []
-        if (token) {
+        const tokenString = localStorage.getItem('auth');
+        const token = tokenString ? JSON.parse(tokenString) : [];
+        if (tokenString) {
             setLoggedIn(true);
-            setProfilePicture(tokenArray.profilePicture);
+            setUsername(token.name);
         } else {
             setLoggedIn(false);
         }
@@ -110,8 +110,8 @@ export default function Header() {
                                     <div id="MobileStadiumItemContainer">
                                         <Link id="MobileStadiumItem" href="/stadiums">Stadiums</Link>
                                     </div>
-                                    <div id="MobileUserContainer">
-                                        {loggedIn ? ( <img id='ProfilePicture' src={profilePicture} /> ) : ( <Link id="MobileUser" href="/profile">Login</Link> )}
+                                    <div id="MobileAuthItemContainer">
+                                        {loggedIn ? ( <Link id='MobileUsernameItem' href='/profile'>{username}</Link> ) : ( <Link id="MobileLoginItem" href="/profile">Login</Link> )}
                                     </div>
                                 </div>
                             </div>
@@ -125,8 +125,8 @@ export default function Header() {
                             <div id="StadiumItemContainer">
                                 <Link id="StadiumItem" href="/stadiums">Stadiums</Link>
                             </div>
-                            <div id="UserContainer">
-                                <Link id="User" href="/profile">Login</Link>
+                            <div id="AuthItemContainer">
+                                {loggedIn ? ( <Link id='UsernameItem' href='/profile'>{username}</Link> ) : ( <Link id="LoginItem" href="/profile">Login</Link> )}
                             </div>
                         </div>
                     </div>
@@ -181,6 +181,7 @@ export default function Header() {
                     width: 300px;
                     height: 100px;
                     object-fit: contain;
+                    user-select: none;
                 }
                 #MenuContainer {
                     display: flex;
@@ -198,14 +199,19 @@ export default function Header() {
                     align-items: center;
                     justify-content: space-around;
                 }
-                #StadiumItem, #User { 
+                #StadiumItem, #UsernameItem, #LoginItem { 
                     font-size: 20px;
                     color: white; 
                     text-decoration: none;
                     font-family: InterSemi; 
+                    overflow-x: scroll;
+                    overflow-y: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                     transition: 0.5s;
                 }
-                #StadiumItem:hover, #User:hover { opacity: 0.7; }
+                #UsernameItem::-webkit-scrollbar, #LoginItem::-webkit-scrollbar { display: none; }
+                #StadiumItem:hover, #UsernameItem:hover, #LoginItem:hover { opacity: 0.7; }
                 #MobileMenuContainer {
                     display: flex;
                     position: relative;
@@ -256,14 +262,14 @@ export default function Header() {
                     padding: 0 2.5%;
                     background-color: rgba(0, 0, 0, 0.85);
                 }
-                #MobileStadiumItem, #MobileUser { 
+                #MobileStadiumItem, #MobileUsernameItem, #MobileLoginItem { 
                     font-size: 20px;
                     color: white; 
                     text-decoration: none; 
                     font-family: InterSemi; 
                     transition: 0.5s;
                 }
-                #MobileStadiumItem:hover, #MobileUser:hover { opacity: 0.7; }
+                #MobileStadiumItem:hover, #MobileUserItem:hover, #MobileLoginItem:hover { opacity: 0.7; }
                 @media (max-width: 600px) {
                     #HeaderLogo { width: 200px; height: 75px; margin-left: 10px; }
                     #MenuContainer { display: none; }

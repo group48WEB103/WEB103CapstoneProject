@@ -1,15 +1,15 @@
 import React from 'react';
 import { IoIosArrowBack } from "react-icons/io";
-import { Ticket, Customer } from '../../../services/types';
+import { Stadium, Ticket, Customer } from '../../../services/types';
 
 interface ConfirmationProps {
+    stadium: Stadium;
     ticket: Ticket;
     customer: Customer;
-    totalPrice: number;
     closeConfirmation: () => void;
 }
 
-const Confirmation: React.FC<ConfirmationProps> = ({ ticket, customer, totalPrice, closeConfirmation }) => {
+const Confirmation: React.FC<ConfirmationProps> = ({ stadium, ticket, customer, closeConfirmation }) => {
 
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--AccentColor').trim();
 
@@ -27,8 +27,17 @@ const Confirmation: React.FC<ConfirmationProps> = ({ ticket, customer, totalPric
                         <div id="TicketOverviewHeaderContainer">
                             <p id="TicketOverviewHeader">Ticket Overview</p>
                         </div>
+                        <div id="TicketTitleContainer">
+                            <p id="TicketTitle">{ticket.title}</p>
+                        </div>
+                        <div id="TicketStadiumTitleContainer">
+                            <p id="TicketStadiumTitle">@ {stadium.title}</p>
+                        </div>
                         <div id="TicketSeatsContainer">
-                            <p id="TicketSeats">{ticket.seat_numbers}</p>
+                            <p id="TicketSeats">Seats: {ticket.seat_numbers}</p>
+                        </div>
+                        <div id="TicketTotalPriceContainer">
+                            <p id="TicketTotalPrice">Total Price: ${ticket.price}</p>
                         </div>
                     </div>
                     <div id="UserOverviewContainer">
@@ -39,7 +48,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({ ticket, customer, totalPric
                             <p id="UserName">{customer.name} - {customer.email}</p>
                         </div>
                         <div id='UserTicketNumberContainer'>
-                            <p id="UserTicketNumber">Ticket Order Number: {customer.tickets}</p>
+                            <p id="UserTicketNumber">Ticket Order Number: {customer.tickets[0]}</p>
                         </div>
                     </div>
                 </div>
