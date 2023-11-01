@@ -2,8 +2,8 @@ import React from 'react';
 import { Metadata } from 'next';
 import Header from '../global/Header';
 import PassedColor from '../global/BackgroundColorComponents/PassedColor';
-// import getEventByID from '../../../services/GET/getEventByID';
-// import getStadiumByID from '../../../services/GET/getStadiumByID';
+import getEventByID from '../../services/GET/getEventByID';
+import getStadiumByID from '../../services/GET/getStadiumByID';
 import { MockEvents } from '../components/MockEvents'; 
 import { MockStadium } from '../components/MockStadium';
 

@@ -17,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ stadium, event }) => {
     const [showCart, setShowCart] = useState(false);
     const [showCheckout, setShowCheckout] = useState(false);
     const [showInformation, setShowInformation] = useState(false);
-    const [showConfirmation, setShowConfirmation] = useState(true);
+    const [showConfirmation, setShowConfirmation] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
     const [ticketID, setTicketID] = useState(0);
     const [cartLength, setCartLength] = useState(0);
@@ -87,7 +87,7 @@ const Modal: React.FC<ModalProps> = ({ stadium, event }) => {
             {showCart && <Cart showCheckout={showCheckoutModal} cartLength={cartLength} />}
             {showCheckout && <Checkout event={event} updateCart={(cartLength: number) => handleCartModal(cartLength)} showInformation={(totalPrice: number, ticketID: number, ticket: Ticket) => showInformationModal(totalPrice, ticketID, ticket)} closeCheckout={closeCheckoutModal} />}
             {showInformation && <Information ticketID={ticketID} showConfirmation={(customer: Customer) => showConfirmationModal(customer)} closeInformation={closeInformationModal} />}
-            {showConfirmation && <Confirmation ticket={ticket} customer={customer} totalPrice={totalPrice} closeConfirmation={closeConfirmationModal} />}
+            {showConfirmation && <Confirmation stadium={stadium} ticket={ticket} customer={customer} closeConfirmation={closeConfirmationModal} />}
         <style>
             {`
                 #Modal { position: relative; width: 80%; height: 40%; }

@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
+import "../../home.css";
+import { MockCustomer } from '../../components/MockCustomer';
 import checkCredentials from '../../../services/GET/checkCredentials';
 
 interface LoginProps {
-    updateLoginState: (username: string, password: string) => void;
+    updateLoginState: (name: string, email: string, password: string) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
 
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showWarning, setShowWarning] = useState(false);
 
     const handleFormSubmit = async () => {
-        const res = await checkCredentials(username, password);
+        const res = MockCustomer.find((customer) => customer.email === email && customer.password === password);
+        // const res = await checkCredentials(email, password);
         if (res) {
-            const confirmedUsername = res.username;
-            const confirmedPassword = res.password;
-            updateLoginState(confirmedUsername, confirmedPassword);
+            updateLoginState(res.name, res.email, res.password);
         } else {
             setShowWarning(true);
             setTimeout(() => {
@@ -25,8 +26,8 @@ const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
         }
     }
 
-    const updateUsername = (e: any) => {
-        setUsername(e.target.value);
+    const updateEmail = (e: any) => {
+        setEmail(e.target.value);
     }
 
     const updatePassword = (e: any) => {
@@ -37,10 +38,10 @@ const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
         <div id='Login'>
             <div id="LoginContainer">
                 <div id="LoginHeaderContainer">
-                    <p id="HeaderLogin">Admin Login</p>
+                    <p id="HeaderLogin">User Login</p>
                 </div>
                 <div id="LoginInputContainer">
-                    <input id="LoginInput" type="text" placeholder="Username" onChange={updateUsername} />
+                    <input id="LoginInput" type="text" placeholder="Email" onChange={updateEmail} />
                     <input id="LoginInput" type="password" placeholder="Password" onChange={updatePassword} />
                 </div>
                 <div id="LoginButtonContainer">
@@ -55,8 +56,9 @@ const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
                     #Login {
                         display: flex;
                         position: relative;
-                        width: 99.5vw;
-                        height: 100vh;
+                        width: 100vw;
+                        height: 90vh;
+                        padding-top: 10vh;
                         flex-direction: column;
                         justify-content: center;
                         align-items: center;
@@ -65,11 +67,11 @@ const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
                         display: flex;
                         position: relative;
                         width: 70%;
-                        height: 70%;
+                        height: 80%;
                         flex-direction: column;
                         justify-content: center;
-                        align-items: center;                    
-                        background-color: rgba(255, 255, 255, 0.1);
+                        align-items: center;
+                        background-color: rgba(0, 0, 0, 0.7);
                         border-radius: 25px;
                     }
                     #LoginHeaderContainer {
@@ -101,6 +103,7 @@ const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
                         outline: none;
                         margin: 5px;
                         padding: 5px;
+                        font-family: Inter;
                     }
                     #LoginButtonContainer {
                         display: flex;
