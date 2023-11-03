@@ -21,7 +21,7 @@ export class EventQueries {
             return res.json(event)
         } catch (error) {
             console.log(error)
-            return res.status(500).json({error: 'server error'})
+            return res.status(500).json({"error": 'server error'})
         }
     }
 
@@ -35,10 +35,10 @@ export class EventQueries {
         }
     }
 
-    async createNewEvent(req: Request, res: Response){
+    async createNewEvent(req: Request, res: Response, data: Event){
         try {
-            const {stadium_id,title,description,performer,image} = req.body;
-            const event = await pool.manyOrNone('INSERT INTO event (stadium_id,title,description,performer,image) VALUES ($1,$2,$3,$4,$5)',[stadium_id,title,description,performer,image])
+            
+            const event = await pool.manyOrNone('INSERT INTO event (stadium_id,title,description,performer,image) VALUES ($1,$2,$3,$4,$5)',[data.stadium_id,data.title,data.description,data.performer,data.image])
             return res.json(event)
         } catch (error) {
             console.log(error)
@@ -46,10 +46,10 @@ export class EventQueries {
         }
     }
 
-    async updateEvent(req: Request, res: Response, id: string){
+    async updateEvent(req: Request, res: Response, id: string,data: Event){
         try {
-            const {stadium_id,title,description,performer,image} = req.body;
-            const event = await pool.manyOrNone('UPDATE event SET stadium_id = $2, title = $3, description = $4, performer = $5, image = $6 WHERE id = $1',[id,stadium_id,title,description,performer,image])
+            
+            const event = await pool.manyOrNone('UPDATE event SET stadium_id = $2, title = $3, description = $4, performer = $5, image = $6 WHERE id = $1',[id,data.stadium_id,data.title,data.description,data.performer,data.image])
             return res.json(event)
         } catch (error) {
             console.log(error)

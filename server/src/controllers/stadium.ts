@@ -21,7 +21,7 @@ export class StadiumQueries {
             return res.json(stadium)
         } catch (error) {
             console.log(error)
-            return res.status(500).json({error: 'server error'})
+            return res.status(500).json({"error": 'server error'})
         }
     }
 
@@ -31,29 +31,28 @@ export class StadiumQueries {
             return res.json(stadium)
         } catch (error) {
             console.log(error)
-            return res.status(500).json({error: 'server error'})
+            return res.status(500).json({"error": 'server error'})
         }
     }
 
-    async createNewStadium(req: Request, res: Response){
+    async createNewStadium(req: Request, res: Response,data: Stadium){
         try {
-            const {location,title,description,capacity,image,gallery} = req.body;
-            const stadium = await pool.manyOrNone('INSERT INTO stadium (location,title,description,capacity,image,gallery) VALUES ($1,$2,$3,$4,$5, $6)',[location,title,description,capacity,image,gallery])
+            
+            const stadium = await pool.manyOrNone('INSERT INTO stadium (location,title,description,capacity,image,gallery) VALUES ($1,$2,$3,$4,$5, $6)',[data.location,data.title,data.description,data.capacity,data.image,data.gallery])
             return res.json(stadium)
         } catch (error) {
             console.log(error)
-            return res.status(500).json({error: 'server error'})
+            return res.status(500).json({"error": 'server error'})
         }
     }
 
-    async updateStadium(req: Request, res: Response, id: string){
+    async updateStadium(req: Request, res: Response, id: string, data: Stadium){
         try {
-            const {location,title,description,capacity,image,gallery} = req.body;
-            const stadium = await pool.manyOrNone('UPDATE stadium SET location = $2, title = $3, description = $4, capacity = $5, image = $6, gallery = $7 WHERE id = $1',[id,location,title,description,capacity,image,gallery])
+            const stadium = await pool.manyOrNone('UPDATE stadium SET location = $2, title = $3, description = $4, capacity = $5, image = $6, gallery = $7 WHERE id = $1',[id,data.location,data.title,data.description,data.capacity,data.image,data.gallery])
             return res.json(stadium)
         } catch (error) {
             console.log(error)
-            return res.status(500).json({error: 'server error'})
+            return res.status(500).json({"error": 'server error'})
         }
     }
 
@@ -63,7 +62,7 @@ export class StadiumQueries {
             return res.json(stadium)
         } catch (error) {
             console.error(error)
-            return res.status(500).json({error:'server error'})
+            return res.status(500).json({"error":'server error'})
         }
     }
 
