@@ -1,14 +1,14 @@
 import express, {Request,Response} from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import {CustomerRoutes} from './src/routes/customer'
-import  {EventRoutes} from './src/routes/event'
-import {StadiumRoutes} from './src/routes/stadium'
-import {TicketRoutes} from './src/routes/ticket'
-import { CustomerQueries } from './src/controllers/customer'
-import { EventQueries } from './src/controllers/event'
-import { StadiumQueries } from './src/controllers/stadium'
-import { TicketQueries } from './src/controllers/ticket'
+import {CustomerRoutes} from './src/routes/customer.js'
+import  {EventRoutes} from './src/routes/event.js'
+import {StadiumRoutes} from './src/routes/stadium.js'
+import {TicketRoutes} from './src/routes/ticket.js'
+import { CustomerQueries } from './src/controllers/customer.js'
+import { EventQueries } from './src/controllers/event.js'
+import { StadiumQueries } from './src/controllers/stadium.js'
+import { TicketQueries } from './src/controllers/ticket.js'
 
 const corsOptions = {
     //makes sure specifc http request are made from our website
@@ -94,3 +94,10 @@ app.get(TicketRoutes.getAllTickets, (req: Request, res: Response,) => {
 })
 
 
+app.get('*', (req, res) => {
+    res.status(404).json('404 Not Found');
+});
+
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+});

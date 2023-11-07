@@ -14,13 +14,14 @@ const connection = {
   };
 
   const pool = pgp()(connection)
+
   export class TicketQueries {
 
     async createNewticket(req: Request, res: Response, data: Ticket) { 
         try {
             const { event_id, title, seat_numbers, description, image, stadium_id, price} = data;
-            const ticket = await pool.manyOrNone('INSERT INTO ticket (event_id, title, seat_numbers, description, image, stadium_id, price) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *', [event_id, title, seat_numbers, description, image, stadium_id, price])
-            return res.json(ticket)
+            const ticket =  pool.manyOrNone('INSERT INTO ticket (event_id, title, seat_numbers, description, image, stadium_id, price) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *', [event_id, title, seat_numbers, description, image, stadium_id, price])
+           
         } catch (error) {
             console.error(error)
             return res.status(500).json({"error":'server error'})
