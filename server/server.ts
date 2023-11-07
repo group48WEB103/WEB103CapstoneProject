@@ -52,6 +52,7 @@ app.get(CustomerRoutes.getCustomerByCredentials, (req: Request,res: Response) =>
 })
 
 app.put(CustomerRoutes.updateCustomer, (req: Request, res: Response) => {
+    
 
     const data = req.body
     const id = String(req.params.id);
