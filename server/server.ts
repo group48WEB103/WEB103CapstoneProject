@@ -13,10 +13,11 @@ dotenv.config();
 
 
 
+// Cors doesn't allow http requests that are not made from our ticketeller domain or search bar(!origin)
+    
 const corsOptions = {
-    // doesn't allow http requests that are not made from our ticketeller domain or search bar
     origin: (origin: any, callback: any) => {
-        const allowedOrigins = "https://tickteller.vercel.app";
+        const allowedOrigins = ["https://tickteller.vercel.app", "http://localhost:3000"];
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
@@ -117,9 +118,15 @@ app.post(TicketRoutes.createNewTicket, (req: Request, res: Response) => {
 
 
 
-app.get('*', (req, res) => {
+// Catch all other routes and return 404 Not Found
+
+app.get('*', (req: Request, res: Response) => {
     res.status(404).json('404 Not Found');
 });
+
+
+
+// Define port for express server
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);

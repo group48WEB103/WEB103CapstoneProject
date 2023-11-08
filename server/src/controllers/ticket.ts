@@ -1,19 +1,6 @@
 import { Request, Response } from 'express';
-import pgp from 'pg-promise';
 import { Ticket } from '../models/ticket';
-import dotenv from 'dotenv';
-dotenv.config();
-
-const connection = {
-    host: process.env.HOST,
-    port: Number(process.env.PORT),
-    database: process.env.DB,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    ssl: true,
-};
-
-const pool = pgp()(connection);
+import { pool } from '../db.config.js';
 
 export class TicketQueries {
 
