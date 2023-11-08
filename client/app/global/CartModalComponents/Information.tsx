@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
-import getAllCustomers from '../../../services/GET/getAllCustomers';
+import getCustomerByEmail from '../../../services/GET/getCustomerByEmail';
 import createCustomer from '../../../services/POST/createCustomer';
 import updateCustomer from '../../../services/PUT/updateCustomer';
 import { Customer } from '../../../services/types';
@@ -49,17 +49,23 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
         const regex = /.+@.+\..+/;
         if (name.length > 0 && regex.test(email) === true && password.length > 0) {
             setCustomer({ name: name, email: email, password: password, tickets: [ticketID] });
-            // const allCustomers = await getAllCustomers();
-            // const foundCustomer = allCustomers.find((item: any) => item.seat_numbers === customer.seat_numbers && item.event_id === customer.event_id);
-            // if (foundCustomer) {
-            //     setCustomer({ name: foundCustomer.name, email: foundCustomer.email, password: foundCustomer.password, tickets: [ticketID, ...foundCustomer.tickets] });
-            //     showConfirmation(customer);
-            // }
+            // const customerByEmail = await getCustomerByEmail(email);
+            // if (customerByEmail) {
+            //     const foundCustomer = customerByEmail.find((item: any) => item.seat_numbers === customer.seat_numbers && item.event_id === customer.event_id);
+            //     if (foundCustomer) {
+            //         setCustomer({ name: foundCustomer.name, email: foundCustomer.email, password: foundCustomer.password, tickets: [ticketID, ...foundCustomer.tickets] });
+            //         showConfirmation(customer);
+            //     } else {
+            //         createNewCustomer(customer);
+            //         const getNewCustomers = await getCustomerByEmail(email);
+            //         const foundNewCustomer = getNewCustomers.find((item: any) => item.seat_numbers === customer.seat_numbers && item.event_id === customer.event_id);
+            //         showConfirmation(customer);
+            //     }
             // } else {
-            //     createNewCustomer(customer);
-            //     const getNewCustomers = await getAllCustomers();
-            //     const foundNewCustomer = getNewCustomers.find((item: any) => item.seat_numbers === customer.seat_numbers && item.event_id === customer.event_id);
-            //     showConfirmation(customer);
+            //     setShowWarning(true);
+            //     setTimeout(() => {
+            //         setShowWarning(false);
+            //     }, 3000);
             // }
         } else {
             setShowWarning(true);

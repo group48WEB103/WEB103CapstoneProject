@@ -6,7 +6,7 @@ export interface Stadium {
     capacity: number;
     image: string;
     gallery: string[];
-}
+};
 
 export interface Event {
     id: number;
@@ -15,7 +15,7 @@ export interface Event {
     description: string;
     performer: string;
     image: string;
-}
+};
 
 export interface Ticket {
     id?: number;
@@ -27,7 +27,7 @@ export interface Ticket {
     image: string;
     stadium_id: number;
     price: number;
-}
+};
 
 export interface Customer {
     id?: number;
@@ -35,4 +35,4 @@ export interface Customer {
     email: string;
     password: string;
     tickets: number[];
-}
+};

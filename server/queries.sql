@@ -94,3 +94,7 @@ CREATE TABLE stadium (
     image TEXT,
     gallery TEXT[]
 );
+
+
+
+INSERT 
