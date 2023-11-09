@@ -42,8 +42,7 @@ const Modal: React.FC<ModalProps> = ({ stadium, event }) => {
         setShowCheckout(false);
     };
 
-    const showInformationModal = (totalPrice: number, ticketID: number, ticket: Ticket) => {
-        setTotalPrice(totalPrice);
+    const showInformationModal = (ticketID: number, ticket: Ticket) => {
         setTicketID(ticketID);
         setTicket(ticket);
         setShowCheckout(false);
@@ -85,7 +84,7 @@ const Modal: React.FC<ModalProps> = ({ stadium, event }) => {
         <div id='Modal'>
             <SeatSelection stadium={stadium} event={event} changeCartState={(cartLength: number) => handleCartModal(cartLength)} />
             {showCart && <Cart showCheckout={showCheckoutModal} cartLength={cartLength} />}
-            {showCheckout && <Checkout event={event} updateCart={(cartLength: number) => handleCartModal(cartLength)} showInformation={(totalPrice: number, ticketID: number, ticket: Ticket) => showInformationModal(totalPrice, ticketID, ticket)} closeCheckout={closeCheckoutModal} />}
+            {showCheckout && <Checkout event={event} updateCart={(cartLength: number) => handleCartModal(cartLength)} showInformation={(ticketID: number, ticket: Ticket) => showInformationModal(ticketID, ticket)} closeCheckout={closeCheckoutModal} />}
             {showInformation && <Information ticketID={ticketID} showConfirmation={(customer: Customer) => showConfirmationModal(customer)} closeInformation={closeInformationModal} />}
             {showConfirmation && <Confirmation stadium={stadium} ticket={ticket} customer={customer} closeConfirmation={closeConfirmationModal} />}
         <style>

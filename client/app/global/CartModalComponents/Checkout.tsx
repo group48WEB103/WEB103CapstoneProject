@@ -9,7 +9,7 @@ interface CheckoutProps {
     event: Event;
     closeCheckout: () => void;
     updateCart: (cartLength: number) => void;
-    showInformation: (totalPrice: number, ticketID: number, ticket: Ticket) => void;
+    showInformation: (ticketID: number, ticket: Ticket) => void;
 }
 
 const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, showInformation }) => {
@@ -73,13 +73,13 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
         const allTickets = await getAllTickets();
         const foundTicket = allTickets.find((item: any) => item.seat_numbers === ticket.seat_numbers && item.event_id === ticket.event_id);
         if (foundTicket) {
+            createTicket(foundTicket);
             setTicket(foundTicket);
-            createTicket(ticket);
         } else {
             createTicket(ticket);
             const updatedTickets = await getAllTickets();
             const foundNewTicket = updatedTickets.find((item: any) => item.seat_numbers === ticket.seat_numbers && item.event_id === ticket.event_id);
-            showInformation(totalPrice, foundNewTicket.id, ticket)
+            showInformation(foundNewTicket.id, ticket)
         }
         // fix this
     };
@@ -288,6 +288,9 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
                         height: 100%;
                         justify-content: center;
                         align-items: center;
+                        color: var(--TextColor);
+                        font-size: 20px;
+                        font-family: InterSemi;
                         background-color: ${accentColor === 'rgba(255,255,255,0.95)' ? 'rgb(169,169,169)' : 'var(--AccentColor)'};
                         border-radius: 25px;
                         box-shadow: -1px 1.5px 5px black;

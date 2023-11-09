@@ -3,7 +3,7 @@ import "../../home.css";
 import checkCredentials from '../../../services/GET/checkCredentials';
 
 interface LoginProps {
-    updateLoginState: (name: string, email: string, password: string) => void;
+    updateLoginState: (email: string, password: string) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
@@ -15,7 +15,7 @@ const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
     const handleFormSubmit = async () => {
         const res = await checkCredentials(email, password);
         if (res) {
-            updateLoginState(res.name, res.email, res.password);
+            updateLoginState(res.email, res.password);
         } else {
             setShowWarning(true);
             setTimeout(() => {

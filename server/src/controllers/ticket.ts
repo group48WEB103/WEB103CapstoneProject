@@ -46,7 +46,7 @@ export class TicketQueries {
 
     // deleteTicket(req: Request, res: Response, id: string) {
     //     try {
-    //         pool.none('DELETE from ticket WHERE id = $1', [id]);
+    //         pool.none('DELETE FROM ticket WHERE id = $1', [id]);
     //     } catch (error) {
     //         console.error(error);
     //         return res.status(500).json({ error: 'Server error deleting ticket' });

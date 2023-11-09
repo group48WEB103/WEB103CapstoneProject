@@ -63,8 +63,8 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
         window.location.href = '/';
     };
 
-    const handleProfileDelete = async () => {
-        await deleteCustomer(String(user.id));
+    const handleProfileDelete = () => {
+        deleteCustomer(String(user.id));
         localStorage.removeItem('auth');
         setTimeout(() => {
             window.location.href = '/';
