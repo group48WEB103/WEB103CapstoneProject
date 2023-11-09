@@ -84,8 +84,8 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                             <div id="StadiumInfoTitleContainer">
                                 <p id='StadiumInfoTitle'>{stadium.title}</p>
                             </div>
-                            <div id="StadiumInfoCapacityContainer">
-                                <p id='StadiumInfoCapacity'>Capacity: {stadium.capacity}</p>
+                            <div id="StadiumInfoAddressContainer">
+                                <p id='StadiumInfoAddress'>{stadium.address}</p>
                             </div>
                             <div id="StadiumInfoLocationContainer">
                                 <p id='StadiumInfoLocation'><CiLocationOn id='LocationIcon'/>{stadium.location}</p>
@@ -157,8 +157,8 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                 #StadiumInfoImageContainer {
                     display: flex;
                     position: relative;
-                    width: 50%;
-                    height: 90%;
+                    width: 60%;
+                    height: 80%;
                     justify-content: center;
                     align-items: center;
                 }
@@ -171,13 +171,13 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                 #StadiumInfoTextContainer {
                     display: flex;
                     position: relative;
-                    width: 50%;
+                    width: 40%;
                     height: 100%;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
                 }
-                #StadiumInfoTitleContainer, #StadiumInfoCapacityContainer, #StadiumInfoLocationContainer {
+                #StadiumInfoTitleContainer, #StadiumInfoAddressContainer, #StadiumInfoLocationContainer {
                     display: flex;
                     position: relative;
                     width: 100%;
@@ -190,10 +190,10 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                     text-overflow: ellipsis;
                     color: var(--TextColor);
                 }
-                #StadiumInfoTitleContainer::-webkit-scrollbar, #StadiumInfoCapacityContainer::-webkit-scrollbar, #StadiumInfoLocationContainer::-webkit-scrollbar { height: 0; }
-                #StadiumInfoTitleContainer::-webkit-scrollbar-thumb, #StadiumInfoCapacityContainer::-webkit-scrollbar-thumb, #StadiumInfoLocationContainer::-webkit-scrollbar-thumb { height: 0; }
+                #StadiumInfoTitleContainer::-webkit-scrollbar, #StadiumInfoAddressContainer::-webkit-scrollbar, #StadiumInfoLocationContainer::-webkit-scrollbar { height: 0; }
+                #StadiumInfoTitleContainer::-webkit-scrollbar-thumb, #StadiumInfoAddressContainer::-webkit-scrollbar-thumb, #StadiumInfoLocationContainer::-webkit-scrollbar-thumb { height: 0; }
                 #StadiumInfoTitle { font-size: 30px; font-family: InterBold; }
-                #StadiumInfoCapacity { font-size: 25px; font-family: InterSemi; }
+                #StadiumInfoAddress { font-size: 25px; font-family: InterSemi; }
                 #StadiumInfoLocation { font-size: 20px; }
                 #LocationIcon { font-size: 20px; margin-right: 3px; margin-bottom: -2px; }
                 #StadiumInfoDescriptionContainer {
@@ -244,9 +244,9 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                     #StadiumInfoImageContainer { width: 100%; height: 60%; }
                     #StadiumInfoImage { width: 70%; height: 90%; }
                     #StadiumInfoTextContainer { width: 100%; height: 40%; }
-                    #StadiumInfoTitleContainer, #StadiumInfoCapacityContainer, #StadiumInfoLocationContainer { justify-content: center; }
+                    #StadiumInfoTitleContainer, #StadiumInfoAddressContainer, #StadiumInfoLocationContainer { justify-content: center; }
                     #StadiumInfoTitle { font-size: 25px; }
-                    #StadiumInfoCapacity { font-size: 20px; }
+                    #StadiumInfoAddress { font-size: 20px; }
                     #StadiumInfoLocation { font-size: 15px; }
                     #LocationIcon { font-size: 15px; }
                     #StadiumInfoDescriptionContainer { width: 70%; height: 15%; }

@@ -1,19 +1,6 @@
 import { Request, Response } from 'express';
-import pgp from 'pg-promise';
 import { Customer } from '../models/customer';
-import dotenv from 'dotenv';
-dotenv.config();
-
-const connection = {
-    host: process.env.HOST,
-    port: Number(process.env.PORT),
-    database: process.env.DB,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    ssl: true,
-};
-
-const pool = pgp()(connection);
+import { pool } from '../db.config.js';
 
 export class CustomerQueries {
 
@@ -30,7 +17,11 @@ export class CustomerQueries {
     async getCustomerByEmail(req: Request, res: Response, email: string) {
         try {
             const customer = await pool.one('SELECT * FROM customer WHERE email = $1', [email]);
-            return res.json(customer);
+            if (customer) {
+                return res.json(true);
+            } else {
+                return res.json(false);
+            }
         } catch (error) {
             console.error(error);
             return res.status(400).json({ error: 'Server error fetching customer by email' });

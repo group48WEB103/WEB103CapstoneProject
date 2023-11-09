@@ -67,7 +67,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                                 <p id='EventInfoPerformer'>{event.performer}</p>
                             </div>
                             <div id="EventInfoLocationContainer">
-                                <p id='EventInfoLocation'><CiLocationOn id='LocationIcon'/>{stadium.title}</p>
+                                <p id='EventInfoLocation'><CiLocationOn id='LocationIcon'/>{stadium.title ? <a href={`/stadiums/${stadium.id}`}>{stadium.title}</a> : "Unknown Stadium"}</p>
                             </div>
                         </div>
                     </div>
@@ -94,8 +94,8 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     padding-top: 10vh;
                     justify-content: center;
                     align-items: center;
-                    background-color: ${showLoading <= 1 ? 'black' : 'var(--BackgroundColor)'};
-                    background-image: ${showLoading <= 1 ? 'black' : 'linear-gradient(var(--BackgroundColor), rgba(0, 0, 0, 0.9))'};
+                    background-color: ${showLoading <= 1 ? '#080707' : 'var(--BackgroundColor)'};
+                    background-image: ${showLoading <= 1 ? '#080707' : 'linear-gradient(var(--BackgroundColor), rgba(0, 0, 0, 0.9))'};
                 }
                 #Loading { width: 200px; height: 150px; margin-top: -10vh; }
                 #EventContainer {
@@ -130,7 +130,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                 #EventInfoImageContainer {
                     display: flex;
                     position: relative;
-                    width: 50%;
+                    width: 60%;
                     height: 90%;
                     justify-content: center;
                     align-items: center;
@@ -144,7 +144,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                 #EventInfoTextContainer {
                     display: flex;
                     position: relative;
-                    width: 50%;
+                    width: 40%;
                     height: 100%;
                     flex-direction: column;
                     justify-content: center;
@@ -169,6 +169,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                 #EventInfoTitle { font-size: 30px; font-family: InterBold; }
                 #EventInfoPerformer { font-size: 25px; font-family: InterSemi; }
                 #EventInfoLocation { font-size: 20px; }
+                #EventInfoLocation a { color: var(--TextColor); }
                 #LocationIcon { font-size: 20px; margin-right: 3px; margin-bottom: -2px; }
                 #EventInfoDescriptionContainer {
                     display: flex;

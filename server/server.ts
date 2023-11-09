@@ -13,10 +13,11 @@ dotenv.config();
 
 
 
+// Cors doesn't allow http requests that are not made from our ticketeller domain or search bar(!origin)
+    
 const corsOptions = {
-    // doesn't allow http requests that are not made from our ticketeller domain or search bar
     origin: (origin: any, callback: any) => {
-        const allowedOrigins = "https://tickteller.vercel.app";
+        const allowedOrigins = ["https://tickteller.vercel.app", "http://localhost:3000"];
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
@@ -32,10 +33,10 @@ const app = express();
 app.use(express.json());
 app.use(cors(corsOptions));
 
-const customerController = new CustomerQueries();
-const eventController = new EventQueries();
-const stadiumController = new StadiumQueries();
-const ticketController = new TicketQueries();
+const CustomerController = new CustomerQueries();
+const EventController = new EventQueries();
+const StadiumController = new StadiumQueries();
+const TicketController = new TicketQueries();
 
 
 
@@ -52,28 +53,28 @@ app.get("/", (req: Request, res: Response) => {
 app.get(CustomerRoutes.getCustomerByCredentials, (req: Request, res: Response) => {
     const email = String(req.params.email);
     const password = String(req.params.password);
-    customerController.getCustomerByCredentials(req, res, email, password);
+    CustomerController.getCustomerByCredentials(req, res, email, password);
 });
 
 app.get(CustomerRoutes.getCustomerByEmail, (req: Request, res: Response) => {
     const email = String(req.params.email);
-    customerController.getCustomerByEmail(req, res, email);
+    CustomerController.getCustomerByEmail(req, res, email);
 });
 
 app.post(CustomerRoutes.createNewCustomer, (req: Request, res: Response) => {
     const data = req.body
-    customerController.createNewCustomer(req, res, data);
+    CustomerController.createNewCustomer(req, res, data);
 });
 
 app.put(CustomerRoutes.updateCustomer, (req: Request, res: Response) => {
     const data = req.body
     const id = String(req.params.id);
-    customerController.updateCustomer(req, res, id, data);
+    CustomerController.updateCustomer(req, res, id, data);
 });
 
 app.delete(CustomerRoutes.deleteCustomer, (req: Request, res: Response) => {
     const id = String(req.params.id);
-    customerController.deleteCustomer(req, res, id);
+    CustomerController.deleteCustomer(req, res, id);
 });
 
 
@@ -81,12 +82,12 @@ app.delete(CustomerRoutes.deleteCustomer, (req: Request, res: Response) => {
 // Event Requests
 
 app.get(EventRoutes.getAllEvents, (req: Request, res: Response) => {
-    eventController.getAllEvents(req, res);
+    EventController.getAllEvents(req, res);
 });
 
 app.get(EventRoutes.getEventByID, (req: Request, res: Response) => {
     const id = String(req.params.id);
-    eventController.getEventByID(req, res, id);
+    EventController.getEventByID(req, res, id);
 });
 
 
@@ -94,12 +95,12 @@ app.get(EventRoutes.getEventByID, (req: Request, res: Response) => {
 // Stadium Requests
 
 app.get(StadiumRoutes.getAllStadiums, (req: Request, res: Response) => {
-    stadiumController.getAllStadiums(req, res);
+    StadiumController.getAllStadiums(req, res);
 });
 
 app.get(StadiumRoutes.getStadiumByID, (req: Request, res: Response) => {
     const id = String(req.params.id);
-    stadiumController.getStadiumByID(req, res, id);
+    StadiumController.getStadiumByID(req, res, id);
 });
 
 
@@ -107,19 +108,25 @@ app.get(StadiumRoutes.getStadiumByID, (req: Request, res: Response) => {
 // Ticket Requests
 
 app.get(TicketRoutes.getAllTickets, (req: Request, res: Response,) => {
-    ticketController.getAllTickets(req, res);
+    TicketController.getAllTickets(req, res);
 });
 
 app.post(TicketRoutes.createNewTicket, (req: Request, res: Response) => {
     const data = req.body
-    ticketController.createNewticket(req, res, data);
+    TicketController.createNewticket(req, res, data);
 });
 
 
 
-app.get('*', (req, res) => {
+// Catch all other routes and return 404 Not Found
+
+app.get('*', (req: Request, res: Response) => {
     res.status(404).json('404 Not Found');
 });
+
+
+
+// Define port for express server
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);

@@ -2,8 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Header from '../../global/Header';
 import PassedColor from '../../global/BackgroundColorComponents/PassedColor';
-import getAllStadiums from '../../../services/GET/getAllStadiums';
-import { MockStadium } from '../../components/MockStadium';
+import getStadiumByID from '../../../services/GET/getStadiumByID';
 
 export const metadata: Metadata = {
   title: 'tickeTeller | Stadium',
@@ -12,7 +11,8 @@ export const metadata: Metadata = {
 
 export default async function Page({ params }: { params: { stadium: string } }) {
 
-  const stadium = await MockStadium[Number(params.stadium)]; 
+  const stadium = await getStadiumByID(params.stadium); 
+  // event doesn't matter here, it's just a placeholder
   const event = {id: 0, stadium_id: 0, title: '', description: '', performer: '', image: 'j'};
 
   return (

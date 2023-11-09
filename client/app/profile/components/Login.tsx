@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import "../../home.css";
-import { MockCustomer } from '../../components/MockCustomer';
 import checkCredentials from '../../../services/GET/checkCredentials';
 
 interface LoginProps {
@@ -14,8 +13,7 @@ const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
     const [showWarning, setShowWarning] = useState(false);
 
     const handleFormSubmit = async () => {
-        const res = MockCustomer.find((customer) => customer.email === email && customer.password === password);
-        // const res = await checkCredentials(email, password);
+        const res = await checkCredentials(email, password);
         if (res) {
             updateLoginState(res.name, res.email, res.password);
         } else {

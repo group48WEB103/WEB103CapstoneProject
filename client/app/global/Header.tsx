@@ -232,16 +232,15 @@ export default function Header() {
                     width: 60%;
                     height: 60%;
                     color: white;
-                    border-radius: 50%;
                     cursor: pointer;
                 }
                 #MobileMenu {
                     display: flex;
                     position: fixed;
-                    top: 10vh;
+                    top: 12vh;
                     left: 0;
                     width: 100vw;
-                    height: 11vh;
+                    height: 10vh;
                     align-items: center;
                     justify-content: center;
                     background-color: rgba(0, 0, 0, 0);

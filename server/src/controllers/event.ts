@@ -1,19 +1,6 @@
 import { Request, Response } from "express";
-import pgp from "pg-promise";
 import { Event } from '../models/event';
-import dotenv from 'dotenv';
-dotenv.config();
-
-const connection = {
-    host: process.env.HOST,
-    port: Number(process.env.PORT),
-    database: process.env.DB,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    ssl: true,
-};
-
-const pool = pgp()(connection);
+import { pool } from '../db.config.js';
 
 export class EventQueries {
 
@@ -29,7 +16,7 @@ export class EventQueries {
 
     async getEventByID(req: Request, res: Response, id: string) {
         try {
-            const event = await pool.manyOrNone('SELECT * FROM event WHERE id = $1', [id]);
+            const event = await pool.one('SELECT * FROM event WHERE id = $1', [id]);
             return res.json(event);
         } catch (error) {
             console.log(error);
