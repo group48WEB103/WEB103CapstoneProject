@@ -50,6 +50,7 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
         const regex = /.+@.+\..+/;
         if (name.length > 0 && regex.test(email) === true && password.length > 0) {
             setCustomer({ name: name, email: email, password: password, tickets: [ticketID] });
+            // add new ticket to their previous tickets array
             try {
                 const customerByEmail = await getCustomerByEmail(email);
                 if (customerByEmail) {

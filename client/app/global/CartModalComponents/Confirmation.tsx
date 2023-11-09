@@ -28,7 +28,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({ stadium, ticket, customer, 
                             <p id="TicketOverviewHeader">Ticket Overview</p>
                         </div>
                         <div id="TicketTitleContainer">
-                            <p id="TicketTitle">{ticket.title}</p>
+                            <p id="TicketTitle">{ticket.id}</p>
                         </div>
                         <div id="TicketStadiumTitleContainer">
                             <p id="TicketStadiumTitle">@ {stadium.title}</p>
