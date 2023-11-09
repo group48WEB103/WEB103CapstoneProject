@@ -4,8 +4,6 @@ import Header from '../global/Header';
 import PassedColor from '../global/BackgroundColorComponents/PassedColor';
 import getEventByID from '../../services/GET/getEventByID';
 import getStadiumByID from '../../services/GET/getStadiumByID';
-import { MockEvents } from '../components/MockEvents'; 
-import { MockStadium } from '../components/MockStadium';
 
 export const metadata: Metadata = {
   title: 'ticketTeller | Event',
@@ -13,9 +11,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Page({ params }: { params: { id: string } }) {
-
-  const event = await MockEvents[Number(params.id)] 
-  const stadium = await MockStadium[Number(event.stadium_id)];
+  console.log(params.id);
+  const event = await getEventByID(params.id);
+  const stadium = await getStadiumByID(event.stadium_id);
 
   return (
     <html>

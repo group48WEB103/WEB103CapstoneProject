@@ -17,7 +17,11 @@ export class CustomerQueries {
     async getCustomerByEmail(req: Request, res: Response, email: string) {
         try {
             const customer = await pool.one('SELECT * FROM customer WHERE email = $1', [email]);
-            return res.json(customer);
+            if (customer) {
+                return res.json(true);
+            } else {
+                return res.json(false);
+            }
         } catch (error) {
             console.error(error);
             return res.status(400).json({ error: 'Server error fetching customer by email' });

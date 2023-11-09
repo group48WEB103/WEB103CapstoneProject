@@ -3,7 +3,7 @@ import axios from 'axios';
 export default async function checkCredentials(username: string, password: string) {
     try {
         const invalid = { "error": "Invalid Credentials." };
-        const getCreds = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/customer/${username}/${password}`);
+        const getCreds = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/customer/auth/${username}/${password}`);
         if (getCreds.data != invalid) {
             return getCreds.data;
         } else {

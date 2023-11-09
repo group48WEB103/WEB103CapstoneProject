@@ -4,8 +4,6 @@ import Header from './global/Header';
 import Home from './components/Home';
 import getAllEvents from "../services/GET/getAllEvents"
 import getAllStadiums from "../services/GET/getAllStadiums"
-import { MockEvents } from "./components/MockEvents";
-import { MockStadium } from "./components/MockStadium";
 
 export const metadata: Metadata = {
   title: 'tickeTeller',
@@ -14,8 +12,8 @@ export const metadata: Metadata = {
 
 export default async function Page() {
 
-  const events = await MockEvents;
-  const stadiums = await MockStadium;
+  const events = await getAllEvents();
+  const stadiums = await getAllStadiums();
 
   return (
     <html>

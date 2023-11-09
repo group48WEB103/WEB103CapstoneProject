@@ -16,7 +16,7 @@ export class StadiumQueries {
 
     async getStadiumByID(req: Request, res: Response, id: string) {
         try {
-            const stadium = await pool.manyOrNone('SELECT * FROM stadium WHERE id = $1', [id]);
+            const stadium = await pool.one('SELECT * FROM stadium WHERE id = $1', [id]);
             return res.json(stadium);
         } catch (error) {
             console.log(error);
@@ -26,8 +26,8 @@ export class StadiumQueries {
 
     // createNewStadium(req: Request, res: Response, data: Stadium) {
     //     try {
-    //         pool.none('INSERT INTO stadium (location, title, description, capacity, image, gallery) VALUES ($1, $2, $3, $4, $5, $6)',
-    //         [data.location, data.title, data.description, data.capacity, data.image, data.gallery]);
+    //         pool.none('INSERT INTO stadium (location, title, address, description, capacity, image, gallery) VALUES ($1, $2, $3, $4, $5, $6)',
+    //         [data.location, data.title, data.address, data.description, data.capacity, data.image, data.gallery]);
     //     } catch (error) {
     //         console.log(error);
     //         return res.status(500).json({ error: 'Server error creating new stadium' });
@@ -36,8 +36,8 @@ export class StadiumQueries {
 
     // updateStadium(req: Request, res: Response, id: string, data: Stadium) {
     //     try {
-    //         pool.none('UPDATE stadium SET location = $1, title = $2, description = $3, capacity = $4, image = $5, gallery = $6 WHERE id = $7',
-    //         [data.location, data.title, data.description, data.capacity, data.image, data.gallery, id]);
+    //         pool.none('UPDATE stadium SET location = $1, title = $2, address = $3, description = $4, capacity = $5, image = $6, gallery = $7 WHERE id = $8',
+    //         [data.location, data.title, data.address, data.description, data.capacity, data.image, data.gallery, id]);
     //     } catch (error) {
     //         console.log(error);
     //         return res.status(500).json({ error: 'Server error updating stadium' });

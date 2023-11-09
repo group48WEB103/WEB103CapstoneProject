@@ -237,10 +237,10 @@ export default function Header() {
                 #MobileMenu {
                     display: flex;
                     position: fixed;
-                    top: 10vh;
+                    top: 12vh;
                     left: 0;
                     width: 100vw;
-                    height: 11vh;
+                    height: 10vh;
                     align-items: center;
                     justify-content: center;
                     background-color: rgba(0, 0, 0, 0);

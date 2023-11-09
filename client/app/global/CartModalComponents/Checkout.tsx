@@ -15,8 +15,8 @@ interface CheckoutProps {
 const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, showInformation }) => {
 
     const [cart, setCart] = useState([]);
-    const [selectedSeats, setSelectedSeats] = useState([]);
-    const [ticket, setTicket] = useState<Ticket>({event_id: 0, title: event.title, seat_numbers: [], description: '', performer: '', image: '', stadium_id: 0, price: 0});
+    const [selectedSeats, setSelectedSeats] = useState<any[]>([]);
+    const [ticket, setTicket] = useState<Ticket>({event_id: 0, seat_numbers: [], stadium_id: 0, price: 0});
     const [totalPrice, setTotalPrice] = useState(0);
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--AccentColor').trim();
 
@@ -55,8 +55,7 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
     const getSelectedSeats = () => {
         const cart = localStorage.getItem('cart');
         const cartArray = cart ? JSON.parse(cart) : [];
-        const selectedSeats = cartArray.map((item: any) => item.id);
-        setSelectedSeats(selectedSeats);
+        setSelectedSeats((prevSelectedSeats) => [...prevSelectedSeats, ...cartArray.map((item: any) => item.id)]);
     };
 
     if (selectedSeats.length === 0) {
@@ -66,24 +65,23 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
     const validateTicket = async () => {
         setTicket({        
             event_id: event.id, 
-            title: event.title, 
             seat_numbers: selectedSeats, 
-            description: event.description, 
-            performer: event.performer, 
-            image: event.image, 
             stadium_id: event.stadium_id,
             price: totalPrice
         })
-        // const allTickets = await getAllTickets();
-        // const foundTicket = allTickets.find((item: any) => item.seat_numbers === ticket.seat_numbers && item.event_id === ticket.event_id);
-        // if (foundTicket) {
-        //     setTicket(foundTicket);
-        // } else {
-        //     createTicket(ticket);
-        //     const getNewTickets = await getAllTickets();
-        //     const foundNewTicket = getNewTickets.find((item: any) => item.seat_numbers === ticket.seat_numbers && item.event_id === ticket.event_id);
-        //     showInformation(totalPrice, foundNewTicket.id, ticket)
-        // }
+        console.log(ticket);
+        const allTickets = await getAllTickets();
+        const foundTicket = allTickets.find((item: any) => item.seat_numbers === ticket.seat_numbers && item.event_id === ticket.event_id);
+        if (foundTicket) {
+            setTicket(foundTicket);
+            createTicket(ticket);
+        } else {
+            createTicket(ticket);
+            const updatedTickets = await getAllTickets();
+            const foundNewTicket = updatedTickets.find((item: any) => item.seat_numbers === ticket.seat_numbers && item.event_id === ticket.event_id);
+            showInformation(totalPrice, foundNewTicket.id, ticket)
+        }
+        // fix this
     };
 
     useEffect(() => {
@@ -205,7 +203,7 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
                         display: flex;
                         position: relative;
                         width: 95%;
-                        height: 20%;
+                        height: 110px;
                         flex-direction: row;
                         justify-content: space-between;
                         align-items: flex-start;
@@ -297,6 +295,7 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
                     }
                     @media (max-width: 600px) {
                         #ExitIcon { top: 5px; }
+                        #CheckoutItem { height: 80px; }
                         #CheckoutItemNameContainer { height: 80%; }
                         #CheckoutItemPriceContainer { 
                             height: 20%; 

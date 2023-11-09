@@ -1,8 +1,8 @@
 export class CustomerRoutes {
 
-    static readonly getCustomerByCredentials = '/customer/:email/:password';
+    static readonly getCustomerByCredentials = '/customer/auth/:email/:password';
 
-    static readonly getCustomerByEmail = '/customer/:email';
+    static readonly getCustomerByEmail = '/customer/exist/:email';
     
     static readonly createNewCustomer = '/new/customer';
 

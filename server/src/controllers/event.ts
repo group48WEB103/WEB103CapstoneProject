@@ -16,7 +16,7 @@ export class EventQueries {
 
     async getEventByID(req: Request, res: Response, id: string) {
         try {
-            const event = await pool.manyOrNone('SELECT * FROM event WHERE id = $1', [id]);
+            const event = await pool.one('SELECT * FROM event WHERE id = $1', [id]);
             return res.json(event);
         } catch (error) {
             console.log(error);

@@ -14,6 +14,7 @@ interface InformationProps {
 const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, closeInformation }) => {
 
     const [showWarning, setShowWarning] = useState(false);
+    const [showSignIn, setShowSignIn] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -45,28 +46,35 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
         setPassword(e.target.value);
     };
 
-    const validateInformation = () => {
+    const validateInformation = async () => {
         const regex = /.+@.+\..+/;
         if (name.length > 0 && regex.test(email) === true && password.length > 0) {
             setCustomer({ name: name, email: email, password: password, tickets: [ticketID] });
-            // const customerByEmail = await getCustomerByEmail(email);
-            // if (customerByEmail) {
-            //     const foundCustomer = customerByEmail.find((item: any) => item.seat_numbers === customer.seat_numbers && item.event_id === customer.event_id);
-            //     if (foundCustomer) {
-            //         setCustomer({ name: foundCustomer.name, email: foundCustomer.email, password: foundCustomer.password, tickets: [ticketID, ...foundCustomer.tickets] });
-            //         showConfirmation(customer);
-            //     } else {
-            //         createNewCustomer(customer);
-            //         const getNewCustomers = await getCustomerByEmail(email);
-            //         const foundNewCustomer = getNewCustomers.find((item: any) => item.seat_numbers === customer.seat_numbers && item.event_id === customer.event_id);
-            //         showConfirmation(customer);
-            //     }
-            // } else {
-            //     setShowWarning(true);
-            //     setTimeout(() => {
-            //         setShowWarning(false);
-            //     }, 3000);
-            // }
+            try {
+                const customerByEmail = await getCustomerByEmail(email);
+                if (customerByEmail) {
+                    const tokenString = localStorage.getItem('auth');
+                    const token = tokenString ? JSON.parse(tokenString) : [];
+                    if (token) {
+                        setCustomer(token);
+                        showConfirmation(token);
+                    } else {
+                        setShowSignIn(true);
+                        setTimeout(() => {
+                            setShowSignIn(false);
+                        }, 3000);
+                    }
+                } else {
+                    createCustomer(customer);
+                    showConfirmation(customer);
+                }
+            } catch (error) {
+                console.error("Error while fetching or creating customer:", error);
+                setShowWarning(true);
+                setTimeout(() => {
+                    setShowWarning(false);
+                }, 3000);
+            }
         } else {
             setShowWarning(true);
             setTimeout(() => {
@@ -97,6 +105,9 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                 </div>
                 <div id="InformationButtonContainer">
                     <div id="InformationButton" onClick={validateInformation}>Confirm Ticket</div>
+                </div>
+                <div id="InformationWarningContainer">
+                    {showWarning && <p id="InformationWarning">Invalid Input</p>}
                 </div>
             </div>
             <style>

@@ -2,6 +2,7 @@ export interface Stadium {
     id?: number;
     location: string;
     title: string;
+    address: string;
     description: string;
     capacity: number;
     image: string;
@@ -20,11 +21,7 @@ export interface Event {
 export interface Ticket {
     id?: number;
     event_id: number;
-    title: string;
     seat_numbers: number[];
-    description: string;
-    performer: string;
-    image: string;
     stadium_id: number;
     price: number;
 };

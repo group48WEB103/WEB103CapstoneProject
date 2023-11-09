@@ -12,7 +12,7 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
 
     const eventRedirect = (id: string) => {
         window.location.href = `/${id}`;
-    }
+    };
 
     return ( 
         <div id='Home'>
@@ -38,7 +38,7 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                                 </div>
                                 <div id="EventRightContainer">
                                     <div id="EventStadiumContainer">
-                                        <p id="EventStadium">{stadiums[event.stadium_id].title}</p>
+                                        <p id="EventStadium">{stadiums[event.stadium_id] ? stadiums[event.stadium_id].title : "Unknown Stadium"}</p>
                                     </div>
                                 </div> 
                             </div>
