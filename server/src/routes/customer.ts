@@ -4,10 +4,10 @@ export class CustomerRoutes {
 
     static readonly getCustomerByEmail = '/customer/exist/:email';
     
-    static readonly createNewCustomer = '/new/customer';
+    static readonly createNewCustomer = '/customer/new';
 
     static readonly updateCustomer = '/customer/update/:id';
 
-    static readonly deleteCustomer = '/delete/customer';
+    static readonly deleteCustomer = '/customer/delete/:id';
 
 };

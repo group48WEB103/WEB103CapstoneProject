@@ -20,6 +20,7 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
     const [password, setPassword] = useState('');
     const [customer, setCustomer] = useState<Customer>({ name: name, email: email, password: password, tickets: [ticketID] });
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--AccentColor').trim();
+    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--TextColor').trim();
 
     const fetchSavedInfo = () => {
         const token = localStorage.getItem('auth');

@@ -4,10 +4,10 @@ export class StadiumRoutes {
 
     static readonly getStadiumByID = '/stadium/:id';
 
-    // static readonly createNewStadium = '/new/stadium';
+    // static readonly createNewStadium = '/stadium/new';
 
-    // static readonly updateStadium = '/update/stadium';
+    // static readonly updateStadium = '/stadium/update';
 
-    // static readonly deleteStadium = '/delete/stadium';
+    // static readonly deleteStadium = '/stadium/delete';
 
 };

@@ -136,3 +136,7 @@ WIZKID * MIGOS • NAV • $UICIDEBOY$ • LIL TJAY • LIL TECCA • BELLY • 
    'NBA Game', 
    'https://statmilk.bleacherreport.com/api/image/mashup/logo?team1=golden-state-warriors&team2=cleveland-cavaliers'
 );
+
+
+
+UPDATE event SET description = 'Largest hip-hop festival in the world is coming to Toronto in September!' WHERE id = 1;

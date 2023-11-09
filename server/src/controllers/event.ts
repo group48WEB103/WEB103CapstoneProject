@@ -46,7 +46,7 @@ export class EventQueries {
 
     // deleteEvent(req: Request, res: Response, id: string) {
     //     try {
-    //         pool.none('DELETE from event WHERE id = $1', [id]);
+    //         pool.none('DELETE FROM event WHERE id = $1', [id]);
     //     } catch (error) {
     //         console.error(error);
     //         return res.status(500).json({ error: 'Server error deleting event' });

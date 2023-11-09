@@ -6,10 +6,10 @@ export class TicketRoutes {
 
     static readonly getTicketByCustomer = '/ticket/customer/:id';
 
-    static readonly createNewTicket = '/new/ticket';
+    static readonly createNewTicket = '/ticket/new';
 
-    // static readonly updateTicket = '/update/ticket';
+    // static readonly updateTicket = '/ticket/update';
 
-    // static readonly deleteTicket = '/delete/ticket';
+    // static readonly deleteTicket = '/ticket/delete';
 
 };

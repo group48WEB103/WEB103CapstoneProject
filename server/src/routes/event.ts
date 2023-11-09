@@ -4,10 +4,10 @@ export class EventRoutes {
 
     static readonly getEventByID = '/event/:id';
 
-    // static readonly createNewEvent = '/new/event';
+    // static readonly createNewEvent = '/event/new';
 
-    // static readonly updateEvent = '/update/event';
+    // static readonly updateEvent = '/event/update';
 
-    // static readonly deleteEvent = '/delete/event';
+    // static readonly deleteEvent = '/event/delete';
 
 };
