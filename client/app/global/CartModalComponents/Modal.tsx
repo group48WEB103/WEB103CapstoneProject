@@ -18,7 +18,6 @@ const Modal: React.FC<ModalProps> = ({ stadium, event }) => {
     const [showCheckout, setShowCheckout] = useState(false);
     const [showInformation, setShowInformation] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
-    const [totalPrice, setTotalPrice] = useState(0);
     const [ticketID, setTicketID] = useState(0);
     const [cartLength, setCartLength] = useState(0);
     const [ticket, setTicket] = useState<Ticket>({ event_id: 0, seat_numbers: [], stadium_id: 0, price: 0 });
@@ -60,18 +59,13 @@ const Modal: React.FC<ModalProps> = ({ stadium, event }) => {
         setShowConfirmation(true);
     };
 
-    const closeConfirmationModal = () => {
-        setShowConfirmation(false);
-        setShowCheckout(true);
-    };
-
     useEffect(() => {
 
-        const cart = localStorage.getItem('cart');
-        if (cart) {
-            const cartArray = JSON.parse(cart);
-            setCartLength(cartArray.length);
-            handleCartModal(cartArray.length);
+        const cartString = localStorage.getItem('cart');
+        if (cartString) {
+            const cart = JSON.parse(cartString);
+            setCartLength(cart.length);
+            handleCartModal(cart.length);
         } else {
             setCartLength(0);
             handleCartModal(0);
@@ -86,7 +80,7 @@ const Modal: React.FC<ModalProps> = ({ stadium, event }) => {
             {showCart && <Cart showCheckout={showCheckoutModal} cartLength={cartLength} />}
             {showCheckout && <Checkout event={event} updateCart={(cartLength: number) => handleCartModal(cartLength)} showInformation={(ticketID: number, ticket: Ticket) => showInformationModal(ticketID, ticket)} closeCheckout={closeCheckoutModal} />}
             {showInformation && <Information ticketID={ticketID} showConfirmation={(customer: Customer) => showConfirmationModal(customer)} closeInformation={closeInformationModal} />}
-            {showConfirmation && <Confirmation stadium={stadium} ticket={ticket} customer={customer} closeConfirmation={closeConfirmationModal} />}
+            {showConfirmation && <Confirmation stadium={stadium} ticket={ticket} customer={customer} />}
         <style>
             {`
                 #Modal { position: relative; width: 80%; height: 40%; }

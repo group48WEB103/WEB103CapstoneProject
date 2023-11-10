@@ -1,24 +1,19 @@
 import React from 'react';
-import { IoIosArrowBack } from "react-icons/io";
 import { Stadium, Ticket, Customer } from '../../../services/types';
 
 interface ConfirmationProps {
     stadium: Stadium;
     ticket: Ticket;
     customer: Customer;
-    closeConfirmation: () => void;
 }
 
-const Confirmation: React.FC<ConfirmationProps> = ({ stadium, ticket, customer, closeConfirmation }) => {
+const Confirmation: React.FC<ConfirmationProps> = ({ stadium, ticket, customer }) => {
 
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--AccentColor').trim();
 
     return (
         <div id="Confirmation">
             <div id="ConfirmationContainer">
-                <div id="Back" onClick={closeConfirmation}>
-                    <IoIosArrowBack id="BackIcon" onClick={closeConfirmation} />
-                </div>
                 <div id="ConfirmationHeaderContainer">
                     <p id="ConfirmationHeader">Confirmation</p>
                 </div>
@@ -34,7 +29,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({ stadium, ticket, customer, 
                             <p id="TicketStadiumTitle">@ {stadium.title}</p>
                         </div>
                         <div id="TicketSeatsContainer">
-                            <p id="TicketSeats">Seats: {ticket.seat_numbers}</p>
+                            <p id="TicketSeats">Selected Seats: {ticket.seat_numbers}</p>
                         </div>
                         <div id="TicketTotalPriceContainer">
                             <p id="TicketTotalPrice">Total Price: ${ticket.price}</p>
@@ -48,8 +43,11 @@ const Confirmation: React.FC<ConfirmationProps> = ({ stadium, ticket, customer, 
                             <p id="UserName">{customer.name} - {customer.email}</p>
                         </div>
                         <div id='UserTicketNumberContainer'>
-                            <p id="UserTicketNumber">Ticket Order Number: {customer.tickets[0]}</p>
+                            <p id="UserTicketNumber">Ticket Order Number: #{customer.tickets.length > 0 ? customer.tickets[customer.tickets.length - 1] : customer.tickets[0]}</p>
                         </div>
+                    </div>
+                    <div id="CloseConfirmationContainer">
+                        <a id="CloseConfirmation" href='/profile'>View Profile</a>
                     </div>
                 </div>
             </div>
