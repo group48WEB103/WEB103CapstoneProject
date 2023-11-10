@@ -22,10 +22,10 @@ const SeatSelection: React.FC<SeatSelectionProps> = ({ event, stadium, changeCar
     };
 
     const addToCart = (seat: number, price: number) => {
-        const cart = localStorage.getItem('cart');
-        const cartArray = cart ? JSON.parse(cart) : [];
+        const cartString = localStorage.getItem('cart');
+        const cart = cartString ? JSON.parse(cartString) : [];
         const seatObject = { id: seat, title: `${stadium.title} - Seat #${seat}`, price: price, event_id: event.id, stadium_id: stadium.id };
-        const found = cartArray.find((item: any) => item.id === seatObject.id);
+        const found = cart.find((item: any) => item.id === seatObject.id);
         if (found) {
             setShowWarning(true);
             setChosenSeat([-1, 0]);
@@ -34,9 +34,9 @@ const SeatSelection: React.FC<SeatSelectionProps> = ({ event, stadium, changeCar
             }, 2000);
             return;
         }
-        cartArray.push(seatObject);
-        localStorage.setItem('cart', JSON.stringify(cartArray));
-        changeCartState(cartArray.length);
+        cart.push(seatObject);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        changeCartState(cart.length);
         setChosenSeat([-1, 0]);
     };
 

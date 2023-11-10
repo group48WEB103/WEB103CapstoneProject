@@ -1,7 +1,5 @@
 export class TicketRoutes {
 
-    static readonly getAllTickets = '/tickets';
-
     static readonly getTicketByID = '/ticket/:id';
 
     static readonly getTicketByCustomer = '/ticket/customer/:id';

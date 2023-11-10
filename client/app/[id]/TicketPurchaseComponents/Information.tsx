@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
-import getCustomerByEmail from '../../../services/GET/getCustomerByEmail';
+import checkCredentials from '../../../services/GET/checkCredentials';
 import createCustomer from '../../../services/POST/createCustomer';
 import updateCustomer from '../../../services/PUT/updateCustomer';
 import { Customer } from '../../../services/types';
@@ -18,17 +18,24 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [customer, setCustomer] = useState<Customer>({ name: name, email: email, password: password, tickets: [ticketID] });
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--AccentColor').trim();
-    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--TextColor').trim();
-
+    
     const fetchSavedInfo = () => {
-        const token = localStorage.getItem('auth');
-        const tokenArray = token ? JSON.parse(token) : [];
-        if (tokenArray.email && tokenArray.password) {
-            setEmail(tokenArray.email);
-            setPassword(tokenArray.password);
+        const tokenString = localStorage.getItem('auth');
+        const token = tokenString ? JSON.parse(tokenString) : [];
+        if (token.email && token.password) {
+            setName(token.name);
+            setEmail(token.email);
+            setPassword(token.password);
         }
+    };
+
+    const createToken = (user: Customer) => { 
+        const token = localStorage.getItem('auth');
+        if (token) {
+            localStorage.removeItem('auth');
+        }
+        localStorage.setItem('auth', JSON.stringify(user));
     };
 
     if (email.length === 0 && password.length === 0) {
@@ -47,35 +54,31 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
         setPassword(e.target.value);
     };
 
-    const validateInformation = async () => {
+    const validateInformation = async (name: string, email: string, password: string, ticketID: number) => {
         const regex = /.+@.+\..+/;
-        if (name.length > 0 && regex.test(email) === true && password.length > 0) {
-            setCustomer({ name: name, email: email, password: password, tickets: [ticketID] });
-            // add new ticket to their previous tickets array
-            try {
-                const customerByEmail = await getCustomerByEmail(email);
-                if (customerByEmail) {
-                    const tokenString = localStorage.getItem('auth');
-                    const token = tokenString ? JSON.parse(tokenString) : [];
-                    if (token) {
-                        setCustomer(token);
-                        showConfirmation(token);
-                    } else {
-                        setShowSignIn(true);
-                        setTimeout(() => {
-                            setShowSignIn(false);
-                        }, 3000);
-                    }
+        if ((name !== '' && name !== ' ') && regex.test(email) === true && (password !== '' && password !== ' ')) {
+            const newCustomer: Customer = { name: name, email: email, password: password, tickets: [ticketID] };
+            const existingCustomer = await checkCredentials(email, password);
+            if (existingCustomer) {
+                const updatedCustomer = { ...existingCustomer, tickets: [...existingCustomer.tickets, ticketID] };
+                const tokenString = localStorage.getItem('auth');
+                const token = tokenString ? JSON.parse(tokenString) : [];
+                if (token) {
+                    updateCustomer(updatedCustomer, existingCustomer.id, password);
+                    showConfirmation(updatedCustomer);
+                    localStorage.removeItem('cart');
+                    createToken(updatedCustomer);
                 } else {
-                    createCustomer(customer);
-                    showConfirmation(customer);
+                    setShowSignIn(true);
+                    setTimeout(() => {
+                        setShowSignIn(false);
+                    }, 3000);
                 }
-            } catch (error) {
-                console.error("Error while fetching or creating customer:", error);
-                setShowWarning(true);
-                setTimeout(() => {
-                    setShowWarning(false);
-                }, 3000);
+            } else {
+                createCustomer(newCustomer);
+                showConfirmation(newCustomer);
+                localStorage.removeItem('cart');
+                createToken(newCustomer);
             }
         } else {
             setShowWarning(true);
@@ -106,10 +109,11 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                     </div>
                 </div>
                 <div id="InformationButtonContainer">
-                    <div id="InformationButton" onClick={validateInformation}>Confirm Ticket</div>
+                    <div id="InformationButton" onClick={() => validateInformation(name, email, password, ticketID)}>Confirm Ticket</div>
                 </div>
                 <div id="InformationWarningContainer">
                     {showWarning && <p id="InformationWarning">Invalid Input</p>}
+                    {showSignIn && <p id="InformationWarning">User exists. Sign in.</p>}
                 </div>
             </div>
             <style>
@@ -219,12 +223,16 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                         height: 100%;
                         justify-content: center;
                         align-items: center;
+                        color: var(--TextColor);
+                        font-size: 20px;
+                        font-family: InterSemi;
                         background-color: ${accentColor === 'rgba(255,255,255,0.95)' ? 'rgb(169,169,169)' : 'var(--AccentColor)'};
                         border-radius: 25px;
                         box-shadow: -1px 1.5px 5px black;
                         cursor: pointer;
                     }
                     @media (max-width: 700px) {
+                        #InformationContainer { height: 75%; }
                         #BackIcon { top: 5px; }
                         #NameInputContainer, #EmailInputContainer, #PasswordInputContainer { width: 90%; }
                     }

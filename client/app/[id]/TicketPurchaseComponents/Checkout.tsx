@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { IoIosClose } from 'react-icons/io';
-import getAllTickets from '../../../services/GET/getAllTickets';
 import createTicket from '../../../services/POST/createTicket';
 import { Event, Ticket } from '../../../services/types';
 
@@ -15,36 +14,34 @@ interface CheckoutProps {
 const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, showInformation }) => {
 
     const [cart, setCart] = useState([]);
-    const [selectedSeats, setSelectedSeats] = useState<any[]>([]);
-    const [ticket, setTicket] = useState<Ticket>({event_id: 0, seat_numbers: [], stadium_id: 0, price: 0});
     const [totalPrice, setTotalPrice] = useState(0);
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--AccentColor').trim();
 
     const getTotalPrice = () => {
-        const cart = localStorage.getItem('cart');
-        const cartArray = cart ? JSON.parse(cart) : [];
+        const cartString = localStorage.getItem('cart');
+        const cart = cartString ? JSON.parse(cartString) : [];
         let total = 0;
-        cartArray.forEach((item: any) => {
+        cart.forEach((item: any) => {
             total += item.price;
         });
         setTotalPrice(total);
     };
 
     const setItems = () => {
-        const cart = localStorage.getItem('cart');
-        const cartArray = cart ? JSON.parse(cart) : [];
-        setCart(cartArray);
+        const cartString = localStorage.getItem('cart');
+        const cart = cartString ? JSON.parse(cartString) : [];
+        setCart(cart);
         getTotalPrice();
     };
 
     const removeItem = (index: number) => {
-        const cart = localStorage.getItem('cart');
-        const cartArray = cart ? JSON.parse(cart) : [];
-        if (cartArray.length <= 1) {
+        const cartString = localStorage.getItem('cart');
+        const cart = cartString ? JSON.parse(cartString) : [];
+        if (cart.length <= 1) {
             localStorage.removeItem('cart');
             updateCart(0);
         } else {
-            const updatedCart = cartArray.filter((item: any) => item.id !== index);
+            const updatedCart = cart.filter((item: any) => item.id !== index);
             localStorage.setItem('cart', JSON.stringify(updatedCart))
             updateCart(updatedCart.length);
         }
@@ -53,39 +50,20 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
     };
 
     const getSelectedSeats = () => {
-        const cart = localStorage.getItem('cart');
-        const cartArray = cart ? JSON.parse(cart) : [];
-        setSelectedSeats((prevSelectedSeats) => [...prevSelectedSeats, ...cartArray.map((item: any) => item.id)]);
+        const cartString = localStorage.getItem('cart');
+        const cart = cartString ? JSON.parse(cartString) : [];
+        return [cart.map((item: any) => item.id)];
     };
 
-    if (selectedSeats.length === 0) {
-        getSelectedSeats();
-    };
-
-    const validateTicket = async () => {
-        setTicket({        
-            event_id: event.id, 
-            seat_numbers: selectedSeats, 
-            stadium_id: event.stadium_id,
-            price: totalPrice
-        })
-        console.log(ticket);
-        const allTickets = await getAllTickets();
-        const foundTicket = allTickets.find((item: any) => item.seat_numbers === ticket.seat_numbers && item.event_id === ticket.event_id);
-        if (foundTicket) {
-            createTicket(foundTicket);
-            setTicket(foundTicket);
-        } else {
-            createTicket(ticket);
-            const updatedTickets = await getAllTickets();
-            const foundNewTicket = updatedTickets.find((item: any) => item.seat_numbers === ticket.seat_numbers && item.event_id === ticket.event_id);
-            showInformation(foundNewTicket.id, ticket)
-        }
-        // fix this
+    const validateTicket = async (event_id: number, seat_numbers: number[], stadium_id: number, price: number) => {
+        const ticket: Ticket = { event_id: event_id, seat_numbers: seat_numbers, stadium_id: stadium_id, price: price };
+        const newTicket = await createTicket(ticket);
+        showInformation(newTicket.id, ticket);
     };
 
     useEffect(() => {
         setItems();
+        getSelectedSeats();
     }, []);
 
     return (
@@ -124,7 +102,7 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
                     <p id="TotalPrice">Total: ${totalPrice}</p>
                 </div>
                 <div id="CheckoutButtonContainer">
-                    {totalPrice > 0 ? ( <div id="CheckoutButton" onClick={validateTicket}>Checkout</div> ) : null}
+                    {totalPrice > 0 ? ( <div id="CheckoutButton" onClick={() => validateTicket(event.id, getSelectedSeats(), event.stadium_id, totalPrice)}>Checkout</div> ) : null}
                 </div>
             </div>
             <style>
@@ -297,7 +275,7 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
                         cursor: pointer;
                     }
                     @media (max-width: 600px) {
-                        #ExitIcon { top: 5px; }
+                        #CheckoutContainer { height: 75%; }
                         #CheckoutItem { height: 80px; }
                         #CheckoutItemNameContainer { height: 80%; }
                         #CheckoutItemPriceContainer { 

@@ -17,7 +17,7 @@ dotenv.config();
     
 const corsOptions = {
     origin: (origin: any, callback: any) => {
-        const allowedOrigins = ["https://tickteller.vercel.app", "http://localhost:3000"];
+        const allowedOrigins = process.env.CLIENT_URL || '';
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
@@ -56,11 +56,6 @@ app.get(CustomerRoutes.getCustomerByCredentials, (req: Request, res: Response) =
     CustomerController.getCustomerByCredentials(req, res, email, password);
 });
 
-app.get(CustomerRoutes.getCustomerByEmail, (req: Request, res: Response) => {
-    const email = String(req.params.email);
-    CustomerController.getCustomerByEmail(req, res, email);
-});
-
 app.post(CustomerRoutes.createNewCustomer, (req: Request, res: Response) => {
     const data = req.body
     CustomerController.createNewCustomer(req, res, data);
@@ -69,12 +64,14 @@ app.post(CustomerRoutes.createNewCustomer, (req: Request, res: Response) => {
 app.put(CustomerRoutes.updateCustomer, (req: Request, res: Response) => {
     const data = req.body
     const id = String(req.params.id);
-    CustomerController.updateCustomer(req, res, id, data);
+    const password = String(req.params.password);
+    CustomerController.updateCustomer(req, res, id, data, password);
 });
 
 app.delete(CustomerRoutes.deleteCustomer, (req: Request, res: Response) => {
     const id = String(req.params.id);
-    CustomerController.deleteCustomer(req, res, id);
+    const password = String(req.params.password);
+    CustomerController.deleteCustomer(req, res, id, password);
 });
 
 
@@ -106,10 +103,6 @@ app.get(StadiumRoutes.getStadiumByID, (req: Request, res: Response) => {
 
 
 // Ticket Requests
-
-app.get(TicketRoutes.getAllTickets, (req: Request, res: Response,) => {
-    TicketController.getAllTickets(req, res);
-});
 
 app.post(TicketRoutes.createNewTicket, (req: Request, res: Response) => {
     const data = req.body

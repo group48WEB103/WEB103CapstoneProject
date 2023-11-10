@@ -10,6 +10,8 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
 
+    console.log(stadiums);
+
     const eventRedirect = (id: string) => {
         window.location.href = `/${id}`;
     };
@@ -38,7 +40,12 @@ const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
                                 </div>
                                 <div id="EventRightContainer">
                                     <div id="EventStadiumContainer">
-                                        <p id="EventStadium">{stadiums[event.stadium_id] ? stadiums[event.stadium_id].title : "Unknown Stadium"}</p>
+                                        <p id="EventStadium">
+                                            {(() => {
+                                                const foundStadium = stadiums.find(stadium => stadium.id === event.stadium_id);
+                                                return foundStadium ? foundStadium.title : "Unknown Stadium";
+                                            })()}
+                                        </p>
                                     </div>
                                 </div> 
                             </div>

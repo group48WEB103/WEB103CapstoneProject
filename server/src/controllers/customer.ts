@@ -17,11 +17,7 @@ export class CustomerQueries {
     async getCustomerByEmail(req: Request, res: Response, email: string) {
         try {
             const customer = await pool.one('SELECT * FROM customer WHERE email = $1', [email]);
-            if (customer) {
-                return res.json(true);
-            } else {
-                return res.json(false);
-            }
+            return res.json(customer.id);
         } catch (error) {
             console.error(error);
             return res.status(400).json({ error: 'Server error fetching customer by email' });
@@ -38,19 +34,19 @@ export class CustomerQueries {
         }
     };
 
-    updateCustomer(req: Request, res: Response, id: string, data: Customer) {
+    updateCustomer(req: Request, res: Response, id: string, data: Customer, password: string) {
         try {
-            pool.none('UPDATE customer SET name = $1, email = $2, password = $3, tickets = $4 WHERE id = $5',
-            [data.name, data.email, data.password, data.tickets, id]);
+            pool.none('UPDATE customer SET name = $1, email = $2, password = $3, tickets = $4 WHERE id = $5 AND password = $6',
+            [data.name, data.email, data.password, data.tickets, id, password]);
         } catch (error) {
             console.error(error);
             return res.status(500).json({ error: 'Server error updating customer' });
         }
     };
 
-    deleteCustomer(req: Request, res: Response, id: string) {
+    deleteCustomer(req: Request, res: Response, id: string, password: string) {
         try {
-            pool.none('DELETE FROM customer WHERE id = $1', [id]);
+            pool.none('DELETE FROM customer WHERE id = $1 AND password = $2', [id, password]);
         } catch (error) {
             console.error(error);
             return res.status(500).json({ error: 'Server error deleting customer' });

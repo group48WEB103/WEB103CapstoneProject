@@ -47,7 +47,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
                 localStorage.setItem('auth', JSON.stringify(updatedCustomer));
             }
             setTimeout(() => {
-                updateCustomer(updatedCustomer, String(id));
+                updateCustomer(updatedCustomer, String(id), password);
                 setShowEditModal(false);
             }, 1);
         } else {
@@ -64,11 +64,15 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     };
 
     const handleProfileDelete = () => {
-        deleteCustomer(String(user.id));
-        localStorage.removeItem('auth');
-        setTimeout(() => {
-            window.location.href = '/';
-        }, 1);
+        const tokenString = localStorage.getItem('auth');
+        const token = tokenString ? JSON.parse(tokenString) : [];
+        if (token) {
+            deleteCustomer(String(user.id), token.password);
+            localStorage.removeItem('auth');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1);
+        }
     };
     
     return (

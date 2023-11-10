@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page({ params }: { params: { id: string } }) {
-  console.log(params.id);
+
   const event = await getEventByID(params.id);
   const stadium = await getStadiumByID(event.stadium_id);
 
