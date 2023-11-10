@@ -52,7 +52,6 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
     const getSelectedSeats = () => {
         const cartString = localStorage.getItem('cart');
         const cart = cartString ? JSON.parse(cartString) : [];
-        console.log('selected seats before state: ', [cart.map((item: any) => item.id)]);
         return [cart.map((item: any) => item.id)];
     };
 
@@ -276,7 +275,7 @@ const Checkout: React.FC<CheckoutProps> = ({ event, closeCheckout, updateCart, s
                         cursor: pointer;
                     }
                     @media (max-width: 600px) {
-                        #ExitIcon { top: 5px; }
+                        #CheckoutContainer { height: 75%; }
                         #CheckoutItem { height: 80px; }
                         #CheckoutItemNameContainer { height: 80%; }
                         #CheckoutItemPriceContainer { 

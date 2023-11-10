@@ -18,7 +18,6 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [customer, setCustomer] = useState<Customer>({ name: name, email: email, password: password, tickets: [ticketID] });
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--AccentColor').trim();
     
     const fetchSavedInfo = () => {
@@ -29,6 +28,14 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
             setEmail(token.email);
             setPassword(token.password);
         }
+    };
+
+    const createToken = (user: Customer) => { 
+        const token = localStorage.getItem('auth');
+        if (token) {
+            localStorage.removeItem('auth');
+        }
+        localStorage.setItem('auth', JSON.stringify(user));
     };
 
     if (email.length === 0 && password.length === 0) {
@@ -50,18 +57,17 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
     const validateInformation = async (name: string, email: string, password: string, ticketID: number) => {
         const regex = /.+@.+\..+/;
         if ((name !== '' && name !== ' ') && regex.test(email) === true && (password !== '' && password !== ' ')) {
-            const newCustomer = { name: name, email: email, password: password, tickets: [ticketID] };
-            setCustomer(newCustomer);
+            const newCustomer: Customer = { name: name, email: email, password: password, tickets: [ticketID] };
             const existingCustomer = await checkCredentials(email, password);
             if (existingCustomer) {
                 const updatedCustomer = { ...existingCustomer, tickets: [...existingCustomer.tickets, ticketID] };
                 const tokenString = localStorage.getItem('auth');
                 const token = tokenString ? JSON.parse(tokenString) : [];
                 if (token) {
-                    setCustomer(updatedCustomer);
                     updateCustomer(updatedCustomer, existingCustomer.id, password);
                     showConfirmation(updatedCustomer);
                     localStorage.removeItem('cart');
+                    createToken(updatedCustomer);
                 } else {
                     setShowSignIn(true);
                     setTimeout(() => {
@@ -72,6 +78,7 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                 createCustomer(newCustomer);
                 showConfirmation(newCustomer);
                 localStorage.removeItem('cart');
+                createToken(newCustomer);
             }
         } else {
             setShowWarning(true);
@@ -225,6 +232,7 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                         cursor: pointer;
                     }
                     @media (max-width: 700px) {
+                        #InformationContainer { height: 75%; }
                         #BackIcon { top: 5px; }
                         #NameInputContainer, #EmailInputContainer, #PasswordInputContainer { width: 90%; }
                     }

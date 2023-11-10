@@ -244,7 +244,6 @@ const StadiumInfo: React.FC<StadiumInfoProps> = ({ stadium, BackgroundColor, Acc
                     #StadiumInfoImageContainer { width: 100%; height: 60%; }
                     #StadiumInfoImage { width: 70%; height: 90%; }
                     #StadiumInfoTextContainer { width: 100%; height: 40%; }
-                    #StadiumInfoTitleContainer, #StadiumInfoAddressContainer, #StadiumInfoLocationContainer { justify-content: center; }
                     #StadiumInfoTitle { font-size: 25px; }
                     #StadiumInfoAddress { font-size: 20px; }
                     #StadiumInfoLocation { font-size: 15px; }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../globals.css";
-import Modal from "../../global/CartModalComponents/Modal";
+import Modal from "../TicketPurchaseComponents/Modal";
 import { IoIosArrowBack } from "react-icons/io";
 import { CiLocationOn } from "react-icons/ci";
 import { Event, Stadium } from "../../../services/types";
@@ -194,7 +194,6 @@ const EventInfo: React.FC<EventInfoProps> = ({ event, stadium, BackgroundColor, 
                     #EventInfoImageContainer { width: 100%; height: 60%; }
                     #EventInfoImage { width: 70%; height: 90%; }
                     #EventInfoTextContainer { width: 100%; height: 40%; }
-                    #EventInfoTitleContainer, #EventInfoPerformerContainer, #EventInfoLocationContainer { justify-content: center; }
                     #EventInfoTitle { font-size: 25px; }
                     #EventInfoPerformer { font-size: 20px; }
                     #EventInfoLocation { font-size: 15px; }

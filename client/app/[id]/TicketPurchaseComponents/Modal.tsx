@@ -80,7 +80,7 @@ const Modal: React.FC<ModalProps> = ({ stadium, event }) => {
             {showCart && <Cart showCheckout={showCheckoutModal} cartLength={cartLength} />}
             {showCheckout && <Checkout event={event} updateCart={(cartLength: number) => handleCartModal(cartLength)} showInformation={(ticketID: number, ticket: Ticket) => showInformationModal(ticketID, ticket)} closeCheckout={closeCheckoutModal} />}
             {showInformation && <Information ticketID={ticketID} showConfirmation={(customer: Customer) => showConfirmationModal(customer)} closeInformation={closeInformationModal} />}
-            {showConfirmation && <Confirmation stadium={stadium} ticket={ticket} customer={customer} />}
+            {showConfirmation && <Confirmation event={event} stadium={stadium} ticket={ticket} customer={customer} />}
         <style>
             {`
                 #Modal { position: relative; width: 80%; height: 40%; }
