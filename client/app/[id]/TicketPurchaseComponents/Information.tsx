@@ -231,6 +231,17 @@ const Information: React.FC<InformationProps> = ({ ticketID, showConfirmation, c
                         box-shadow: -1px 1.5px 5px black;
                         cursor: pointer;
                     }
+                    #InformationWarningContainer {
+                        display: flex;
+                        position: relative;
+                        width: 100%;
+                        height: 10%;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 18px;
+                        font-family: InterSemi;
+                        color: red;
+                    }
                     @media (max-width: 700px) {
                         #InformationContainer { height: 75%; }
                         #BackIcon { top: 5px; }

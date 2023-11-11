@@ -41,15 +41,11 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
         const regex = /.+@.+\..+/;
         if (name.length > 0 && regex.test(email) === true && password.length > 0) {
             const updatedCustomer = { id, name, email, password, tickets };
-            const tokenString = localStorage.getItem('auth');
-            const token = tokenString ? JSON.parse(tokenString) : [];
-            if (token) {
-                localStorage.setItem('auth', JSON.stringify(updatedCustomer));
-            }
+            localStorage.setItem('auth', JSON.stringify(updatedCustomer));
+            updateCustomer(updatedCustomer, String(id), password);
             setTimeout(() => {
-                updateCustomer(updatedCustomer, String(id), password);
-                setShowEditModal(false);
-            }, 1);
+                window.location.reload();
+            }, 10);
         } else {
             setShowWarning(true);
             setTimeout(() => {

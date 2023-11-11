@@ -10,8 +10,6 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ events, stadiums }) => {
 
-    console.log(stadiums);
-
     const eventRedirect = (id: string) => {
         window.location.href = `/${id}`;
     };
