@@ -92,7 +92,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({ event, stadium, ticket, cus
                         display: flex;
                         position: relative;
                         width: 90%;
-                        height: 60%;
+                        height: 70%;
                         flex-direction: column;
                         align-items: center;
                         overflow-y: scroll;
