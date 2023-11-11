@@ -46,12 +46,12 @@ User can purchase one ticket that offers multiple events/locations.
 | 8               | 3        | Location C           |
 
 
-### Backend-Features: RESTful API with response to at least of each type of Request (CRUD)
+### ✅Backend-Features: RESTful API with response to at least of each type of Request (CRUD)
 
 User can CREATE/READ/UPDATE/DELETE their shopping list of tickets.
 
 
-### Frontend Features
+### ✅Frontend Features
 The web app implements at least one redirection.
 The web app implements at least one interaction that the user can initiate and complete on the same page without navigating to a new page.
 The web app uses dynamic frontend routes created with React Router.
