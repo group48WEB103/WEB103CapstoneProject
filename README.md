@@ -28,6 +28,7 @@ Backend: Node.js, TypeScript, Express, PostgreSQL
 
 ✅User can purchase multiple ticket to different events/locations.
 Ticket table is join table for stadium and event, making a many-to-many relationship
+Event table's stadium ID references stadium table's ID making a one-to-many relationship
 
 
 
