@@ -14,36 +14,21 @@ A ticket selling application that allows users to buy bundles with access to mul
 
 ### Inspiration
 
-Inspiration for this application came from popularity of sports in current society.
+Inspiration for this came from recognizing the challenges faced by event organizers in managing and selling tickets for various events.
 
 ## Tech Stack
 
 Frontend: React, Next.js, Javascript
 
-Backend: Node.js, Express, Vercel
+Backend: Node.js, TypeScript, Express, PostgreSQL
 
 ## Features
 
 ### ✅Backend-Features: One-to-Many relational database
 
-✅User can purchase multiple ticket that offers multiple events/locations.
+✅User can purchase multiple ticket to different events/locations.
+Ticket table is join table for stadium and event, making a many-to-many relationship
 
-| TicketID | TicketName   | Price |
-|---------|--------------|-------|
-| 1       | Bundle A     | 50    |
-| 2       | Bundle B     | 75    |
-| 3       | Bundle C     | 60    |
-
-| EventLocationID | TicketID | EventLocationName    |
-|-----------------|----------|----------------------|
-| 1               | 1        | Event 1              |
-| 2               | 1        | Event 2              |
-| 3               | 1        | Location A           |
-| 4               | 2        | Event 3              |
-| 5               | 2        | Location B           |
-| 6               | 3        | Event 4              |
-| 7               | 3        | Event 5              |
-| 8               | 3        | Location C           |
 
 
 ### ✅Backend-Features: RESTful API with response to at least of each type of Request (CRUD)
